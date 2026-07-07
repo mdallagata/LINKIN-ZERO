@@ -7,12 +7,18 @@ import Nav from "react-bootstrap/Nav";
 import { BAND_NAME, BAND_TAGLINE } from "@/data/band";
 import type { NavLink } from "@/data/nav";
 
-export default function SiteHeader({ links }: { links: NavLink[] }): ReactNode {
+export default function SiteHeader({
+  links,
+  heroPhoto = false,
+}: {
+  links: NavLink[];
+  heroPhoto?: boolean;
+}): ReactNode {
   const pathname = usePathname();
 
   return (
     <>
-      <div className="site-hero w-100">
+      <div className={`site-hero w-100${heroPhoto ? " site-hero--photo" : ""}`}>
         <nav className="pt-3 pb-2">
           <Link href="/" className="glow-hover text-decoration-none">
             <div className="site-wordmark text-white">

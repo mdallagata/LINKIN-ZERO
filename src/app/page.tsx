@@ -11,7 +11,7 @@ import { HOME_NAV_LINKS } from "@/data/nav";
 export default function Home(): ReactNode {
   return (
     <>
-      <SiteHeader links={HOME_NAV_LINKS} />
+      <SiteHeader links={HOME_NAV_LINKS} heroPhoto />
 
       <main className="w-100 px-3">
         <FadeInSection>

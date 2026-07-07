@@ -34,7 +34,7 @@ export default function MembersPage(): ReactNode {
         <Container fluid>
           {MEMBERS.map((member: Member, i: number) => (
             <FadeInSection key={member.name}>
-              <MemberSection {...member} priority={i === 0} index={i} total={MEMBERS.length} />
+              <MemberSection {...member} priority={i === 0} />
             </FadeInSection>
           ))}
         </Container>

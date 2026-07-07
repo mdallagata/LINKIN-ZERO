@@ -17,8 +17,8 @@ export const MEMBERS: Member[] = [
     reverse: false,
     imageSrc: "/images/lucas.jpg",
     imageAlt: "Lucas Emir Sorroza",
-    imageWidth: 400,
-    imageHeight: 400,
+    imageWidth: 800,
+    imageHeight: 1200,
   },
   {
     name: "Gustavo Monjes",
@@ -27,8 +27,8 @@ export const MEMBERS: Member[] = [
     reverse: true,
     imageSrc: "/images/gustavo.jpg",
     imageAlt: "Gustavo Monjes",
-    imageWidth: 400,
-    imageHeight: 400,
+    imageWidth: 800,
+    imageHeight: 1200,
   },
   {
     name: "Mariano Cruz Abregu Mussatti",
@@ -37,8 +37,8 @@ export const MEMBERS: Member[] = [
     reverse: false,
     imageSrc: "/images/mariano.jpg",
     imageAlt: "Mariano Cruz Abregu Mussatti",
-    imageWidth: 400,
-    imageHeight: 400,
+    imageWidth: 800,
+    imageHeight: 1200,
   },
   {
     name: "Mauricio Antonio Dall'Agata",
@@ -47,8 +47,8 @@ export const MEMBERS: Member[] = [
     reverse: true,
     imageSrc: "/images/mauricio.jpg",
     imageAlt: "Mauricio Antonio Dall'Agata",
-    imageWidth: 400,
-    imageHeight: 400,
+    imageWidth: 800,
+    imageHeight: 1200,
   },
   {
     name: "Exequiel Mleziva",
@@ -57,7 +57,7 @@ export const MEMBERS: Member[] = [
     reverse: false,
     imageSrc: "/images/exequiel.jpg",
     imageAlt: "Exequiel Mleziva",
-    imageWidth: 400,
-    imageHeight: 400,
+    imageWidth: 800,
+    imageHeight: 1200,
   },
 ];

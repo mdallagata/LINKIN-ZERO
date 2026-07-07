@@ -102,15 +102,6 @@ h3 {
   border-radius: 1px;
 }
 
-.member-kicker {
-  font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 0.85rem;
-  letter-spacing: 0.15em;
-  color: var(--brand);
-  display: block;
-  margin-bottom: 0.5rem;
-}
-
 .member-role {
   font-family: var(--font-body), sans-serif;
   font-weight: 600;
@@ -135,7 +126,7 @@ h3 {
   inset: 0;
   background: var(--brand);
   mix-blend-mode: color;
-  opacity: 0.6;
+  opacity: 0.2;
   pointer-events: none;
 }
 
@@ -144,7 +135,7 @@ h3 {
   height: 480px;
   object-fit: cover;
   display: block;
-  filter: grayscale(0.9) contrast(1.08) brightness(0.95);
+  filter: grayscale(0.5) contrast(1.05);
 }
 
 .site-hero {
@@ -165,6 +156,19 @@ h3 {
 .site-hero > * {
   position: relative;
   z-index: 1;
+}
+
+.site-hero--photo {
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.site-hero--photo::before {
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0.75) 70%, #000 100%),
+    url("/images/show-hero.jpg") center 25% / cover no-repeat;
 }
 
 .site-wordmark {

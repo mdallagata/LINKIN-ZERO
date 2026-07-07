@@ -12,7 +12,7 @@ const anton = Anton({
 });
 
 export const metadata: Metadata = {
-  title: `${BAND_NAME} — LINKIN PARK Tribute Band`,
+  title: `${BAND_NAME}`,
   description: `${BAND_NAME} — banda tributo a LINKIN PARK de Tucumán, Argentina.`,
 };
 

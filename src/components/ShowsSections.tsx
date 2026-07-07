@@ -32,7 +32,7 @@ function PastShowItem({ show, index }: { show: PastShow; index: number }) {
     <Accordion.Item eventKey={String(index)}>
       <Accordion.Header>
         <div>
-          <p className="glow-sm text-brand mb-0 fw-bold">{show.date}</p>
+          <p className="text-brand mb-0 fw-bold">{show.date}</p>
           <p className="glow-sm text-muted mb-0">
             {show.event}
             <br />
@@ -98,7 +98,7 @@ export function UpcomingShowsSection(): ReactNode {
             <Accordion.Item eventKey={String(index)} key={`${show.date}-${show.venue}`}>
               <Accordion.Header>
                 <div>
-                  <p className="glow-sm text-brand mb-0 fw-bold">{show.date}</p>
+                  <p className="text-brand mb-0 fw-bold">{show.date}</p>
                   <p className="glow-sm text-muted mb-0">
                     {show.venue} — {show.city}
                   </p>

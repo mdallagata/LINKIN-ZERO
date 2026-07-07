@@ -1,5 +1,6 @@
 :root {
-  --brand: #5f9ea0; /* cadetblue, the site's original accent color */
+  --brand: #5f9ea0;
+  /* cadetblue, the site's original accent color */
   --bs-body-bg: #000;
   --bs-body-color: #fff;
   --bs-body-font-family: ui-monospace, SFMono-Regular, Menlo, Consolas,
@@ -16,7 +17,6 @@ body {
 
 h1 {
   font-family: var(--font-heading), sans-serif;
-  font-weight: 700;
   font-size: clamp(1.4rem, 3.5vw, 2rem);
 }
 
@@ -61,6 +61,7 @@ h1 {
 }
 
 .member-name {
+  font-family: var(--font-heading), sans-serif;
   font-size: clamp(1.8rem, 4vw, 2.8rem) !important;
 }
 
@@ -75,13 +76,19 @@ h1 {
 
 .site-wordmark {
   font-family: var(--font-heading), sans-serif;
-  font-size: clamp(2rem, 7vw, 5.5rem);
-  font-weight: 900;
+  font-size: clamp(2rem, 7.5vw, 6rem);
   letter-spacing: 0.02em;
 }
 
 .site-nav-link {
-  font-size: clamp(1rem, 2.2vw, 2rem) !important;
+  font-size: clamp(1rem, 2.2vw, 1.8rem) !important;
+  text-shadow: 0 0 6px var(--brand);
+  transition: text-shadow 0.3s, letter-spacing 0.3s;
+}
+
+.site-nav-link:hover {
+  text-shadow: 0 0 20px var(--brand), 0 0 40px var(--brand);
+  letter-spacing: 0.06em;
 }
 
 .placeholder-box {
@@ -136,4 +143,3 @@ h1 {
 .shows-accordion .accordion-button::after {
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
 }
-

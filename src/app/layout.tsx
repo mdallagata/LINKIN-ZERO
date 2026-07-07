@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import { Archivo } from "next/font/google";
+import { Anton } from "next/font/google";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./globals.css";
 import { BAND_NAME } from "@/data/band";
 
-const archivo = Archivo({
+const anton = Anton({
   subsets: ["latin"],
-  weight: ["700", "900"],
+  weight: "400",
   variable: "--font-heading",
 });
 
@@ -25,7 +25,7 @@ export default function RootLayout({
     <html
       lang="es"
       data-bs-theme="dark"
-      className={archivo.variable}
+      className={anton.variable}
     >
       <body className="d-flex flex-column min-vh-100 align-items-center">
         {children}

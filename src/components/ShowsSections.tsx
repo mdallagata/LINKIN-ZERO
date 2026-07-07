@@ -89,7 +89,8 @@ function PastShowItem({ show, index }: { show: PastShow; index: number }): React
 export function UpcomingShowsSection(): ReactNode {
   return (
     <Container as="section" id="fechas" className="mb-5 pb-4" style={{ maxWidth: 960 }}>
-      <h1 className="glow-lg text-decoration-underline mb-4">Próximas Fechas</h1>
+      <h1 className="mb-1">Próximas Fechas</h1>
+      <div className="section-divider" />
       {UPCOMING_SHOWS.length === 0 ? (
         <div className="placeholder-box">
           <p className="mb-0">
@@ -132,7 +133,8 @@ export function LatestShowSection(): ReactNode {
   if (!latest) return null;
   return (
     <Container as="section" id="ultimo-show" className="mb-5 pb-4" style={{ maxWidth: 960 }}>
-      <h1 className="glow-lg text-decoration-underline mb-4">Último Show</h1>
+      <h1 className="mb-1">Último Show</h1>
+      <div className="section-divider" />
       <Accordion className="shows-accordion text-start">
         <PastShowItem show={latest} index={0} />
       </Accordion>
@@ -148,7 +150,8 @@ export function PastShowsSection(): ReactNode {
       className="mb-5 pb-4"
       style={{ maxWidth: 960 }}
     >
-      <h1 className="glow-lg text-decoration-underline mb-4">Shows Anteriores</h1>
+      <h1 className="mb-1">Shows Anteriores</h1>
+      <div className="section-divider" />
       <Accordion className="shows-accordion text-start">
         {PAST_SHOWS.map((show: PastShow, index: number) => (
           <PastShowItem key={`${show.date}-${show.venue}`} show={show} index={index} />

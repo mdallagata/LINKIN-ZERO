@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import Container from "react-bootstrap/Container";
 import ContactForm from "@/components/ContactForm";
+import FadeInSection from "@/components/FadeInSection";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
 import { LatestShowSection, UpcomingShowsSection } from "@/components/ShowsSections";
@@ -13,21 +14,31 @@ export default function Home(): ReactNode {
       <SiteHeader links={HOME_NAV_LINKS} />
 
       <main className="w-100 px-3">
-        <Container as="section" className="mb-5 pb-4" style={{ maxWidth: 960 }}>
-          <h1 className="glow-lg text-decoration-underline mb-4">Sobre la banda</h1>
-          <p className="glow-sm text-muted">
-            {BAND_DESCRIPTION}
-          </p>
-        </Container>
+        <FadeInSection>
+          <Container as="section" className="mb-5 pb-4" style={{ maxWidth: 960 }}>
+            <h1 className="mb-1">Sobre la banda</h1>
+            <div className="section-divider" />
+            <p className="glow-sm text-muted">
+              {BAND_DESCRIPTION}
+            </p>
+          </Container>
+        </FadeInSection>
 
-        <UpcomingShowsSection />
+        <FadeInSection>
+          <UpcomingShowsSection />
+        </FadeInSection>
 
-        <LatestShowSection />
+        <FadeInSection>
+          <LatestShowSection />
+        </FadeInSection>
 
-        <Container as="section" id="contacto" className="mb-5 pb-4" style={{ maxWidth: 960 }}>
-          <h1 className="glow-lg text-decoration-underline mb-4">Contacto</h1>
-          <ContactForm />
-        </Container>
+        <FadeInSection>
+          <Container as="section" id="contacto" className="mb-5 pb-4" style={{ maxWidth: 960 }}>
+            <h1 className="mb-1">Contacto</h1>
+            <div className="section-divider" />
+            <ContactForm />
+          </Container>
+        </FadeInSection>
       </main>
 
       <SiteFooter />

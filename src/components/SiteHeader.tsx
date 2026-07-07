@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Nav from "react-bootstrap/Nav";
-import { BAND_NAME } from "@/data/band";
+import { BAND_NAME, BAND_TAGLINE } from "@/data/band";
 import type { NavLink } from "@/data/nav";
 
 export default function SiteHeader({ links }: { links: NavLink[] }): ReactNode {
@@ -12,12 +12,13 @@ export default function SiteHeader({ links }: { links: NavLink[] }): ReactNode {
 
   return (
     <>
-      <nav className="pt-3">
+      <nav className="pt-3 pb-2">
         <Link href="/" className="glow-hover text-decoration-none">
-          <div className="site-wordmark glow-lg text-white">
+          <div className="site-wordmark text-white">
             [ {BAND_NAME} ]
           </div>
         </Link>
+        <p className="hero-tagline mb-0">{BAND_TAGLINE}</p>
       </nav>
 
       <header className="w-100 px-3 pb-4 pb-md-5">

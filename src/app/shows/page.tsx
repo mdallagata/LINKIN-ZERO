@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import FadeInSection from "@/components/FadeInSection";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
 import { PastShowsSection, UpcomingShowsSection } from "@/components/ShowsSections";
@@ -19,9 +20,13 @@ export default function ShowsPage(): ReactNode {
       <SiteHeader links={NAV_LINKS} />
 
       <main className="w-100 px-3">
-        <UpcomingShowsSection />
+        <FadeInSection>
+          <UpcomingShowsSection />
+        </FadeInSection>
 
-        <PastShowsSection />
+        <FadeInSection>
+          <PastShowsSection />
+        </FadeInSection>
       </main>
 
       <SiteFooter />

@@ -1,6 +1,5 @@
 :root {
   --brand: #5f9ea0;
-  /* cadetblue, the site's original accent color */
   --bs-body-bg: #000;
   --bs-body-color: #fff;
   --bs-body-font-family: ui-monospace, SFMono-Regular, Menlo, Consolas,
@@ -13,6 +12,7 @@
 
 body {
   text-align: center;
+  background: linear-gradient(180deg, #000 0%, #080808 100%);
 }
 
 h1 {
@@ -60,9 +60,24 @@ h1 {
   border: 2px dotted var(--brand) !important;
 }
 
+.section-divider {
+  width: 60px;
+  height: 2px;
+  background: var(--brand);
+  box-shadow: 0 0 8px var(--brand), 0 0 16px var(--brand);
+  margin: 0.25rem auto 1.5rem;
+  border-radius: 1px;
+}
+
 .member-name {
   font-family: var(--font-heading), sans-serif;
   font-size: clamp(2rem, 4.5vw, 3rem) !important;
+}
+
+.member-role {
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: clamp(0.85rem, 1.8vw, 1.1rem);
 }
 
 .member-photo {
@@ -97,6 +112,15 @@ h1 {
   }
 }
 
+.hero-tagline {
+  font-family: var(--font-heading), sans-serif;
+  font-size: clamp(0.9rem, 2.2vw, 1.3rem);
+  color: rgb(174, 214, 214);
+  text-shadow: 0 0 6px var(--brand);
+  letter-spacing: 0.08em;
+  margin-top: 0;
+}
+
 .site-nav-link {
   font-size: clamp(1rem, 2.2vw, 1.8rem) !important;
   text-shadow: 0 0 6px var(--brand);
@@ -124,8 +148,9 @@ h1 {
   width: 220px;
   height: 220px;
   border-radius: 40%;
-  border: 3px dashed var(--brand);
-  background: rgba(95, 158, 160, 0.12);
+  border: 2px solid var(--brand);
+  background: linear-gradient(135deg, rgba(95, 158, 160, 0.25), rgba(95, 158, 160, 0.05));
+  box-shadow: 0 0 12px rgba(95, 158, 160, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -135,11 +160,37 @@ h1 {
   margin: 0 auto;
 }
 
+.cta-badge {
+  display: inline-block;
+  border: 1px solid var(--brand);
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  box-shadow: 0 0 12px rgba(95, 158, 160, 0.25);
+  color: #fff;
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
+}
+
+.cta-badge a {
+  color: var(--brand);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.cta-badge a:hover {
+  color: #fff;
+}
+
 .shows-accordion .accordion-item {
   background-color: transparent;
   border: 2px dotted var(--brand);
   border-radius: 8px;
   margin-bottom: 1rem;
+  box-shadow: 0 0 8px rgba(95, 158, 160, 0.15);
+  transition: box-shadow 0.3s;
+}
+
+.shows-accordion .accordion-item:hover {
+  box-shadow: 0 0 16px rgba(95, 158, 160, 0.3);
 }
 
 .shows-accordion .accordion-button {
@@ -169,4 +220,15 @@ h1 {
 .form-control-focus-white:focus {
   border-color: #fff !important;
   box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.25) !important;
+}
+
+.fade-in-section {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.fade-in-section.is-visible {
+  opacity: 1;
+  transform: translateY(0);
 }

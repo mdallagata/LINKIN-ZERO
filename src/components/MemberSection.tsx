@@ -43,7 +43,7 @@ export default function MemberSection({
       className={`text-center ${reverse ? "text-md-end order-md-last" : "text-md-start"}`}
     >
       <h1 className="member-name glow-lg mb-1">{name}</h1>
-      <p className="glow-sm text-brand mb-3">{role}</p>
+      <p className="member-role glow-sm text-brand mb-3">{role}</p>
       <p className="glow-sm text-muted">
         {bio}
       </p>

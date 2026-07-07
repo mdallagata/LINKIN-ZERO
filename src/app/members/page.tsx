@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import Container from "react-bootstrap/Container";
+import FadeInSection from "@/components/FadeInSection";
 import MemberSection from "@/components/MemberSection";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
@@ -23,7 +24,9 @@ export default function MembersPage(): ReactNode {
       <main className="w-100 px-3">
         <Container fluid>
           {MEMBERS.map((member: Member, i: number) => (
-            <MemberSection key={member.name} {...member} priority={i === 0} />
+            <FadeInSection key={member.name}>
+              <MemberSection {...member} priority={i === 0} />
+            </FadeInSection>
           ))}
         </Container>
       </main>

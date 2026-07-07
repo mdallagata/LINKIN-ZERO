@@ -37,12 +37,10 @@ export default function ContactForm(): ReactNode {
 
   return (
     <>
-      <p className="text-muted">
+      <div className="cta-badge mb-4">
         ¿Querés contratarnos para tu evento o local? Envíanos un correo a{" "}
-        <a href={`mailto:${CONTACT_EMAIL}`} className="text-brand">
-          {CONTACT_EMAIL}
-        </a>.
-      </p>
+        <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+      </div>
 
       <div className="mt-4 text-start" style={{ maxWidth: 500, margin: "0 auto" }}>
         {status === "success" ? (

@@ -37,12 +37,12 @@ export default function RootLayout({
   children: ReactNode;
 }>): ReactNode {
   return (
-    <html
-      lang="es"
-      data-bs-theme="dark"
-      className={anton.variable}
-    >
-      <body className="d-flex flex-column min-vh-100 align-items-center">
+      <html
+        lang="es"
+        data-bs-theme="dark"
+        className={anton.variable}
+      >
+        <body className="d-flex flex-column min-vh-100 align-items-center">
         {children}
         <BackToTop />
       </body>

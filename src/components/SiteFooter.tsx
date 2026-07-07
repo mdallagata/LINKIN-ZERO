@@ -28,8 +28,8 @@ const SOCIALS: SocialLink[] = [
     href: INSTAGRAM_URL,
     src: "/images/ig.jpg",
     alt: "Instagram",
-    width: 53,
-    height: 40,
+    width: 36,
+    height: 36,
   },
 ];
 
@@ -57,7 +57,7 @@ export default function SiteFooter(): ReactNode {
           {SOCIALS.map((social: SocialLink) => (
             <a
               key={social.alt}
-              className="d-inline-flex"
+              className="social-icon-link"
               href={social.href}
               target="_blank"
               rel="noopener noreferrer"

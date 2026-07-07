@@ -39,7 +39,7 @@ function hasRealSetlist(setlist?: string[]): boolean {
 function PastShowCard({ show, featured = false }: { show: PastShow; featured?: boolean }): ReactNode {
   return (
     <div className={`show-card${featured ? " show-card--featured" : ""}`}>
-      <p className="text-brand mb-0 fw-bold font-mono">{show.date}</p>
+      <p className="text-brand mb-0 fw-bold">{show.date}</p>
       <h3 className="mb-2 mt-1">{show.event}</h3>
       <p className="text-muted mb-0">
         {show.venue} — {show.city}
@@ -84,7 +84,7 @@ function PastShowCard({ show, featured = false }: { show: PastShow; featured?: b
 export function UpcomingShowsSection(): ReactNode {
   return (
     <Container as="section" id="fechas" className="mb-5 pb-4" style={{ maxWidth: 960 }}>
-      <h2 className="mb-1">Próximas Fechas</h2>
+      <h3 className="mb-1 mt-5">Próximas Fechas</h3>
       <div className="section-divider" />
       {UPCOMING_SHOWS.length === 0 ? (
         <div className="placeholder-box">
@@ -99,7 +99,7 @@ export function UpcomingShowsSection(): ReactNode {
         <div className="text-start">
           {UPCOMING_SHOWS.map((show: UpcomingShow) => (
             <div className="show-card" key={`${show.date}-${show.venue}`}>
-              <p className="text-brand mb-0 fw-bold font-mono">{show.date}</p>
+              <p className="text-brand mb-0 fw-bold">{show.date}</p>
               <h3 className="mb-2 mt-1">
                 {show.venue} — {show.city}
               </h3>
@@ -133,7 +133,7 @@ export function LatestShowSection(): ReactNode {
 export function PastShowsSection(): ReactNode {
   return (
     <Container as="section" id="shows-anteriores" className="mb-5 pb-4" style={{ maxWidth: 960 }}>
-      <h2 className="mb-1">Shows Anteriores</h2>
+      <h3 className="mb-1">Shows Anteriores</h3>
       <div className="section-divider" />
       <div className="text-start">
         {PAST_SHOWS.map((show: PastShow) => (

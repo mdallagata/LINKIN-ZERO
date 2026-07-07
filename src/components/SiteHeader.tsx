@@ -10,20 +10,31 @@ import type { NavLink } from "@/data/nav";
 export default function SiteHeader({
   links,
   heroPhoto = false,
+  heroCompact = false,
 }: {
   links: NavLink[];
   heroPhoto?: boolean;
+  heroCompact?: boolean;
 }): ReactNode {
   const pathname = usePathname();
 
+  const heroClass = [
+    "site-hero",
+    "w-100",
+    (heroPhoto || heroCompact) && "site-hero--photo",
+    heroCompact && "site-hero--compact",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  const wordmarkClass = `site-wordmark${heroPhoto ? " site-wordmark--glow" : ""}`;
+
   return (
     <>
-      <div className={`site-hero w-100${heroPhoto ? " site-hero--photo" : ""}`}>
+      <div className={heroClass}>
         <nav className="pt-3 pb-2">
-          <Link href="/" className="glow-hover text-decoration-none">
-            <div className="site-wordmark text-white">
-              [ {BAND_NAME} ]
-            </div>
+          <Link href="/" className="text-decoration-none">
+            <div className={wordmarkClass}>[ {BAND_NAME} ]</div>
           </Link>
           <p className="hero-tagline mb-0">{BAND_TAGLINE}</p>
         </nav>
@@ -36,7 +47,7 @@ export default function SiteHeader({
               return link.href.startsWith("http") ? (
                 <Nav.Link
                   key={link.href}
-                  className="site-nav-link glow-hover text-white p-0"
+                  className="site-nav-link text-white p-0"
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -48,7 +59,7 @@ export default function SiteHeader({
                 <Nav.Link
                   key={link.href}
                   as={Link}
-                  className="site-nav-link glow-hover text-white p-0"
+                  className="site-nav-link text-white p-0"
                   href={link.href}
                   aria-current={isActive ? "page" : undefined}
                   aria-label={link.label}

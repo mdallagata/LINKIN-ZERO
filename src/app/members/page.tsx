@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 export default function MembersPage(): ReactNode {
   return (
     <>
-      <SiteHeader links={NAV_LINKS} />
+      <SiteHeader links={NAV_LINKS} heroCompact />
 
       <main className="w-100 px-3">
         <Container className="text-center mb-4" style={{ maxWidth: 960 }}>

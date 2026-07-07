@@ -14,14 +14,11 @@ export default function Home(): ReactNode {
       <SiteHeader links={HOME_NAV_LINKS} heroPhoto />
 
       <main className="w-100 px-3">
-        <FadeInSection>
-          <Container as="section" className="mb-5 pb-4" style={{ maxWidth: 960 }}>
-
-            <p className="text-muted">
-              {BAND_DESCRIPTION}
-            </p>
-          </Container>
-        </FadeInSection>
+        <Container as="section" className="mt-4 mb-5" style={{ maxWidth: 700 }}>
+          <h2 className="mb-1">¿Quiénes somos?</h2>
+          <div className="section-divider" />
+          <p className="hero-description mb-0">{BAND_DESCRIPTION}</p>
+        </Container>
 
         <FadeInSection>
           <UpcomingShowsSection />

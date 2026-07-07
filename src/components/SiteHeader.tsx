@@ -28,6 +28,7 @@ export default function SiteHeader({ links }: { links: NavLink[] }): ReactNode {
                 href={link.href}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label={link.label}
               >
                 {link.label}
               </Nav.Link>
@@ -37,6 +38,7 @@ export default function SiteHeader({ links }: { links: NavLink[] }): ReactNode {
                 as={Link}
                 className="site-nav-link glow-hover text-white p-0"
                 href={link.href}
+                aria-label={link.label}
               >
                 {link.label}
               </Nav.Link>

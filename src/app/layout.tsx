@@ -12,8 +12,22 @@ const anton = Anton({
 });
 
 export const metadata: Metadata = {
-  title: `${BAND_NAME}`,
-  description: `${BAND_NAME} — banda tributo a LINKIN PARK de Tucumán, Argentina.`,
+  title: {
+    default: `${BAND_NAME}`,
+    template: `%s — ${BAND_NAME}`,
+  },
+  description:
+    `${BAND_NAME} — banda tributo a LINKIN PARK de Tucumán, Argentina.` +
+    ` Contrataciones para eventos y shows en vivo.`,
+  keywords: [
+    "LINKIN ZERØ",
+    "tributo LINKIN PARK",
+    "banda cover LINKIN PARK Argentina",
+    "contratar tributo LINKIN PARK",
+    "LINKIN PARK Tucumán",
+    "banda tributo nu metal",
+    "show en vivo contratación",
+  ],
 };
 
 export default function RootLayout({

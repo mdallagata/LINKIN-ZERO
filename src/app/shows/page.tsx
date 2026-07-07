@@ -8,6 +8,9 @@ import { SUBPAGE_NAV_LINKS } from "@/data/nav";
 
 export const metadata: Metadata = {
   title: `Shows — ${BAND_NAME}`,
+  description:
+    `Shows pasados y próximos de ${BAND_NAME}. Vimos en Magic Music Box, Espacio Lola Mora ` +
+    `(Septiembre Musical), Obscene Fest y más. Seguinos para conocer nuevas fechas.`,
 };
 
 export default function ShowsPage(): ReactNode {

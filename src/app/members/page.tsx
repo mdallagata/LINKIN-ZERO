@@ -10,6 +10,9 @@ import { SUBPAGE_NAV_LINKS } from "@/data/nav";
 
 export const metadata: Metadata = {
   title: `Miembros — ${BAND_NAME}`,
+  description:
+    `Conocé a los integrantes de ${BAND_NAME}: Lucas Sorroza (batería), Gustavo Monjes (bajo), ` +
+    `Mariano Cruz (voz), Mauricio Dall'Agata (guitarra) y Exequiel Mleziva (voz/guitarra).`,
 };
 
 export default function MembersPage(): ReactNode {

@@ -16,6 +16,7 @@ export type PastShow = {
   description?: string;
   photos?: string[];
   embedUrl?: string;
+  setlist?: string[];
 };
 
 // Sin fechas confirmadas por el momento.
@@ -29,6 +30,7 @@ export const PAST_SHOWS: PastShow[] = [
     city: "Tucumán, Argentina",
     event: "Show en Magic Music Box",
     embedUrl: "https://www.instagram.com/p/DaRebBYDFNT/embed",
+    setlist: Array(11).fill("PRÓXIMAMENTE"),
   },
   {
     date: "8 de noviembre, 2025",
@@ -38,6 +40,7 @@ export const PAST_SHOWS: PastShow[] = [
     description:
       "Tres tributos en una noche para revivir la era dorada del Nü Metal: P.O.R.N. (Korn), LINKIN ZERØ (Linkin Park) y Def Party (Deftones), más DJ set 2000s.",
     embedUrl: "https://www.instagram.com/p/DSYwsETDNQ8/embed",
+    setlist: Array(11).fill("PRÓXIMAMENTE"),
   },
   {
     date: "12 de septiembre, 2025",
@@ -45,6 +48,7 @@ export const PAST_SHOWS: PastShow[] = [
     city: "Tucumán, Argentina",
     event: "Show en Magic Music Box",
     embedUrl: "https://www.instagram.com/p/DO4zdAtjF5A/embed",
+    setlist: Array(11).fill("PRÓXIMAMENTE"),
   },
   {
     date: "5 de septiembre, 2025",
@@ -56,5 +60,6 @@ export const PAST_SHOWS: PastShow[] = [
     description:
       "El 65° Septiembre Musical nos convocó el viernes 5 de septiembre en el Espacio Lola Mora para una noche intensa de rock alternativo y metal. Junto a Porn (tributo a Korn) y Aeon (tributo a Tool), revivimos la potencia de bandas icónicas que marcaron a generaciones enteras. Fue un espacio de encuentro familiar con música en vivo, feria de artesanos y gastronomía, celebrando la vigencia de estos himnos en la memoria colectiva.",
     embedUrl: "https://www.instagram.com/p/DOXS0a2DDJ7/embed",
+    setlist: Array(11).fill("PRÓXIMAMENTE"),
   },
 ];

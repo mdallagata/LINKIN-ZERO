@@ -20,6 +20,7 @@ function ShowPhotos({ photos }: { photos?: string[] }) {
           width={160}
           height={160}
           className="rounded"
+          loading="lazy"
           style={{ objectFit: "cover", height: 120, width: 120 }}
         />
       ))}
@@ -47,6 +48,16 @@ function PastShowItem({ show, index }: { show: PastShow; index: number }) {
           </p>
         )}
         <ShowPhotos photos={show.photos} />
+        {show.setlist && show.setlist.length > 0 && (
+          <div className="mt-3">
+            <p className="glow-sm text-muted mb-1 fw-semibold">Setlist:</p>
+            <ul className="list-unstyled mb-0 text-muted glow-sm" style={{ columns: 2, columnGap: "1rem" }}>
+              {show.setlist.map((song: string, i: number) => (
+                <li key={`${song}-${i}`} className="mb-1">{song}</li>
+              ))}
+            </ul>
+          </div>
+        )}
         {show.embedUrl && (
           <div className="mt-3 text-center">
             <iframe
@@ -55,6 +66,7 @@ function PastShowItem({ show, index }: { show: PastShow; index: number }) {
               height="480"
               style={{ border: "none", borderRadius: 8, maxWidth: 500 }}
               allowFullScreen
+              title={`Video de ${show.event}`}
             />
           </div>
         )}

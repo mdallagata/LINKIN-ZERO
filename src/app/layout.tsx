@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { Anton } from "next/font/google";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./globals.css";
+import BackToTop from "@/components/BackToTop";
 import { BAND_NAME } from "@/data/band";
 
 const anton = Anton({
@@ -43,6 +44,7 @@ export default function RootLayout({
     >
       <body className="d-flex flex-column min-vh-100 align-items-center">
         {children}
+        <BackToTop />
       </body>
     </html>
   );

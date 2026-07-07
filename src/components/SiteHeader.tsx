@@ -12,47 +12,49 @@ export default function SiteHeader({ links }: { links: NavLink[] }): ReactNode {
 
   return (
     <>
-      <nav className="pt-3 pb-2">
-        <Link href="/" className="glow-hover text-decoration-none">
-          <div className="site-wordmark text-white">
-            [ {BAND_NAME} ]
-          </div>
-        </Link>
-        <p className="hero-tagline mb-0">{BAND_TAGLINE}</p>
-      </nav>
+      <div className="site-hero w-100">
+        <nav className="pt-3 pb-2">
+          <Link href="/" className="glow-hover text-decoration-none">
+            <div className="site-wordmark text-white">
+              [ {BAND_NAME} ]
+            </div>
+          </Link>
+          <p className="hero-tagline mb-0">{BAND_TAGLINE}</p>
+        </nav>
 
-      <header className="w-100 px-3 pb-4 pb-md-5">
-        <hr className="brand-hr my-2" />
-        <Nav className="justify-content-center flex-wrap gap-4 gap-md-5 py-2">
-          {links.map((link: NavLink) => {
-            const isActive: boolean = link.href === pathname || (link.href !== "/" && pathname.startsWith(link.href));
-            return link.href.startsWith("http") ? (
-              <Nav.Link
-                key={link.href}
-                className="site-nav-link glow-hover text-white p-0"
-                href={link.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={link.label}
-              >
-                {link.label}
-              </Nav.Link>
-            ) : (
-              <Nav.Link
-                key={link.href}
-                as={Link}
-                className="site-nav-link glow-hover text-white p-0"
-                href={link.href}
-                aria-current={isActive ? "page" : undefined}
-                aria-label={link.label}
-              >
-                {link.label}
-              </Nav.Link>
-            );
-          })}
-        </Nav>
-        <hr className="brand-hr my-2" />
-      </header>
+        <header className="w-100 px-3 pb-4 pb-md-5">
+          <hr className="brand-hr my-2" />
+          <Nav className="justify-content-center flex-wrap gap-4 gap-md-5 py-2">
+            {links.map((link: NavLink) => {
+              const isActive: boolean = link.href === pathname || (link.href !== "/" && pathname.startsWith(link.href));
+              return link.href.startsWith("http") ? (
+                <Nav.Link
+                  key={link.href}
+                  className="site-nav-link glow-hover text-white p-0"
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={link.label}
+                >
+                  {link.label}
+                </Nav.Link>
+              ) : (
+                <Nav.Link
+                  key={link.href}
+                  as={Link}
+                  className="site-nav-link glow-hover text-white p-0"
+                  href={link.href}
+                  aria-current={isActive ? "page" : undefined}
+                  aria-label={link.label}
+                >
+                  {link.label}
+                </Nav.Link>
+              );
+            })}
+          </Nav>
+          <hr className="brand-hr my-2" />
+        </header>
+      </div>
     </>
   );
 }

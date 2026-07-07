@@ -10,6 +10,10 @@
   --bs-border-color: var(--brand);
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   text-align: center;
   background: linear-gradient(180deg, #000 0%, #080808 100%);
@@ -89,6 +93,26 @@ h1 {
   border: 2px solid rgba(95, 158, 160, 0.7);
 }
 
+.site-hero {
+  position: relative;
+}
+
+.site-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 30%, rgba(95, 158, 160, 0.06), transparent),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120'%3E%3Cpath d='M0,60 C200,20 400,100 600,60 C800,20 1000,100 1200,60 L1200,0 L0,0 Z' fill='rgba(95,158,160,0.03)'/%3E%3C/svg%3E") center top / 100% 40px no-repeat;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.site-hero > * {
+  position: relative;
+  z-index: 1;
+}
+
 .site-wordmark {
   font-family: var(--font-heading), sans-serif;
   font-size: clamp(3rem, 9vw, 6.5rem);
@@ -135,6 +159,17 @@ h1 {
     0 0 40px var(--brand),
     0 0 60px rgba(95, 158, 160, 0.5);
   transform: translateY(-2px) scale(1.05);
+}
+
+.site-nav-link[aria-current="page"] {
+  text-shadow:
+    0 0 8px var(--brand),
+    0 0 20px var(--brand),
+    0 0 36px rgba(95, 158, 160, 0.6);
+  text-decoration: underline;
+  text-underline-offset: 6px;
+  text-decoration-thickness: 2px;
+  text-decoration-color: var(--brand);
 }
 
 .placeholder-box {
@@ -231,4 +266,39 @@ h1 {
 .fade-in-section.is-visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+.back-to-top {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 9999;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--brand);
+  background: rgba(0, 0, 0, 0.8);
+  color: var(--brand);
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s, transform 0.3s, box-shadow 0.3s;
+  pointer-events: none;
+  box-shadow: 0 0 8px rgba(95, 158, 160, 0.2);
+}
+
+.back-to-top.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.back-to-top:hover {
+  box-shadow: 0 0 16px rgba(95, 158, 160, 0.5);
+  color: #fff;
+  border-color: #fff;
 }

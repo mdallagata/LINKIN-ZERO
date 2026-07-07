@@ -12,7 +12,7 @@ export default function SiteHeader({ links }: { links: NavLink[] }): ReactNode {
       <nav className="pt-3">
         <Link href="/" className="glow-hover text-decoration-none">
           <div className="site-wordmark glow-lg text-white">
-            「 {BAND_NAME} 」
+            [ {BAND_NAME} ]
           </div>
         </Link>
       </nav>

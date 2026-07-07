@@ -80,16 +80,7 @@ export function UpcomingShowsSection(): ReactNode {
       {UPCOMING_SHOWS.length === 0 ? (
         <div className="placeholder-box">
           <p className="mb-0">
-            No hay fechas confirmadas por el momento. Seguinos en{" "}
-            <a
-              href={INSTAGRAM_URL}
-              className="glow-hover text-brand"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Instagram
-            </a>{" "}
-            para enterarte primero.
+            No hay fechas próximas por el momento.
           </p>
         </div>
       ) : (

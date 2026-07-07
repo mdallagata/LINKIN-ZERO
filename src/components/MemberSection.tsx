@@ -38,7 +38,7 @@ export default function MemberSection({
   const textCol = (
     <Col
       md={7}
-      className={`text-center ${reverse ? "text-md-end" : "text-md-start"}`}
+      className={`text-center ${reverse ? "text-md-end order-md-last" : "text-md-start"}`}
     >
       <h1 className="member-name glow-lg mb-1">{name}</h1>
       <p className="glow-sm text-brand mb-3">{role}</p>
@@ -49,7 +49,7 @@ export default function MemberSection({
   );
 
   const imageCol = (
-    <Col md={5} className="text-center mb-4 mb-md-0">
+    <Col md={5} className={`text-center mb-4 mb-md-0 ${reverse ? "order-md-first" : ""}`}>
       {imageSrc ? (
         <Image
           className="member-photo"
@@ -71,17 +71,8 @@ export default function MemberSection({
       className="align-items-center gy-4 mb-5 pb-4"
       style={{ maxWidth: 1100, margin: "0 auto" }}
     >
-      {reverse ? (
-        <>
-          {imageCol}
-          {textCol}
-        </>
-      ) : (
-        <>
-          {textCol}
-          {imageCol}
-        </>
-      )}
+      {textCol}
+      {imageCol}
     </Row>
   );
 }

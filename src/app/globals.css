@@ -76,7 +76,7 @@ h1 {
 
 .site-wordmark {
   font-family: var(--font-heading), sans-serif;
-  font-size: clamp(2rem, 7.5vw, 6rem);
+  font-size: clamp(3rem, 9vw, 6.5rem);
   letter-spacing: 0.02em;
 }
 

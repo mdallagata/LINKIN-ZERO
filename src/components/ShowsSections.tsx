@@ -84,7 +84,7 @@ function PastShowCard({ show, featured = false }: { show: PastShow; featured?: b
 export function UpcomingShowsSection(): ReactNode {
   return (
     <Container as="section" id="fechas" className="mb-5 pb-4" style={{ maxWidth: 960 }}>
-      <h3 className="mb-1 mt-5">Próximas Fechas</h3>
+      <h2 className="mb-1 mt-5">Próximas Fechas</h2>
       <div className="section-divider" />
       {UPCOMING_SHOWS.length === 0 ? (
         <div className="placeholder-box">

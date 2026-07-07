@@ -1,37 +1,32 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import Nav from "react-bootstrap/Nav";
-
-type NavLink = {
-  label: string;
-  href: string;
-};
+import { BAND_NAME, BAND_TAGLINE } from "@/data/band";
+import type { NavLink } from "@/data/nav";
 
 export default function SiteHeader({ links }: { links: NavLink[] }) {
   return (
     <>
-      <nav className="pt-3">
-        <Image
-          src="/images/lpgif.gif"
-          alt="Linkin Park Logo"
-          width={640}
-          height={320}
-          priority
-          unoptimized
-          style={{ height: "auto", width: "min(85vw, 380px)" }}
-        />
+      <nav className="pt-4">
+        <Link href="/" className="glow-hover text-decoration-none">
+          <div className="site-wordmark glow-lg text-brand">
+            「 {BAND_NAME} 」
+          </div>
+        </Link>
+        <p className="glow-sm mt-2" style={{ color: "rgb(174, 214, 214)" }}>
+          {BAND_TAGLINE}
+        </p>
       </nav>
 
-      <header className="w-100 px-3 pb-4 pb-md-5" style={{ maxWidth: 960 }}>
+      <header className="w-100 px-3 pb-4 pb-md-5" style={{ maxWidth: 1400 }}>
         <hr className="brand-hr" />
-        <Nav className="justify-content-center flex-wrap gap-3 gap-md-4 py-3 fs-5">
+        <Nav className="justify-content-center flex-wrap gap-3 gap-md-4 py-3">
           {links.map((link) =>
             link.href.startsWith("http") ? (
               <Nav.Link
                 key={link.href}
-                className="glow-hover text-brand p-0"
+                className="site-nav-link glow-hover text-brand p-0"
                 href={link.href}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -42,7 +37,7 @@ export default function SiteHeader({ links }: { links: NavLink[] }) {
               <Nav.Link
                 key={link.href}
                 as={Link}
-                className="glow-hover text-brand p-0"
+                className="site-nav-link glow-hover text-brand p-0"
                 href={link.href}
               >
                 {link.label}

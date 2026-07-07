@@ -14,6 +14,11 @@ body {
   text-align: center;
 }
 
+h1 {
+  font-family: var(--font-heading), sans-serif;
+  font-weight: 700;
+}
+
 .text-brand {
   color: var(--brand) !important;
 }
@@ -53,20 +58,63 @@ body {
   border-radius: 40%;
 }
 
-.glow-yellow {
-  text-shadow: 0 0 10px rgb(255, 255, 83);
+.site-wordmark {
+  font-family: var(--font-heading), sans-serif;
+  font-size: clamp(1.8rem, 6vw, 4.5rem);
+  font-weight: 900;
+  letter-spacing: 0.02em;
 }
 
-@keyframes fade-pulse {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.15;
-  }
+.site-nav-link {
+  font-size: clamp(1.15rem, 2.6vw, 2.5rem) !important;
 }
 
-.animate-fade-pulse {
-  animation: fade-pulse 4s ease-in-out infinite;
+.placeholder-box {
+  border: 2px dashed var(--brand);
+  border-radius: 8px;
+  padding: 3rem 1.5rem;
+  color: var(--brand);
 }
+
+.placeholder-avatar {
+  width: 220px;
+  height: 220px;
+  border-radius: 40%;
+  border: 3px dashed var(--brand);
+  background: rgba(95, 158, 160, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  font-weight: bold;
+  color: var(--brand);
+  margin: 0 auto;
+}
+
+.shows-accordion .accordion-item {
+  background-color: transparent;
+  border: 2px dotted var(--brand);
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.shows-accordion .accordion-button {
+  background-color: transparent;
+  color: inherit;
+  box-shadow: none;
+}
+
+.shows-accordion .accordion-button:not(.collapsed) {
+  background-color: rgba(95, 158, 160, 0.1);
+  color: inherit;
+  box-shadow: none;
+}
+
+.shows-accordion .accordion-button:focus {
+  box-shadow: none;
+}
+
+.shows-accordion .accordion-body {
+  background-color: transparent;
+}
+

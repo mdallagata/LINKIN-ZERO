@@ -5,8 +5,8 @@ import MemberSection from "@/components/MemberSection";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
 import { BAND_NAME } from "@/data/band";
-import { MEMBERS } from "@/data/members";
-import { SUBPAGE_NAV_LINKS } from "@/data/nav";
+import { Member, MEMBERS } from "@/data/members";
+import { NAV_LINKS } from "@/data/nav";
 
 export const metadata: Metadata = {
   title: `Miembros — ${BAND_NAME}`,
@@ -18,12 +18,12 @@ export const metadata: Metadata = {
 export default function MembersPage(): ReactNode {
   return (
     <>
-      <SiteHeader links={SUBPAGE_NAV_LINKS} />
+      <SiteHeader links={NAV_LINKS} />
 
       <main className="w-100 px-3">
         <Container fluid>
-          {MEMBERS.map((member) => (
-            <MemberSection key={member.name} {...member} />
+          {MEMBERS.map((member: Member, i: number) => (
+            <MemberSection key={member.name} {...member} priority={i === 0} />
           ))}
         </Container>
       </main>

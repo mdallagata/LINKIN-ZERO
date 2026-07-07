@@ -2,11 +2,14 @@
 
 import type { ReactNode } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import Nav from "react-bootstrap/Nav";
 import { BAND_NAME } from "@/data/band";
 import type { NavLink } from "@/data/nav";
 
 export default function SiteHeader({ links }: { links: NavLink[] }): ReactNode {
+  const pathname = usePathname();
+
   return (
     <>
       <nav className="pt-3">
@@ -20,8 +23,9 @@ export default function SiteHeader({ links }: { links: NavLink[] }): ReactNode {
       <header className="w-100 px-3 pb-4 pb-md-5">
         <hr className="brand-hr my-2" />
         <Nav className="justify-content-center flex-wrap gap-4 gap-md-5 py-2">
-          {links.map((link) =>
-            link.href.startsWith("http") ? (
+          {links.map((link: NavLink) => {
+            const isActive: boolean = link.href === pathname || (link.href !== "/" && pathname.startsWith(link.href));
+            return link.href.startsWith("http") ? (
               <Nav.Link
                 key={link.href}
                 className="site-nav-link glow-hover text-white p-0"
@@ -38,12 +42,13 @@ export default function SiteHeader({ links }: { links: NavLink[] }): ReactNode {
                 as={Link}
                 className="site-nav-link glow-hover text-white p-0"
                 href={link.href}
+                aria-current={isActive ? "page" : undefined}
                 aria-label={link.label}
               >
                 {link.label}
               </Nav.Link>
-            )
-          )}
+            );
+          })}
         </Nav>
         <hr className="brand-hr my-2" />
       </header>

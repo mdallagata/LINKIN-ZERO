@@ -8,11 +8,11 @@ import { INSTAGRAM_URL } from "@/data/band";
 import type { PastShow, UpcomingShow } from "@/data/shows";
 import { PAST_SHOWS, UPCOMING_SHOWS } from "@/data/shows";
 
-function ShowPhotos({ photos }: { photos?: string[] }) {
+function ShowPhotos({ photos }: { photos?: string[] }): ReactNode {
   if (!photos || photos.length === 0) return null;
   return (
     <div className="d-flex flex-wrap gap-2 mt-3">
-      {photos.map((photo) => (
+      {photos.map((photo: string) => (
         <Image
           key={photo}
           src={photo}
@@ -28,7 +28,7 @@ function ShowPhotos({ photos }: { photos?: string[] }) {
   );
 }
 
-function PastShowItem({ show, index }: { show: PastShow; index: number }) {
+function PastShowItem({ show, index }: { show: PastShow; index: number }): ReactNode {
   return (
     <Accordion.Item eventKey={String(index)}>
       <Accordion.Header>
@@ -64,6 +64,7 @@ function PastShowItem({ show, index }: { show: PastShow; index: number }) {
               src={show.embedUrl}
               width="100%"
               height="480"
+              loading="lazy"
               style={{ border: "none", borderRadius: 8, maxWidth: 500 }}
               allowFullScreen
               title={`Video de ${show.event}`}
@@ -127,7 +128,7 @@ export function UpcomingShowsSection(): ReactNode {
 }
 
 export function LatestShowSection(): ReactNode {
-  const latest = PAST_SHOWS[0];
+  const latest: PastShow | undefined = PAST_SHOWS[0];
   if (!latest) return null;
   return (
     <Container as="section" id="ultimo-show" className="mb-5 pb-4" style={{ maxWidth: 960 }}>

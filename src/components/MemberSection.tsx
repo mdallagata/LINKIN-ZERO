@@ -14,12 +14,13 @@ type MemberSectionProps = {
   imageWidth?: number;
   imageHeight?: number;
   reverse?: boolean;
+  priority?: boolean;
 };
 
 function initials(name: string): string {
   return name
     .split(" ")
-    .map((word) => word[0])
+    .map((word: string): string => word[0])
     .join("")
     .slice(0, 2)
     .toUpperCase();
@@ -34,8 +35,9 @@ export default function MemberSection({
   imageWidth,
   imageHeight,
   reverse = false,
+  priority = false,
 }: MemberSectionProps): ReactNode {
-  const textCol = (
+  const textCol: ReactNode = (
     <Col
       md={7}
       className={`text-center ${reverse ? "text-md-end order-md-last" : "text-md-start"}`}
@@ -48,7 +50,7 @@ export default function MemberSection({
     </Col>
   );
 
-  const imageCol = (
+  const imageCol: ReactNode = (
     <Col md={5} className={`text-center mb-4 mb-md-0 ${reverse ? "order-md-first" : ""}`}>
       {imageSrc ? (
         <Image
@@ -57,6 +59,7 @@ export default function MemberSection({
           alt={imageAlt ?? name}
           width={imageWidth}
           height={imageHeight}
+          priority={priority}
           unoptimized={imageSrc.endsWith(".gif")}
         />
       ) : (

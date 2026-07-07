@@ -6,8 +6,9 @@ import Image from "next/image";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import { BAND_NAME, INSTAGRAM_URL, LEGAL_DISCLAIMER } from "@/data/band";
+import type { NavLink } from "@/data/nav";
 
-const QUICK_LINKS = [
+const QUICK_LINKS: NavLink[] = [
   { label: "Inicio", href: "/" },
   { label: "Miembros", href: "/members" },
   { label: "Shows", href: "/shows" },
@@ -38,7 +39,7 @@ export default function SiteFooter(): ReactNode {
       <hr className="brand-hr" />
       <Container className="text-center" style={{ maxWidth: 960 }}>
         <Nav className="justify-content-center flex-wrap gap-3 mb-3">
-          {QUICK_LINKS.map((link) => (
+          {QUICK_LINKS.map((link: NavLink) => (
             <Nav.Link
               key={link.href}
               as={Link}
@@ -51,9 +52,9 @@ export default function SiteFooter(): ReactNode {
         </Nav>
         <div className="d-flex flex-wrap align-items-center justify-content-center gap-3">
           <p className="glow-sm text-muted mb-0">
-            © 2026 {BAND_NAME} — {LEGAL_DISCLAIMER}
+            © {new Date().getFullYear()} {BAND_NAME} — {LEGAL_DISCLAIMER}
           </p>
-          {SOCIALS.map((social) => (
+          {SOCIALS.map((social: SocialLink) => (
             <a
               key={social.alt}
               className="d-inline-flex"

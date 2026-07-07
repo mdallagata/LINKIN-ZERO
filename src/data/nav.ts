@@ -3,10 +3,15 @@ export type NavLink = {
   href: string;
 };
 
-export const HOME_NAV_LINKS: NavLink[] = [
+export const NAV_LINKS: NavLink[] = [
+  { label: "Inicio", href: "/" },
   { label: "Miembros", href: "/members" },
   { label: "Shows", href: "/shows" },
   { label: "Contacto", href: "/#contacto" },
 ];
 
-export const SUBPAGE_NAV_LINKS: NavLink[] = [{ label: "Inicio", href: "/" }];
+export const HOME_NAV_LINKS: NavLink[] = [
+  { label: "Miembros", href: "/members" },
+  { label: "Shows", href: "/shows" },
+  { label: "Contacto", href: "/#contacto" },
+];

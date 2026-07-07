@@ -33,7 +33,7 @@ h1 {
 }
 
 .glow-sm {
-  text-shadow: 0 0 8px var(--brand);
+  text-shadow: 0 0 8px #fff;
 }
 
 .glow-box {
@@ -49,8 +49,11 @@ h1 {
 }
 
 .brand-hr {
-  border-top: 1px solid var(--brand);
+  border-top: 0;
+  height: 2px;
+  background: var(--brand);
   opacity: 1;
+  box-shadow: 0 0 10px var(--brand), 0 0 20px var(--brand);
 }
 
 .brand-dotted-border {

@@ -24,7 +24,7 @@ export default function SiteHeader({ links }: { links: NavLink[] }): ReactNode {
             link.href.startsWith("http") ? (
               <Nav.Link
                 key={link.href}
-                className="site-nav-link glow-hover text-brand p-0"
+                className="site-nav-link glow-hover text-white p-0"
                 href={link.href}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -35,7 +35,7 @@ export default function SiteHeader({ links }: { links: NavLink[] }): ReactNode {
               <Nav.Link
                 key={link.href}
                 as={Link}
-                className="site-nav-link glow-hover text-brand p-0"
+                className="site-nav-link glow-hover text-white p-0"
                 href={link.href}
               >
                 {link.label}

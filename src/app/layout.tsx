@@ -4,7 +4,7 @@ import { Anton } from "next/font/google";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./globals.css";
 import BackToTop from "@/components/BackToTop";
-import { BAND_NAME } from "@/data/band";
+import { BAND_NAME, BAND_TAGLINE, SITE_URL } from "@/data/band";
 
 const anton = Anton({
   subsets: ["latin"],
@@ -13,6 +13,7 @@ const anton = Anton({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
     default: `${BAND_NAME}`,
     template: `%s — ${BAND_NAME}`,
@@ -29,6 +30,28 @@ export const metadata: Metadata = {
     "banda tributo nu metal",
     "show en vivo contratación",
   ],
+  openGraph: {
+    title: BAND_NAME,
+    description: BAND_TAGLINE,
+    url: SITE_URL,
+    siteName: BAND_NAME,
+    locale: "es_AR",
+    type: "website",
+    images: [
+      {
+        url: "/icon.png",
+        width: 256,
+        height: 256,
+        alt: BAND_NAME,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary",
+    title: BAND_NAME,
+    description: BAND_TAGLINE,
+    images: ["/icon.png"],
+  },
 };
 
 export default function RootLayout({

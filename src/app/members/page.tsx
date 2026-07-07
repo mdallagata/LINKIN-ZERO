@@ -5,7 +5,7 @@ import FadeInSection from "@/components/FadeInSection";
 import MemberSection from "@/components/MemberSection";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
-import { BAND_NAME } from "@/data/band";
+import { BAND_NAME, BAND_TAGLINE } from "@/data/band";
 import { Member, MEMBERS } from "@/data/members";
 import { NAV_LINKS } from "@/data/nav";
 
@@ -14,6 +14,10 @@ export const metadata: Metadata = {
   description:
     `Conocé a los integrantes de ${BAND_NAME}: Lucas Sorroza (batería), Gustavo Monjes (bajo), ` +
     `Mariano Cruz (voz), Mauricio Dall'Agata (guitarra) y Exequiel Mleziva (voz/guitarra).`,
+  openGraph: {
+    title: `Miembros — ${BAND_NAME}`,
+    description: BAND_TAGLINE,
+  },
 };
 
 export default function MembersPage(): ReactNode {

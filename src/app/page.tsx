@@ -25,7 +25,7 @@ export default function Home(): ReactNode {
 
         <Container as="section" id="contacto" className="mb-5 pb-4" style={{ maxWidth: 960 }}>
           <h1 className="glow-lg text-decoration-underline mb-4">Contacto</h1>
-          <p className="glow-sm text-muted">
+          <p className="text-muted">
             ¿Querés contratarnos para tu evento o local?{" "}
             <a
               href={`mailto:${CONTACT_EMAIL}`}

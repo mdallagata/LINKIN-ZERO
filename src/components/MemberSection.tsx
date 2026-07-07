@@ -40,7 +40,7 @@ export default function MemberSection({
       md={7}
       className={`text-center ${reverse ? "text-md-end" : "text-md-start"}`}
     >
-      <h1 className="glow-lg mb-1">{name}</h1>
+      <h1 className="member-name glow-lg mb-1">{name}</h1>
       <p className="glow-sm text-brand mb-3">{role}</p>
       <p className="glow-sm text-muted">
         {bio}
@@ -58,7 +58,6 @@ export default function MemberSection({
           width={imageWidth}
           height={imageHeight}
           unoptimized={imageSrc.endsWith(".gif")}
-          style={{ maxHeight: 420, width: "auto" }}
         />
       ) : (
         <div className="placeholder-avatar">{initials(name)}</div>
@@ -70,7 +69,7 @@ export default function MemberSection({
     <Row
       as="article"
       className="align-items-center gy-4 mb-5 pb-4"
-      style={{ maxWidth: 960, margin: "0 auto" }}
+      style={{ maxWidth: 1100, margin: "0 auto" }}
     >
       {reverse ? (
         <>

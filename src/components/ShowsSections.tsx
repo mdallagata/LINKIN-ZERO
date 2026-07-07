@@ -47,6 +47,17 @@ function PastShowItem({ show, index }: { show: PastShow; index: number }) {
           </p>
         )}
         <ShowPhotos photos={show.photos} />
+        {show.embedUrl && (
+          <div className="mt-3 text-center">
+            <iframe
+              src={show.embedUrl}
+              width="100%"
+              height="480"
+              style={{ border: "none", borderRadius: 8, maxWidth: 500 }}
+              allowFullScreen
+            />
+          </div>
+        )}
         {show.detailsUrl && (
           <a
             href={show.detailsUrl}
@@ -64,7 +75,7 @@ function PastShowItem({ show, index }: { show: PastShow; index: number }) {
 
 export function UpcomingShowsSection(): ReactNode {
   return (
-    <Container as="section" id="fechas" className="mb-5 pb-4" style={{ maxWidth: 700 }}>
+    <Container as="section" id="fechas" className="mb-5 pb-4" style={{ maxWidth: 960 }}>
       <h1 className="glow-lg text-decoration-underline mb-4">Próximas Fechas</h1>
       {UPCOMING_SHOWS.length === 0 ? (
         <div className="placeholder-box">
@@ -116,7 +127,7 @@ export function LatestShowSection(): ReactNode {
   const latest = PAST_SHOWS[0];
   if (!latest) return null;
   return (
-    <Container as="section" id="ultimo-show" className="mb-5 pb-4" style={{ maxWidth: 700 }}>
+    <Container as="section" id="ultimo-show" className="mb-5 pb-4" style={{ maxWidth: 960 }}>
       <h1 className="glow-lg text-decoration-underline mb-4">Último Show</h1>
       <Accordion className="shows-accordion text-start">
         <PastShowItem show={latest} index={0} />
@@ -131,7 +142,7 @@ export function PastShowsSection(): ReactNode {
       as="section"
       id="shows-anteriores"
       className="mb-5 pb-4"
-      style={{ maxWidth: 700 }}
+      style={{ maxWidth: 960 }}
     >
       <h1 className="glow-lg text-decoration-underline mb-4">Shows Anteriores</h1>
       <Accordion className="shows-accordion text-start">

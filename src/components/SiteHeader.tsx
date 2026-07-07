@@ -9,17 +9,17 @@ import type { NavLink } from "@/data/nav";
 export default function SiteHeader({ links }: { links: NavLink[] }): ReactNode {
   return (
     <>
-      <nav className="pt-4">
+      <nav className="pt-3">
         <Link href="/" className="glow-hover text-decoration-none">
-          <div className="site-wordmark glow-lg text-brand">
+          <div className="site-wordmark glow-lg text-white">
             「 {BAND_NAME} 」
           </div>
         </Link>
       </nav>
 
-      <header className="w-100 px-3 pb-4 pb-md-5" style={{ maxWidth: 1400 }}>
-        <hr className="brand-hr" />
-        <Nav className="justify-content-center flex-wrap gap-3 gap-md-4 py-3">
+      <header className="w-100 px-3 pb-4 pb-md-5">
+        <hr className="brand-hr my-2" />
+        <Nav className="justify-content-center flex-wrap gap-4 gap-md-5 py-2">
           {links.map((link) =>
             link.href.startsWith("http") ? (
               <Nav.Link
@@ -43,7 +43,7 @@ export default function SiteHeader({ links }: { links: NavLink[] }): ReactNode {
             )
           )}
         </Nav>
-        <hr className="brand-hr" />
+        <hr className="brand-hr my-2" />
       </header>
     </>
   );

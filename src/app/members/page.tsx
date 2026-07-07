@@ -26,10 +26,15 @@ export default function MembersPage(): ReactNode {
       <SiteHeader links={NAV_LINKS} />
 
       <main className="w-100 px-3">
+        <Container className="text-center mb-4" style={{ maxWidth: 960 }}>
+          <h1 className="mb-1">Miembros</h1>
+          <div className="section-divider" />
+        </Container>
+
         <Container fluid>
           {MEMBERS.map((member: Member, i: number) => (
             <FadeInSection key={member.name}>
-              <MemberSection {...member} priority={i === 0} />
+              <MemberSection {...member} priority={i === 0} index={i} total={MEMBERS.length} />
             </FadeInSection>
           ))}
         </Container>

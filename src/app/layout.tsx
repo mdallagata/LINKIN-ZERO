@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import { Anton } from "next/font/google";
+import { Anton, Space_Grotesk, Space_Mono } from "next/font/google";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./globals.css";
 import BackToTop from "@/components/BackToTop";
@@ -10,6 +10,18 @@ const anton = Anton({
   subsets: ["latin"],
   weight: "400",
   variable: "--font-heading",
+});
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
+  variable: "--font-body",
+});
+
+const spaceMono = Space_Mono({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-mono",
 });
 
 export const metadata: Metadata = {
@@ -63,7 +75,7 @@ export default function RootLayout({
       <html
         lang="es"
         data-bs-theme="dark"
-        className={anton.variable}
+        className={`${anton.variable} ${spaceGrotesk.variable} ${spaceMono.variable}`}
       >
         <body className="d-flex flex-column min-vh-100 align-items-center">
         {children}

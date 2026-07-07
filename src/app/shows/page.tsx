@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import Container from "react-bootstrap/Container";
 import FadeInSection from "@/components/FadeInSection";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
@@ -24,6 +25,11 @@ export default function ShowsPage(): ReactNode {
       <SiteHeader links={NAV_LINKS} />
 
       <main className="w-100 px-3">
+        <Container className="text-center mb-4" style={{ maxWidth: 960 }}>
+          <h1 className="mb-1">Shows</h1>
+          <div className="section-divider" />
+        </Container>
+
         <FadeInSection>
           <UpcomingShowsSection />
         </FadeInSection>

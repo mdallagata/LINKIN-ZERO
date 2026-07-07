@@ -16,9 +16,8 @@ export default function Home(): ReactNode {
       <main className="w-100 px-3">
         <FadeInSection>
           <Container as="section" className="mb-5 pb-4" style={{ maxWidth: 960 }}>
-            <h1 className="mb-1">Sobre la banda</h1>
-            <div className="section-divider" />
-            <p className="glow-sm text-muted">
+
+            <p className="text-muted">
               {BAND_DESCRIPTION}
             </p>
           </Container>
@@ -34,7 +33,7 @@ export default function Home(): ReactNode {
 
         <FadeInSection>
           <Container as="section" id="contacto" className="mb-5 pb-4" style={{ maxWidth: 960 }}>
-            <h1 className="mb-1">Contacto</h1>
+            <h2 className="mb-1">Contacto</h2>
             <div className="section-divider" />
             <ContactForm />
           </Container>

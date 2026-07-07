@@ -28,8 +28,8 @@ const SOCIALS: SocialLink[] = [
     href: INSTAGRAM_URL,
     src: "/images/ig.jpg",
     alt: "Instagram",
-    width: 1920,
-    height: 1440,
+    width: 53,
+    height: 40,
   },
 ];
 
@@ -67,7 +67,6 @@ export default function SiteFooter(): ReactNode {
                 alt={social.alt}
                 width={social.width}
                 height={social.height}
-                style={{ height: 40, width: "auto" }}
               />
             </a>
           ))}

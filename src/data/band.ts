@@ -1,7 +1,7 @@
-export const BAND_NAME = "LINKIN ZERØ";
-export const BAND_TAGLINE = "Tributo a LINKIN PARK";
-export const CONTACT_EMAIL = "booking@linkinzero.example";
-export const INSTAGRAM_URL = "https://www.instagram.com/linkin.zero/";
+export const BAND_NAME: string = "LINKIN ZERØ";
+export const BAND_DESCRIPTION: string = "Somos una banda tributo a LINKIN PARK de San Miguel de Tucumán, Argentina, formada en diciembre de 2023. Buscamos ofrecer una experiencia fiel, potente y emocional, tanto en lo musical como en lo sonoro.";
+export const CONTACT_EMAIL: string = "booking@linkinzero.example";
+export const INSTAGRAM_URL: string = "https://www.instagram.com/linkin.zero/";
 
-export const LEGAL_DISCLAIMER =
+export const LEGAL_DISCLAIMER: string =
   "Tributo independiente. Sin afiliación con LINKIN PARK.";

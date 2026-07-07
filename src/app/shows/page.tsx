@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import type { ReactNode } from "react";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
 import { PastShowsSection, UpcomingShowsSection } from "@/components/ShowsSections";
@@ -9,7 +10,7 @@ export const metadata: Metadata = {
   title: `Shows — ${BAND_NAME}`,
 };
 
-export default function ShowsPage() {
+export default function ShowsPage(): ReactNode {
   return (
     <>
       <SiteHeader links={SUBPAGE_NAV_LINKS} />

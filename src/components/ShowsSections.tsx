@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode } from "react";
 import Image from "next/image";
 import Accordion from "react-bootstrap/Accordion";
 import Container from "react-bootstrap/Container";
@@ -32,7 +33,7 @@ function PastShowItem({ show, index }: { show: PastShow; index: number }) {
       <Accordion.Header>
         <div>
           <p className="glow-sm text-brand mb-0 fw-bold">{show.date}</p>
-          <p className="glow-sm mb-0" style={{ color: "rgb(174, 214, 214)" }}>
+          <p className="glow-sm text-muted mb-0">
             {show.event}
             <br />
             {show.venue} — {show.city}
@@ -41,7 +42,7 @@ function PastShowItem({ show, index }: { show: PastShow; index: number }) {
       </Accordion.Header>
       <Accordion.Body>
         {show.description && (
-          <p className="glow-sm" style={{ color: "rgb(174, 214, 214)" }}>
+          <p className="glow-sm text-muted">
             {show.description}
           </p>
         )}
@@ -61,7 +62,7 @@ function PastShowItem({ show, index }: { show: PastShow; index: number }) {
   );
 }
 
-export function UpcomingShowsSection() {
+export function UpcomingShowsSection(): ReactNode {
   return (
     <Container as="section" id="fechas" className="mb-5 pb-4" style={{ maxWidth: 700 }}>
       <h1 className="glow-lg text-decoration-underline mb-4">Próximas Fechas</h1>
@@ -87,14 +88,14 @@ export function UpcomingShowsSection() {
               <Accordion.Header>
                 <div>
                   <p className="glow-sm text-brand mb-0 fw-bold">{show.date}</p>
-                  <p className="glow-sm mb-0" style={{ color: "rgb(174, 214, 214)" }}>
+                  <p className="glow-sm text-muted mb-0">
                     {show.venue} — {show.city}
                   </p>
                 </div>
               </Accordion.Header>
               <Accordion.Body>
                 {show.description && (
-                  <p className="glow-sm" style={{ color: "rgb(174, 214, 214)" }}>
+                  <p className="glow-sm text-muted">
                     {show.description}
                   </p>
                 )}
@@ -111,7 +112,7 @@ export function UpcomingShowsSection() {
   );
 }
 
-export function LatestShowSection() {
+export function LatestShowSection(): ReactNode {
   const latest = PAST_SHOWS[0];
   if (!latest) return null;
   return (
@@ -124,7 +125,7 @@ export function LatestShowSection() {
   );
 }
 
-export function PastShowsSection() {
+export function PastShowsSection(): ReactNode {
   return (
     <Container
       as="section"

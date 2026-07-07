@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode } from "react";
 import Image from "next/image";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
@@ -33,7 +34,7 @@ export default function MemberSection({
   imageWidth,
   imageHeight,
   reverse = false,
-}: MemberSectionProps) {
+}: MemberSectionProps): ReactNode {
   const textCol = (
     <Col
       md={7}
@@ -41,7 +42,7 @@ export default function MemberSection({
     >
       <h1 className="glow-lg mb-1">{name}</h1>
       <p className="glow-sm text-brand mb-3">{role}</p>
-      <p className="glow-sm" style={{ color: "rgb(174, 214, 214)" }}>
+      <p className="glow-sm text-muted">
         {bio}
       </p>
     </Col>

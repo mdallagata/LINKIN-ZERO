@@ -1,11 +1,12 @@
 "use client";
 
+import type { ReactNode } from "react";
 import Link from "next/link";
 import Nav from "react-bootstrap/Nav";
-import { BAND_NAME, BAND_TAGLINE } from "@/data/band";
+import { BAND_NAME } from "@/data/band";
 import type { NavLink } from "@/data/nav";
 
-export default function SiteHeader({ links }: { links: NavLink[] }) {
+export default function SiteHeader({ links }: { links: NavLink[] }): ReactNode {
   return (
     <>
       <nav className="pt-4">
@@ -14,9 +15,6 @@ export default function SiteHeader({ links }: { links: NavLink[] }) {
             「 {BAND_NAME} 」
           </div>
         </Link>
-        <p className="glow-sm mt-2" style={{ color: "rgb(174, 214, 214)" }}>
-          {BAND_TAGLINE}
-        </p>
       </nav>
 
       <header className="w-100 px-3 pb-4 pb-md-5" style={{ maxWidth: 1400 }}>

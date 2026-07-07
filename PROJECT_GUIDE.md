@@ -24,9 +24,18 @@ A page that exports `metadata` **cannot** be a Client Component (Next.js require
 
 There's no Sass build step. The site's look (black background, cadetblue glow, monospace) is done by overriding Bootstrap 5.3's CSS variables (`--bs-body-bg`, `--bs-body-color`, `--bs-link-color`, etc.) plus a handful of custom utility classes, all in [src/app/globals.css](src/app/globals.css). See STYLEGUIDE.md for the actual tokens.
 
+## Propósito del sitio
+
+Este sitio es una **herramienta de publicidad y captación de contrataciones**. El foco principal es que productores, bares, organizadores de eventos y público de otras provincias puedan:
+- Ver quiénes somos (miembros)
+- Ver shows pasados y próximos
+- Contactarnos para contratarnos
+
+Cada decisión de contenido y layout debe responder a: **¿esto ayuda a vender un show?**
+
 ## Content
 
 This is a tribute-band site, not the real LINKIN PARK's — all editable content (band name/tagline, nav links, shows, member bios) lives in [src/data/](src/data/), currently filled with placeholders. When replacing placeholders with real content:
 
-- **Don't reuse real LINKIN PARK photos/logo assets** (`public/images/lpgif.gif`, `cbpic.jpg`, `mspic.jpg`, etc. — leftover from the original 2021 fan-page rewrite) as if they depicted this band's own members or branding. `MemberSection` falls back to a placeholder initials avatar when `imageSrc` is omitted; use that until real member photos exist.
+- `MemberSection` falls back to a placeholder initials avatar when `imageSrc` is omitted; use that until real member photos exist.
 - Keep the footer's tribute disclaimer (`LEGAL_DISCLAIMER` in `src/data/band.ts`) — this is a tribute act, not the official band, and the site shouldn't imply otherwise.

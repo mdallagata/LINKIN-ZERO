@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import type { ReactNode } from "react";
 import Container from "react-bootstrap/Container";
 import MemberSection from "@/components/MemberSection";
 import SiteFooter from "@/components/SiteFooter";
@@ -11,7 +12,7 @@ export const metadata: Metadata = {
   title: `Miembros — ${BAND_NAME}`,
 };
 
-export default function MembersPage() {
+export default function MembersPage(): ReactNode {
   return (
     <>
       <SiteHeader links={SUBPAGE_NAV_LINKS} />

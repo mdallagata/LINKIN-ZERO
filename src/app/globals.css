@@ -75,15 +75,6 @@ h3 {
   text-shadow: 0 0 10px var(--brand);
 }
 
-.social-icon-link {
-  display: inline-flex;
-  transition: filter 0.2s;
-}
-
-.social-icon-link:hover {
-  filter: drop-shadow(0 0 8px var(--brand));
-}
-
 .brand-hr {
   border-top: 0;
   height: 2px;
@@ -104,6 +95,9 @@ h3 {
 }
 
 .member-role {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
   font-family: var(--font-body), sans-serif;
   font-weight: 600;
   text-transform: uppercase;
@@ -136,6 +130,18 @@ h3 {
   height: 480px;
   object-fit: cover;
   display: block;
+}
+
+.member-instagram-link {
+  display: inline-flex;
+  color: var(--brand);
+  font-size: 1.4rem;
+  transition: color 0.2s, filter 0.2s;
+}
+
+.member-instagram-link:hover {
+  color: #fff;
+  filter: drop-shadow(0 0 8px var(--brand));
 }
 
 .site-hero {
@@ -298,6 +304,38 @@ h3 {
 
 .cta-badge a:hover {
   color: #fff;
+}
+
+.contact-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.contact-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  border: 1px solid var(--brand);
+  border-radius: 8px;
+  padding: 0.75rem 1.75rem;
+  color: #fff;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: clamp(0.85rem, 1.6vw, 1rem);
+  transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+}
+
+.contact-button svg {
+  font-size: 1.3rem;
+}
+
+.contact-button:hover {
+  background: var(--brand);
+  color: #000;
+  box-shadow: 0 0 16px var(--brand);
 }
 
 /* Show cards — replaces the old shows-accordion. Real, finished content

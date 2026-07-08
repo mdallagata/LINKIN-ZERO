@@ -4,17 +4,18 @@ import type { ReactNode } from "react";
 import Image from "next/image";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
+import { SiInstagram } from "react-icons/si";
 
 type MemberSectionProps = {
   name: string;
   role: string;
-  bio: string;
   imageSrc?: string;
   imageAlt?: string;
   imageWidth?: number;
   imageHeight?: number;
   reverse?: boolean;
   priority?: boolean;
+  instagramUrl?: string;
 };
 
 function initials(name: string): string {
@@ -29,13 +30,13 @@ function initials(name: string): string {
 export default function MemberSection({
   name,
   role,
-  bio,
   imageSrc,
   imageAlt,
   imageWidth,
   imageHeight,
   reverse = false,
   priority = false,
+  instagramUrl,
 }: MemberSectionProps): ReactNode {
   const textCol: ReactNode = (
     <Col
@@ -43,8 +44,20 @@ export default function MemberSection({
       className={`text-center ${reverse ? "text-md-end order-md-last" : "text-md-start"}`}
     >
       <h2 className="mb-1">{name}</h2>
-      <p className="member-role text-brand mb-3">{role}</p>
-      <p className="text-muted">{bio}</p>
+      <p className="member-role text-brand mb-0">
+        {role}
+        {instagramUrl && (
+          <a
+            href={instagramUrl}
+            className="member-instagram-link"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Instagram de ${name}`}
+          >
+            <SiInstagram aria-hidden />
+          </a>
+        )}
+      </p>
     </Col>
   );
 

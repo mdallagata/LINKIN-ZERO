@@ -35,7 +35,7 @@ export const PAST_SHOWS: PastShow[] = [
   {
     date: "8 de noviembre, 2025",
     venue: "Mendoza 1084",
-    city: "San Miguel de Tucumán, Argentina",
+    city: "Tucumán, Argentina",
     event: "OBSCENE FEST — Nü Sessions · VOL. I",
     description:
       "Tres tributos en una noche para revivir la era dorada del Nü Metal: P.O.R.N. (Korn), LINKIN ZERØ (Linkin Park) y Def Party (Deftones), más DJ set 2000s.",

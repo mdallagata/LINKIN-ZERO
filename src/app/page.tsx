@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import Container from "react-bootstrap/Container";
-import ContactForm from "@/components/ContactForm";
+import ContactButtons from "@/components/ContactButtons";
 import FadeInSection from "@/components/FadeInSection";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
@@ -32,7 +32,7 @@ export default function Home(): ReactNode {
           <Container as="section" id="contacto" className="mb-5 pb-4" style={{ maxWidth: 960 }}>
             <h2 className="mb-1">Contacto</h2>
             <div className="section-divider" />
-            <ContactForm />
+            <ContactButtons />
           </Container>
         </FadeInSection>
       </main>

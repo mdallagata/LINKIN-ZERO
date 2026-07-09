@@ -19,7 +19,12 @@ export default function Home(): ReactNode {
       <SiteHeader links={NAV_LINKS} heroImage="/images/show-hero.jpg" heroImagePosition="40%" />
 
       <main className="w-100 px-3 position-relative">
-        <div role="img" aria-label="Batería de LINKIN ZERØ en vivo" className="home-side-photo" />
+        <div role="img" aria-label="Batería de LINKIN ZERØ en vivo" className="home-side-photo">
+          <div className="home-side-photo__img" />
+        </div>
+        <div role="img" aria-label="Guitarra de LINKIN ZERØ en vivo" className="home-side-photo home-side-photo--left">
+          <div className="home-side-photo__img" />
+        </div>
 
         <Container
           as="section"

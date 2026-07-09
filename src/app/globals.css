@@ -139,24 +139,55 @@ h3 {
     bottom: 0;
     right: -1rem;
     width: 900px;
-    background:
-      linear-gradient(to bottom, black 0%, transparent 22%, transparent 78%, black 100%),
-      url("/images/bateria.jpg");
-    background-size: cover;
-    background-position: center, 60% center;
-    opacity: 0.25;
+    overflow: hidden;
     -webkit-mask-image: linear-gradient(to left, black 35%, transparent 100%);
     mask-image: linear-gradient(to left, black 35%, transparent 100%);
     pointer-events: none;
   }
 
-  .home-side-photo::after {
+  .home-side-photo__img {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(to bottom, black 0%, transparent 22%, transparent 78%, black 100%),
+      url("/images/bateria.jpg");
+    background-size: cover;
+    background-position: center, 60% center;
+    background-repeat: no-repeat;
+    opacity: 0.35;
+  }
+
+  .home-side-photo__img::after {
     content: "";
     position: absolute;
     inset: 0;
     background: var(--brand);
     mix-blend-mode: color;
-    opacity: 0.3;
+    opacity: 0.2;
+  }
+
+  .home-side-photo--left {
+    right: auto;
+    left: -1rem;
+    -webkit-mask-image: linear-gradient(to right, black 35%, transparent 100%);
+    mask-image: linear-gradient(to right, black 35%, transparent 100%);
+  }
+
+  .home-side-photo--left .home-side-photo__img {
+    background-image:
+      linear-gradient(to bottom, black 0%, transparent 22%, transparent 78%, black 100%),
+      url("/images/guitarra.jpg");
+    background-position: center, 60% center;
+  }
+
+  .home-side-photo__img--rotate {
+    inset: auto;
+    top: 50%;
+    left: 50%;
+    width: 140vh;
+    height: 140vh;
+    transform: translate(-50%, -50%) rotate(90deg);
+    background-size: cover, cover;
   }
 }
 

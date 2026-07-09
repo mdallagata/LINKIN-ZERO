@@ -1,9 +1,15 @@
 "use client";
 
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import { useEffect, useRef, useState } from "react";
 
-export default function FadeInSection({ children }: { children: ReactNode }): ReactNode {
+export default function FadeInSection({
+  children,
+  delay,
+}: {
+  children: ReactNode;
+  delay?: number;
+}): ReactNode {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState<boolean>(false);
 
@@ -23,8 +29,12 @@ export default function FadeInSection({ children }: { children: ReactNode }): Re
     return (): void => observer.disconnect();
   }, []);
 
+  const style: CSSProperties | undefined = delay !== undefined
+    ? { transitionDelay: `${delay}ms` }
+    : undefined;
+
   return (
-    <div ref={ref} className={`fade-in-section${visible ? " is-visible" : ""}`}>
+    <div ref={ref} className={`fade-in-section${visible ? " is-visible" : ""}`} style={style}>
       {children}
     </div>
   );

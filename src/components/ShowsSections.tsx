@@ -3,6 +3,7 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 import Container from "react-bootstrap/Container";
+import { SiInstagram } from "react-icons/si";
 import FadeInImage from "@/components/FadeInImage";
 import type { PastShow, PressLink, UpcomingShow } from "@/data/shows";
 import { PAST_SHOWS, UPCOMING_SHOWS } from "@/data/shows";
@@ -50,11 +51,12 @@ function PastShowCard({ show, featured = false }: { show: PastShow; featured?: b
         {show.embedUrl && (
           <a
             href={instagramPostUrl(show.embedUrl)}
-            className="glow-hover text-brand"
+            className="instagram-link"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Ver nuestra publicación en Instagram ↗
+            <SiInstagram aria-hidden />
+            Ver publicación
           </a>
         )}
         {show.pressLinks?.map((link: PressLink) => (

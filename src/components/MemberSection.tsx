@@ -1,7 +1,9 @@
 "use client";
 
 import type { ReactNode } from "react";
+import { useState } from "react";
 import Col from "react-bootstrap/Col";
+import Modal from "react-bootstrap/Modal";
 import Row from "react-bootstrap/Row";
 import { SiInstagram } from "react-icons/si";
 import FadeInImage from "@/components/FadeInImage";
@@ -38,6 +40,8 @@ export default function MemberSection({
   priority = false,
   instagramUrl,
 }: MemberSectionProps): ReactNode {
+  const [show, setShow] = useState<boolean>(false);
+
   const textCol: ReactNode = (
     <Col
       md={7}
@@ -64,17 +68,40 @@ export default function MemberSection({
   const imageCol: ReactNode = (
     <Col md={5} className={`text-center mb-4 mb-md-0 ${reverse ? "order-md-first" : ""}`}>
       {imageSrc ? (
-        <div className="member-photo-wrap">
-          <FadeInImage
-            className="member-photo"
-            src={imageSrc}
-            alt={imageAlt ?? name}
-            width={imageWidth}
-            height={imageHeight}
-            priority={priority}
-            unoptimized={imageSrc.endsWith(".gif")}
-          />
-        </div>
+        <>
+          <button
+            type="button"
+            className="member-photo-wrap photo-modal-trigger"
+            onClick={() => setShow(true)}
+            aria-label={`Ver foto completa de ${name}`}
+          >
+            <FadeInImage
+              className="member-photo"
+              src={imageSrc}
+              alt={imageAlt ?? name}
+              width={imageWidth}
+              height={imageHeight}
+              priority={priority}
+              unoptimized={imageSrc.endsWith(".gif")}
+            />
+          </button>
+
+          <Modal show={show} onHide={() => setShow(false)} centered size="xl" className="photo-modal">
+            <Modal.Header closeButton className="border-0 pb-0" />
+            <Modal.Body className="p-0 d-flex justify-content-center">
+              <FadeInImage
+                src={imageSrc}
+                alt={imageAlt ?? name}
+                width={imageWidth}
+                height={imageHeight}
+                className="h-auto"
+                style={{ maxHeight: "85vh", width: "100%", objectFit: "contain" }}
+                priority={priority}
+                unoptimized={imageSrc.endsWith(".gif")}
+              />
+            </Modal.Body>
+          </Modal>
+        </>
       ) : (
         <div className="placeholder-avatar">{initials(name)}</div>
       )}

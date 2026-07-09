@@ -33,7 +33,7 @@ export default function MembersPage(): ReactNode {
 
         <Container fluid>
           {MEMBERS.map((member: Member, i: number) => (
-            <FadeInSection key={member.name}>
+            <FadeInSection key={member.name} delay={i * 150}>
               <MemberSection {...member} priority={i === 0} />
             </FadeInSection>
           ))}

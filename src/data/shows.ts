@@ -25,8 +25,8 @@ export type PastShow = {
 };
 
 // Nombres de bandas invitadas/anfitrionas, reutilizados en varias descripciones.
-export const PORN_BAND_NAME = "PORN";
-export const BREAKPOINT_BAND_NAME = "BREAKPOINT";
+export const PORN_BAND_NAME: string = "PORN";
+export const BREAKPOINT_BAND_NAME: string = "BREAKPOINT";
 
 // Sin fechas confirmadas por el momento.
 export const UPCOMING_SHOWS: UpcomingShow[] = [];

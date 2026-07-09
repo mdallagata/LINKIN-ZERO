@@ -8,7 +8,7 @@ import FadeInImage from "@/components/FadeInImage";
 const ALT_TEXT = "Los integrantes de LINKIN ZERØ en Obscene Fest";
 
 export default function QuienesSomosPhoto(): ReactNode {
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState<boolean>(false);
 
   return (
     <>

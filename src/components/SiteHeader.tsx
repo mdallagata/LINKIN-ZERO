@@ -25,7 +25,7 @@ export default function SiteHeader({
   heroImagePosition?: string;
 }): ReactNode {
   const pathname = usePathname();
-  const [heroLoaded, setHeroLoaded] = useState(false);
+  const [heroLoaded, setHeroLoaded] = useState<boolean>(false);
 
   const heroClass = [
     "site-hero",

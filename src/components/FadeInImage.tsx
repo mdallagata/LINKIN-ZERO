@@ -1,6 +1,6 @@
 "use client";
 
-import type { ReactNode } from "react";
+import type { ReactNode, SyntheticEvent } from "react";
 import { useState } from "react";
 import Image from "next/image";
 import type { ImageProps } from "next/image";
@@ -15,7 +15,7 @@ export default function FadeInImage({
   onLoad,
   ...rest
 }: FadeInImageProps): ReactNode {
-  const [loaded, setLoaded] = useState(false);
+  const [loaded, setLoaded] = useState<boolean>(false);
 
   return (
     <Image
@@ -25,7 +25,7 @@ export default function FadeInImage({
         opacity: loaded ? 1 : 0,
         transition: `opacity ${fadeDuration}s ease-in`,
       }}
-      onLoad={(e) => {
+      onLoad={(e: SyntheticEvent<HTMLImageElement>) => {
         setLoaded(true);
         onLoad?.(e);
       }}

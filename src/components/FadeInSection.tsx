@@ -5,13 +5,13 @@ import { useEffect, useRef, useState } from "react";
 
 export default function FadeInSection({ children }: { children: ReactNode }): ReactNode {
   const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState<boolean>(false);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
     const observer = new IntersectionObserver(
-      ([entry]) => {
+      ([entry]: IntersectionObserverEntry[]) => {
         if (entry.isIntersecting) {
           setVisible(true);
           observer.unobserve(el);

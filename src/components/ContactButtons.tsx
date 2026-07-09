@@ -19,7 +19,7 @@ const CONTACT_LINKS: ContactLink[] = [
 export default function ContactButtons(): ReactNode {
   return (
     <div className="contact-buttons">
-      {CONTACT_LINKS.map(({ href, label, Icon }) => {
+      {CONTACT_LINKS.map(({ href, label, Icon }: ContactLink) => {
         const isExternal: boolean = href.startsWith("http");
         return (
           <a

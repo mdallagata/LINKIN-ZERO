@@ -1,7 +1,9 @@
 :root {
   --brand: #5f9ea0;
-  --ink-2: rgba(255, 255, 255, 0.7); /* neutral secondary text — not brand-tinted, so brand color stays meaningful */
-  --surface-2: #121212; /* card elevation, replaces "dotted border on transparent" for finished content */
+  --ink-2: rgba(255, 255, 255, 0.7);
+  /* neutral secondary text — not brand-tinted, so brand color stays meaningful */
+  --surface-2: #121212;
+  /* card elevation, replaces "dotted border on transparent" for finished content */
   --hairline: rgba(255, 255, 255, 0.12);
   --bs-body-bg: #000;
   --bs-body-color: #fff;
@@ -115,6 +117,39 @@ h3 {
   border: 1px solid var(--hairline);
 }
 
+.home-side-photo {
+  display: none;
+}
+
+@media (min-width: 1400px) {
+  .home-side-photo {
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: -1rem;
+    width: 900px;
+    background:
+      linear-gradient(to bottom, black 0%, transparent 22%, transparent 78%, black 100%),
+      url("/images/bateria.jpg");
+    background-size: cover;
+    background-position: center, 60% center;
+    opacity: 0.55;
+    -webkit-mask-image: linear-gradient(to left, black 35%, transparent 100%);
+    mask-image: linear-gradient(to left, black 35%, transparent 100%);
+    pointer-events: none;
+  }
+
+  .home-side-photo::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--brand);
+    mix-blend-mode: color;
+    opacity: 0.3;
+  }
+}
+
 .member-photo-wrap::after {
   content: "";
   position: absolute;
@@ -159,13 +194,13 @@ h3 {
   z-index: 0;
 }
 
-.site-hero > * {
+.site-hero>* {
   position: relative;
   z-index: 1;
 }
 
 .site-hero--photo {
-  min-height: 85vh;
+  min-height: 70vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -178,7 +213,7 @@ h3 {
 .site-hero--photo::before {
   background:
     linear-gradient(180deg, rgba(0, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0.75) 70%, #000 100%),
-    url("/images/show-hero.jpg") center 45% / cover no-repeat;
+    var(--hero-image, url("/images/show-hero.jpg")) center var(--hero-position, 45%) / cover no-repeat;
 }
 
 .site-hero--photo::after {
@@ -229,6 +264,77 @@ h3 {
   margin-right: auto;
   padding-left: 1rem;
   padding-right: 1rem;
+}
+
+.photo-modal-trigger {
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.quienes-somos-photo-wrap {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  max-width: 500px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--hairline);
+  margin-bottom: 1.5rem;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.quienes-somos-photo-wrap:hover {
+  border-color: var(--brand);
+}
+
+.quienes-somos-photo-wrap::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--brand);
+  mix-blend-mode: color;
+  opacity: 0.05;
+  pointer-events: none;
+}
+
+.photo-modal.modal.fade .modal-dialog {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease-out;
+  transform: scale(0.95);
+  opacity: 0;
+}
+
+.photo-modal.modal.show .modal-dialog {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.photo-modal .modal-header {
+  background: transparent;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 2;
+  border: none;
+  padding: 0.5rem;
+}
+
+.photo-modal .modal-header .btn-close {
+  filter: invert(1);
+  opacity: 0.8;
+}
+
+.photo-modal .modal-header .btn-close:hover,
+.photo-modal .modal-header .btn-close:focus {
+  opacity: 1;
+  box-shadow: none;
+}
+
+.quienes-somos-photo {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
 .site-nav-link {
@@ -357,6 +463,15 @@ h3 {
 .show-card--featured {
   border-color: var(--brand);
   padding: 1.75rem 2rem;
+}
+
+.show-badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--brand);
 }
 
 .form-control-focus-white:focus {

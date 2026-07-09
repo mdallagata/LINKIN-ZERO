@@ -1,6 +1,6 @@
 "use client";
 
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Nav from "react-bootstrap/Nav";
@@ -11,10 +11,14 @@ export default function SiteHeader({
   links,
   heroPhoto = false,
   heroCompact = false,
+  heroImage,
+  heroImagePosition,
 }: {
   links: NavLink[];
   heroPhoto?: boolean;
   heroCompact?: boolean;
+  heroImage?: string;
+  heroImagePosition?: string;
 }): ReactNode {
   const pathname = usePathname();
 
@@ -29,9 +33,16 @@ export default function SiteHeader({
 
   const wordmarkClass = `site-wordmark${heroPhoto ? " site-wordmark--glow" : ""}`;
 
+  const heroStyle: CSSProperties | undefined = heroImage || heroImagePosition
+    ? ({
+        ...(heroImage ? { "--hero-image": `url(${heroImage})` } : {}),
+        "--hero-position": heroImagePosition ?? "45%",
+      } as CSSProperties)
+    : undefined;
+
   return (
     <>
-      <div className={heroClass}>
+      <div className={heroClass} style={heroStyle}>
         <nav className="pt-3 pb-2">
           <Link href="/" className="text-decoration-none">
             <div className={wordmarkClass}>[ {BAND_NAME} ]</div>

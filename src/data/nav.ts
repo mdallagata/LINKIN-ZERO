@@ -9,9 +9,3 @@ export const NAV_LINKS: NavLink[] = [
   { label: "Shows", href: "/shows" },
   { label: "Contacto", href: "/#contacto" },
 ];
-
-export const HOME_NAV_LINKS: NavLink[] = [
-  { label: "Miembros", href: "/members" },
-  { label: "Shows", href: "/shows" },
-  { label: "Contacto", href: "/#contacto" },
-];

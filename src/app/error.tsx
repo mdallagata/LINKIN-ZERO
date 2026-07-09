@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 import Container from "react-bootstrap/Container";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
-import { HOME_NAV_LINKS } from "@/data/nav";
+import { NAV_LINKS } from "@/data/nav";
 
 export default function Error({
   error,
@@ -15,7 +15,7 @@ export default function Error({
 }): ReactNode {
   return (
     <>
-      <SiteHeader links={HOME_NAV_LINKS} />
+      <SiteHeader links={NAV_LINKS} />
 
       <main className="w-100 px-3">
         <Container as="section" className="mb-5 pb-4" style={{ maxWidth: 960 }}>

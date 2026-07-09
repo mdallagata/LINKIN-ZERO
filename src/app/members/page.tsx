@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   title: `Miembros — ${BAND_NAME}`,
   description:
     `Conocé a los integrantes de ${BAND_NAME}: Lucas Sorroza (batería), Gustavo Monjes (bajo), ` +
-    `Mariano Cruz (voz), Mauricio Dall'Agata (guitarra) y Exequiel Mleziva (voz/guitarra).`,
+    `Mariano Cruz (voz), Mauricio Dall'Agata (guitarra) y Exequiel Arias (voz/guitarra).`,
   openGraph: {
     title: `Miembros — ${BAND_NAME}`,
     description: BAND_TAGLINE,
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 export default function MembersPage(): ReactNode {
   return (
     <>
-      <SiteHeader links={NAV_LINKS} heroCompact />
+      <SiteHeader links={NAV_LINKS} heroPhoto heroImage="/images/members-hero.jpg" heroImagePosition="30%" />
 
       <main className="w-100 px-3">
         <Container className="text-center mb-4" style={{ maxWidth: 960 }}>

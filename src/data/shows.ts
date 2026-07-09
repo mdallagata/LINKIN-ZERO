@@ -25,13 +25,13 @@ export type PastShow = {
 };
 
 // Nombres de bandas invitadas/anfitrionas, reutilizados en varias descripciones.
-export const PORN_BAND_NAME: string = "PORN";
-export const BREAKPOINT_BAND_NAME: string = "BREAKPOINT";
+const PORN_BAND_NAME: string = "PORN";
+const BREAKPOINT_BAND_NAME: string = "BREAKPOINT";
 
 // Sin fechas confirmadas por el momento.
 export const UPCOMING_SHOWS: UpcomingShow[] = [];
 
-export const PAST_SHOWS: PastShow[] = [
+const PAST_SHOWS: PastShow[] = [
   {
     date: "19 de Junio, 2026",
     sortKey: "2026-06-19",

@@ -138,7 +138,7 @@ h3 {
     top: 0;
     bottom: 0;
     right: -1rem;
-    width: 900px;
+    width: 680px;
     overflow: hidden;
     -webkit-mask-image: linear-gradient(to left, black 35%, transparent 100%);
     mask-image: linear-gradient(to left, black 35%, transparent 100%);
@@ -152,9 +152,10 @@ h3 {
       linear-gradient(to bottom, black 0%, transparent 22%, transparent 78%, black 100%),
       url("/images/linkin-zero-34.jpg");
     background-size: cover;
-    background-position: center, 100% center;
+    background-position: center, 80% center;
     background-repeat: no-repeat;
     opacity: 0.35;
+    filter: grayscale(1) contrast(1.15);
   }
 
   .home-side-photo__img::after {
@@ -176,18 +177,9 @@ h3 {
   .home-side-photo--left .home-side-photo__img {
     background-image:
       linear-gradient(to bottom, black 0%, transparent 22%, transparent 78%, black 100%),
-      url("/images/mauricio-home.jpg");
-    background-position: center, 60% center;
-  }
-
-  .home-side-photo__img--rotate {
-    inset: auto;
-    top: 50%;
-    left: 50%;
-    width: 140vh;
-    height: 140vh;
-    transform: translate(-50%, -50%) rotate(90deg);
-    background-size: cover, cover;
+      url("/images/linkin-zero-7.jpg");
+    background-position: center, 55% center;
+    filter: none;
   }
 }
 
@@ -502,21 +494,6 @@ footer .brand-hr {
   color: var(--brand);
   box-shadow: 0 0 24px rgba(95, 158, 160, 0.35), inset 0 0 20px rgba(95, 158, 160, 0.08);
   background: rgba(95, 158, 160, 0.04);
-}
-
-.placeholder-avatar {
-  width: 220px;
-  height: 220px;
-  border-radius: 40%;
-  border: 1px solid var(--hairline);
-  background: var(--surface-2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 3rem;
-  font-weight: bold;
-  color: var(--brand);
-  margin: 0 auto;
 }
 
 .instagram-link {

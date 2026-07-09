@@ -34,6 +34,7 @@ main {
     opacity: 0;
     transform: translateY(8px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -93,7 +94,7 @@ h3 {
 .section-divider {
   width: 60px;
   height: 2px;
-  background: linear-gradient(90deg, var(--brand), var(--ink-2), var(--brand));
+  background: var(--brand);
   margin: 0.25rem auto 1.5rem;
   border-radius: 1px;
 }
@@ -264,12 +265,15 @@ footer .brand-hr {
 }
 
 @keyframes wordmark-breath {
-  0%, 100% {
+
+  0%,
+  100% {
     text-shadow:
       0 0 6px var(--brand),
       0 0 12px var(--brand),
       0 0 24px rgba(95, 158, 160, 0.4);
   }
+
   50% {
     text-shadow:
       0 0 10px var(--brand),
@@ -299,6 +303,7 @@ footer .brand-hr {
     opacity: 0;
     transform: translateY(6px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -317,10 +322,13 @@ footer .brand-hr {
 }
 
 @keyframes scroll-bounce {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateX(-50%) translateY(0);
     opacity: 0.5;
   }
+
   50% {
     transform: translateX(-50%) translateY(8px);
     opacity: 1;
@@ -564,18 +572,18 @@ footer .brand-hr {
   text-align: left;
   transition: background 0.3s;
   background: linear-gradient(var(--surface-2), var(--surface-2)) padding-box,
-              linear-gradient(var(--hairline), var(--hairline)) border-box;
+    linear-gradient(var(--hairline), var(--hairline)) border-box;
 }
 
 .show-card:hover {
   background: linear-gradient(var(--surface-2), var(--surface-2)) padding-box,
-              linear-gradient(90deg, var(--brand), var(--ink-2), var(--brand)) border-box;
+    linear-gradient(var(--brand), var(--brand)) border-box;
 }
 
 .show-card--featured {
   padding: 1.75rem 2rem;
   background: linear-gradient(var(--surface-2), var(--surface-2)) padding-box,
-              linear-gradient(90deg, var(--brand), var(--ink-2), var(--brand)) border-box;
+    linear-gradient(var(--brand), var(--brand)) border-box;
 }
 
 .show-badge {
@@ -650,8 +658,15 @@ footer .brand-hr {
 }
 
 @keyframes glow-pulse {
-  0%, 100% { box-shadow: 0 0 8px rgba(95, 158, 160, 0.3); }
-  50% { box-shadow: 0 0 24px rgba(95, 158, 160, 0.8); }
+
+  0%,
+  100% {
+    box-shadow: 0 0 8px rgba(95, 158, 160, 0.3);
+  }
+
+  50% {
+    box-shadow: 0 0 24px rgba(95, 158, 160, 0.8);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

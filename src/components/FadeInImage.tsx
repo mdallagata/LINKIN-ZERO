@@ -1,0 +1,34 @@
+"use client";
+
+import type { ReactNode } from "react";
+import { useState } from "react";
+import Image from "next/image";
+import type { ImageProps } from "next/image";
+
+type FadeInImageProps = ImageProps & {
+  fadeDuration?: number;
+};
+
+export default function FadeInImage({
+  fadeDuration = 0.4,
+  style,
+  onLoad,
+  ...rest
+}: FadeInImageProps): ReactNode {
+  const [loaded, setLoaded] = useState(false);
+
+  return (
+    <Image
+      {...rest}
+      style={{
+        ...style,
+        opacity: loaded ? 1 : 0,
+        transition: `opacity ${fadeDuration}s ease-in`,
+      }}
+      onLoad={(e) => {
+        setLoaded(true);
+        onLoad?.(e);
+      }}
+    />
+  );
+}

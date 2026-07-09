@@ -2,11 +2,11 @@ export type Member = {
   name: string;
   role: string;
   reverse: boolean;
-  imageSrc?: string;
-  imageAlt?: string;
-  imageWidth?: number;
-  imageHeight?: number;
-  instagramUrl?: string;
+  imageSrc: string;
+  imageAlt: string;
+  imageWidth: number;
+  imageHeight: number;
+  instagramUrl: string;
 };
 
 export const MEMBERS: Member[] = [

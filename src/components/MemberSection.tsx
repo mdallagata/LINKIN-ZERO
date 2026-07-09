@@ -1,10 +1,10 @@
 "use client";
 
 import type { ReactNode } from "react";
-import Image from "next/image";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import { SiInstagram } from "react-icons/si";
+import FadeInImage from "@/components/FadeInImage";
 
 type MemberSectionProps = {
   name: string;
@@ -65,7 +65,7 @@ export default function MemberSection({
     <Col md={5} className={`text-center mb-4 mb-md-0 ${reverse ? "order-md-first" : ""}`}>
       {imageSrc ? (
         <div className="member-photo-wrap">
-          <Image
+          <FadeInImage
             className="member-photo"
             src={imageSrc}
             alt={imageAlt ?? name}

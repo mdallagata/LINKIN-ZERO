@@ -1,9 +1,9 @@
 "use client";
 
 import type { ReactNode } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import Container from "react-bootstrap/Container";
+import FadeInImage from "@/components/FadeInImage";
 import type { PastShow, PressLink, UpcomingShow } from "@/data/shows";
 import { PAST_SHOWS, UPCOMING_SHOWS } from "@/data/shows";
 
@@ -12,7 +12,7 @@ function ShowPhotos({ photos }: { photos?: string[] }): ReactNode {
   return (
     <div className="d-flex flex-wrap gap-2 mt-3">
       {photos.map((photo: string) => (
-        <Image
+        <FadeInImage
           key={photo}
           src={photo}
           alt=""

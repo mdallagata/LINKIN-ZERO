@@ -1,11 +1,15 @@
 "use client";
 
-import type { CSSProperties, ReactNode } from "react";
+import type { ReactNode } from "react";
+import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Nav from "react-bootstrap/Nav";
 import { BAND_NAME, BAND_TAGLINE } from "@/data/band";
 import type { NavLink } from "@/data/nav";
+
+const DEFAULT_HERO = "/images/show-hero.jpg";
 
 export default function SiteHeader({
   links,
@@ -21,6 +25,7 @@ export default function SiteHeader({
   heroImagePosition?: string;
 }): ReactNode {
   const pathname = usePathname();
+  const [heroLoaded, setHeroLoaded] = useState(false);
 
   const heroClass = [
     "site-hero",
@@ -33,16 +38,29 @@ export default function SiteHeader({
 
   const wordmarkClass = `site-wordmark${heroPhoto ? " site-wordmark--glow" : ""}`;
 
-  const heroStyle: CSSProperties | undefined = heroImage || heroImagePosition
-    ? ({
-        ...(heroImage ? { "--hero-image": `url(${heroImage})` } : {}),
-        "--hero-position": heroImagePosition ?? "45%",
-      } as CSSProperties)
-    : undefined;
+  const activeHeroImage = heroImage || (heroPhoto ? DEFAULT_HERO : undefined);
+  const objectPosition = heroImagePosition ?? "45%";
 
   return (
     <>
-      <div className={heroClass} style={heroStyle}>
+      <div className={heroClass}>
+        {activeHeroImage && (
+          <Image
+            src={activeHeroImage}
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="hero-bg-image"
+            style={{
+              objectFit: "cover",
+              objectPosition,
+              opacity: heroLoaded ? 1 : 0,
+              transition: "opacity 0.5s ease-in",
+            }}
+            onLoad={() => setHeroLoaded(true)}
+          />
+        )}
         <nav className="pt-3 pb-2">
           <Link href="/" className="text-decoration-none">
             <div className={wordmarkClass}>[ {BAND_NAME} ]</div>

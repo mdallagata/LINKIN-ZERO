@@ -134,7 +134,7 @@ h3 {
       url("/images/bateria.jpg");
     background-size: cover;
     background-position: center, 60% center;
-    opacity: 0.55;
+    opacity: 0.25;
     -webkit-mask-image: linear-gradient(to left, black 35%, transparent 100%);
     mask-image: linear-gradient(to left, black 35%, transparent 100%);
     pointer-events: none;
@@ -191,7 +191,11 @@ h3 {
     radial-gradient(ellipse 80% 60% at 50% 30%, rgba(95, 158, 160, 0.06), transparent),
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120'%3E%3Cpath d='M0,60 C200,20 400,100 600,60 C800,20 1000,100 1200,60 L1200,0 L0,0 Z' fill='rgba(95,158,160,0.03)'/%3E%3C/svg%3E") center top / 100% 40px no-repeat;
   pointer-events: none;
-  z-index: 0;
+  z-index: 1;
+}
+
+.hero-bg-image {
+  z-index: 0 !important;
 }
 
 .site-hero>* {
@@ -211,9 +215,7 @@ h3 {
 }
 
 .site-hero--photo::before {
-  background:
-    linear-gradient(180deg, rgba(0, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0.75) 70%, #000 100%),
-    var(--hero-image, url("/images/show-hero.jpg")) center var(--hero-position, 45%) / cover no-repeat;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0.75) 70%, #000 100%);
 }
 
 .site-hero--photo::after {
@@ -224,7 +226,7 @@ h3 {
   mix-blend-mode: color;
   opacity: 0.15;
   pointer-events: none;
-  z-index: 0;
+  z-index: 1;
 }
 
 .site-hero--compact::after {
@@ -544,6 +546,11 @@ h3 {
     transition: none;
     opacity: 1;
     transform: none;
+  }
+
+  .hero-bg-image {
+    transition: none !important;
+    opacity: 1 !important;
   }
 
   .site-nav-link::after,

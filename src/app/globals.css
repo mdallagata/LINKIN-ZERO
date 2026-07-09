@@ -531,25 +531,25 @@ footer .brand-hr {
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
-  border: 1px solid transparent;
+  border: none;
   border-radius: 8px;
   padding: 0.75rem 1.75rem;
-  color: #fff;
-  font-weight: 600;
+  color: #000;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.04em;
   font-size: clamp(0.85rem, 1.6vw, 1rem);
-  transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
-  background: linear-gradient(#000, #000) padding-box,
-              linear-gradient(90deg, var(--brand), var(--ink-2), var(--brand)) border-box;
+  background: var(--brand);
+  transition: background-color 0.2s, box-shadow 0.2s;
 }
 
 .contact-button svg {
-  font-size: 1.3rem;
+  font-size: 1.5rem;
+  flex-shrink: 0;
 }
 
 .contact-button:hover {
-  background: var(--brand);
+  background: #fff;
   color: #000;
   box-shadow: 0 0 16px var(--brand);
 }

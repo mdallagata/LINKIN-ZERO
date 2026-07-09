@@ -17,11 +17,11 @@
     "react-icons": "^5.7.0"
   },
   "devDependencies": {
-    "@types/node": "^26",
+    "@types/node": "^24",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "eslint": "^10",
+    "eslint": "^9",
     "eslint-config-next": "16.2.10",
-    "typescript": "7.0.2"
+    "typescript": "^5"
   }
 }

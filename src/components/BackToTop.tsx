@@ -23,6 +23,8 @@ export default function BackToTop(): ReactNode {
       className={`back-to-top${visible ? " visible" : ""}`}
       onClick={scrollToTop}
       aria-label="Volver arriba"
+      aria-hidden={!visible}
+      tabIndex={visible ? 0 : -1}
       type="button"
     >
       ↑

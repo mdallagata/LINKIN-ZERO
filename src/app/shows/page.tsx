@@ -5,24 +5,33 @@ import FadeInSection from "@/components/FadeInSection";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
 import { PastShowsSection, UpcomingShowsSection } from "@/components/ShowsSections";
-import { BAND_NAME, BAND_TAGLINE } from "@/data/band";
+import { BAND_NAME, BAND_TAGLINE, OG_IMAGE, SITE_URL } from "@/data/band";
 import { NAV_LINKS } from "@/data/nav";
 
 export const metadata: Metadata = {
-  title: `Shows — ${BAND_NAME}`,
+  title: "Shows",
   description:
     `Shows pasados y próximos de ${BAND_NAME}. Vimos en Magic Music Box, Espacio Lola Mora ` +
     `(Septiembre Musical), Obscene Fest y más. Seguinos para conocer nuevas fechas.`,
   openGraph: {
     title: `Shows — ${BAND_NAME}`,
     description: BAND_TAGLINE,
+    url: `${SITE_URL}/shows`,
+    siteName: BAND_NAME,
+    locale: "es_AR",
+    type: "website",
+    images: [OG_IMAGE],
   },
 };
+
+// Revalida a diario: sin esto, el año del footer (new Date().getFullYear())
+// queda fijo en el HTML del último build hasta el próximo deploy.
+export const revalidate: number = 86400;
 
 export default function ShowsPage(): ReactNode {
   return (
     <>
-      <SiteHeader links={NAV_LINKS} heroPhoto heroImage="/images/shows-hero.jpg" heroImagePosition="30%" />
+      <SiteHeader links={NAV_LINKS} heroImage="/images/shows-hero.jpg" heroImagePosition="30%" />
 
       <main className="w-100 px-3">
         <Container className="text-center mb-4" style={{ maxWidth: 960 }}>

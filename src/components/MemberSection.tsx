@@ -16,7 +16,6 @@ type MemberSectionProps = {
   imageWidth: number;
   imageHeight: number;
   reverse?: boolean;
-  priority?: boolean;
   instagramUrl: string;
 };
 
@@ -28,7 +27,6 @@ export default function MemberSection({
   imageWidth,
   imageHeight,
   reverse = false,
-  priority = false,
   instagramUrl,
 }: MemberSectionProps): ReactNode {
   const [show, setShow] = useState<boolean>(false);
@@ -68,7 +66,7 @@ export default function MemberSection({
           alt={imageAlt}
           width={imageWidth}
           height={imageHeight}
-          priority={priority}
+          sizes="(min-width: 768px) 480px, 100vw"
         />
       </button>
 
@@ -82,7 +80,6 @@ export default function MemberSection({
             height={imageHeight}
             className="h-auto"
             style={{ maxHeight: "85vh", width: "100%", objectFit: "contain" }}
-            priority={priority}
           />
         </Modal.Body>
       </Modal>

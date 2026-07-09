@@ -8,3 +8,12 @@ export const WHATSAPP_URL: string = "https://wa.me/543816176275";
 
 export const LEGAL_DISCLAIMER: string =
   "Tributo independiente. Sin afiliación con LINKIN PARK.";
+
+// Imagen compartida por el openGraph de todas las páginas, para que compartir
+// cualquier link (no solo la home) muestre preview con foto en redes sociales.
+export const OG_IMAGE = {
+  url: "/icon.png",
+  width: 256,
+  height: 256,
+  alt: BAND_NAME,
+};

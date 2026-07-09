@@ -5,7 +5,7 @@ import Link from "next/link";
 import Container from "react-bootstrap/Container";
 import { SiInstagram } from "react-icons/si";
 import type { PastShow, PressLink, UpcomingShow } from "@/data/shows";
-import { PAST_SHOWS, UPCOMING_SHOWS } from "@/data/shows";
+import { SORTED_PAST_SHOWS, UPCOMING_SHOWS } from "@/data/shows";
 
 function instagramPostUrl(embedUrl: string): string {
   return embedUrl.replace(/\/embed\/?$/, "");
@@ -82,7 +82,7 @@ export function UpcomingShowsSection(): ReactNode {
 }
 
 export function LatestShowSection(): ReactNode {
-  const latest: PastShow | undefined = PAST_SHOWS[0];
+  const latest: PastShow | undefined = SORTED_PAST_SHOWS[0];
   if (!latest) return null;
   return (
     <Container
@@ -106,7 +106,7 @@ export function PastShowsSection(): ReactNode {
       <h2 className="mb-1">Shows Anteriores</h2>
       <div className="section-divider" />
       <div className="text-start">
-        {PAST_SHOWS.map((show: PastShow) => (
+        {SORTED_PAST_SHOWS.map((show: PastShow) => (
           <PastShowCard key={`${show.date}-${show.venue}`} show={show} />
         ))}
       </div>

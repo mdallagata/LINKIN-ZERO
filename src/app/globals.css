@@ -683,4 +683,24 @@ footer .brand-hr {
   .loading-spinner {
     animation-duration: 2.4s;
   }
+
+  main {
+    animation: none;
+  }
+
+  .hero-tagline--reveal .tagline-char {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .scroll-indicator {
+    animation: none;
+  }
+
+  .photo-modal .modal-dialog {
+    transition: none;
+    transform: none;
+    opacity: 1;
+  }
 }

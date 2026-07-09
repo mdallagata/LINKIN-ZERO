@@ -9,10 +9,14 @@ import { LatestShowSection, UpcomingShowsSection } from "@/components/ShowsSecti
 import { BAND_DESCRIPTION } from "@/data/band";
 import { NAV_LINKS } from "@/data/nav";
 
+// Revalida a diario: sin esto, el año del footer (new Date().getFullYear())
+// queda fijo en el HTML del último build hasta el próximo deploy.
+export const revalidate: number = 86400;
+
 export default function Home(): ReactNode {
   return (
     <>
-      <SiteHeader links={NAV_LINKS} heroPhoto heroImagePosition="40%" />
+      <SiteHeader links={NAV_LINKS} heroImage="/images/show-hero.jpg" heroImagePosition="40%" />
 
       <main className="w-100 px-3 position-relative">
         <div role="img" aria-label="Batería de LINKIN ZERØ en vivo" className="home-side-photo" />

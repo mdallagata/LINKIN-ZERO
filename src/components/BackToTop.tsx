@@ -6,12 +6,12 @@ import { useEffect, useState } from "react";
 export default function BackToTop(): ReactNode {
   const [visible, setVisible] = useState<boolean>(false);
 
-  useEffect(() => {
+  useEffect((): void | (() => void) => {
     function onScroll(): void {
       setVisible(window.scrollY > 300);
     }
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    return (): void => window.removeEventListener("scroll", onScroll);
   }, []);
 
   function scrollToTop(): void {

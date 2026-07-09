@@ -7,8 +7,8 @@ export default function FadeInSection({ children }: { children: ReactNode }): Re
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState<boolean>(false);
 
-  useEffect(() => {
-    const el = ref.current;
+  useEffect((): void | (() => void) => {
+    const el: HTMLDivElement | null = ref.current;
     if (!el) return;
     const observer = new IntersectionObserver(
       ([entry]: IntersectionObserverEntry[]) => {
@@ -20,7 +20,7 @@ export default function FadeInSection({ children }: { children: ReactNode }): Re
       { threshold: 0.15 }
     );
     observer.observe(el);
-    return () => observer.disconnect();
+    return (): void => observer.disconnect();
   }, []);
 
   return (

@@ -56,19 +56,6 @@ h3 {
   color: var(--ink-2) !important;
 }
 
-.glow-lg {
-  /* intentionally no text-shadow — permanent glow read as dated; headings carry
-     weight through size/type now, not effects. Kept as a no-op for old markup. */
-}
-
-.glow-sm {
-  /* same as .glow-lg — no-op, kept so existing markup doesn't need editing. */
-}
-
-.glow-box {
-  /* no-op — see .glow-lg. */
-}
-
 .glow-hover {
   transition: color 0.2s, text-shadow 0.2s;
 }
@@ -83,10 +70,6 @@ h3 {
   height: 2px;
   background: var(--brand);
   opacity: 1;
-}
-
-.brand-dotted-border {
-  border: 2px dotted var(--brand) !important;
 }
 
 .section-divider {
@@ -212,10 +195,6 @@ h3 {
   justify-content: center;
 }
 
-.site-hero--compact {
-  min-height: 36vh;
-}
-
 .site-hero--photo::before {
   background: linear-gradient(180deg, rgba(0, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0.75) 70%, #000 100%);
 }
@@ -229,10 +208,6 @@ h3 {
   opacity: 0.15;
   pointer-events: none;
   z-index: 1;
-}
-
-.site-hero--compact::after {
-  opacity: 0.3;
 }
 
 .site-wordmark {
@@ -303,14 +278,16 @@ h3 {
   pointer-events: none;
 }
 
+/* Misma curva y gesto que .fade-in-section (los textos de la página): entra
+   desde abajo con fade, solo que más pausado por ser una pieza protagónica. */
 .photo-modal.modal.fade .modal-dialog {
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease-out;
-  transform: scale(0.95);
+  transition: transform 0.9s ease-out, opacity 0.9s ease-out;
+  transform: translateY(20px);
   opacity: 0;
 }
 
 .photo-modal.modal.show .modal-dialog {
-  transform: scale(1);
+  transform: translateY(0);
   opacity: 1;
 }
 
@@ -397,25 +374,6 @@ h3 {
   margin: 0 auto;
 }
 
-.cta-badge {
-  display: inline-block;
-  border: 1px solid var(--brand);
-  border-radius: 8px;
-  padding: 0.75rem 1.5rem;
-  color: #fff;
-  font-size: clamp(0.9rem, 2vw, 1.1rem);
-}
-
-.cta-badge a {
-  color: var(--brand);
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
-
-.cta-badge a:hover {
-  color: #fff;
-}
-
 .contact-buttons {
   display: flex;
   flex-wrap: wrap;
@@ -478,11 +436,6 @@ h3 {
   color: var(--brand);
 }
 
-.form-control-focus-white:focus {
-  border-color: #fff !important;
-  box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.25) !important;
-}
-
 .fade-in-section {
   opacity: 0;
   transform: translateY(20px);
@@ -502,9 +455,9 @@ h3 {
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  border: 1px solid var(--brand);
-  background: rgba(0, 0, 0, 0.8);
-  color: var(--brand);
+  border: none;
+  background: var(--brand);
+  color: #000;
   font-size: 1.3rem;
   display: flex;
   align-items: center;
@@ -523,8 +476,8 @@ h3 {
 }
 
 .back-to-top:hover {
-  color: #fff;
-  border-color: #fff;
+  background: #fff;
+  color: #000;
   box-shadow: 0 0 12px var(--brand);
 }
 

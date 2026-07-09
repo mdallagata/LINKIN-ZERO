@@ -14,6 +14,8 @@ export type PressLink = {
 
 export type PastShow = {
   date: string;
+  /** Fecha en formato ISO (AAAA-MM-DD), solo para ordenar cronológicamente — `date` es el texto que se muestra. */
+  sortKey: string;
   venue: string;
   city: string;
   event: string;
@@ -31,10 +33,10 @@ export const BREAKPOINT_BAND_NAME: string = "BREAKPOINT";
 // Sin fechas confirmadas por el momento.
 export const UPCOMING_SHOWS: UpcomingShow[] = [];
 
-// Orden: el más reciente primero (PAST_SHOWS[0] es el que se muestra en "Último Show" en la home).
 export const PAST_SHOWS: PastShow[] = [
   {
-    date: "19 de junio, 2026",
+    date: "19 de Junio, 2026",
+    sortKey: "2026-06-19",
     venue: "Magic Music Box",
     city: "Tucumán, Argentina",
     event: "Noche Nu Metal",
@@ -43,7 +45,8 @@ export const PAST_SHOWS: PastShow[] = [
     embedUrl: "https://www.instagram.com/p/DaRebBYDFNT/embed",
   },
   {
-    date: "8 de noviembre, 2025",
+    date: "8 de Noviembre, 2025",
+    sortKey: "2025-11-08",
     venue: "Mendoza 1084",
     city: "Tucumán, Argentina",
     event: "OBSCENE FEST — Nü Sessions · VOL. I",
@@ -51,7 +54,8 @@ export const PAST_SHOWS: PastShow[] = [
     embedUrl: "https://www.instagram.com/p/DSYwsETDNQ8/embed",
   },
   {
-    date: "12 de septiembre, 2025",
+    date: "12 de Septiembre, 2025",
+    sortKey: "2025-09-12",
     venue: "Magic Music Box",
     city: "Tucumán, Argentina",
     event: "PROJEKT REVOLUTION",
@@ -59,7 +63,8 @@ export const PAST_SHOWS: PastShow[] = [
     embedUrl: "https://www.instagram.com/p/DO4zdAtjF5A/embed",
   },
   {
-    date: "5 de septiembre, 2025",
+    date: "5 de Septiembre, 2025",
+    sortKey: "2025-09-05",
     venue: "Espacio Lola Mora",
     city: "Tucumán, Argentina",
     event: "65° Septiembre Musical — NuMetal & Prog Night",
@@ -78,3 +83,8 @@ export const PAST_SHOWS: PastShow[] = [
     embedUrl: "https://www.instagram.com/p/DOXS0a2DDJ7/embed",
   },
 ];
+
+// PAST_SHOWS ordenado del más reciente al más antiguo por sortKey, no por
+// posición en el array — evita que un show cargado fuera de orden rompa
+// silenciosamente "Último Show" en la home.
+export const SORTED_PAST_SHOWS: PastShow[] = [...PAST_SHOWS].sort((a: PastShow, b: PastShow) => b.sortKey.localeCompare(a.sortKey));

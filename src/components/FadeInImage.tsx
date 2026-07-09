@@ -11,6 +11,7 @@ type FadeInImageProps = ImageProps & {
 
 export default function FadeInImage({
   fadeDuration = 0.4,
+  alt,
   style,
   onLoad,
   ...rest
@@ -20,6 +21,7 @@ export default function FadeInImage({
   return (
     <Image
       {...rest}
+      alt={alt}
       style={{
         ...style,
         opacity: loaded ? 1 : 0,

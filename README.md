@@ -1,6 +1,6 @@
 # LINKIN ZERØ
 
-Sitio web promocional de **LINKIN ZERØ**, una banda tributo a LINKIN PARK de Tucumán, Argentina, disponible para contrataciones en todo el país. El objetivo es que productores, bares, eventos y particulares de otras provincias nos conozcan y nos contraten.
+Sitio web promocional de **LINKIN ZERØ**, una banda tributo a LINKIN PARK de Tucumán, Argentina, disponible para contrataciones en todo el país. El objetivo es que productores, eventos y particulares de otras provincias nos conozcan y nos contraten.
 
 Empezó en 2021 como una página de fan sobre la banda real, mi primera página en HTML y CSS puro. En 2026 la revivimos migrándola a **Next.js 16** (App Router) + **React 19** + **TypeScript** + **react-bootstrap 5**, manteniendo la estética original (fondo negro, acentos cadetblue, tipografía monospace) y remodelando el contenido para una banda tributo real (ver rama `legacy` para la versión original sobre LINKIN PARK).
 

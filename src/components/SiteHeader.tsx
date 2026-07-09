@@ -14,27 +14,18 @@ const DEFAULT_HERO: string = "/images/show-hero.jpg";
 export default function SiteHeader({
   links,
   heroPhoto = false,
-  heroCompact = false,
   heroImage,
   heroImagePosition,
 }: {
   links: NavLink[];
   heroPhoto?: boolean;
-  heroCompact?: boolean;
   heroImage?: string;
   heroImagePosition?: string;
 }): ReactNode {
   const pathname: string = usePathname();
   const [heroLoaded, setHeroLoaded] = useState<boolean>(false);
 
-  const heroClass: string = [
-    "site-hero",
-    "w-100",
-    (heroPhoto || heroCompact) && "site-hero--photo",
-    heroCompact && "site-hero--compact",
-  ]
-    .filter(Boolean)
-    .join(" ");
+  const heroClass: string = ["site-hero", "w-100", heroPhoto && "site-hero--photo"].filter(Boolean).join(" ");
 
   const wordmarkClass: string = `site-wordmark${heroPhoto ? " site-wordmark--glow" : ""}`;
 

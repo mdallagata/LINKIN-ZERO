@@ -6,23 +6,21 @@ import PhotoShowcase from "@/components/PhotoShowcase";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
 import { LatestShowSection, UpcomingShowsSection } from "@/components/ShowsSections";
-import { BAND_DESCRIPTION } from "@/data/band";
+import { BAND_DESCRIPTION, DAILY_REVALIDATE_SECONDS } from "@/data/band";
 import { NAV_LINKS } from "@/data/nav";
 
-// Revalida a diario: sin esto, el año del footer (new Date().getFullYear())
-// queda fijo en el HTML del último build hasta el próximo deploy.
-export const revalidate: number = 86400;
+export const revalidate: number = DAILY_REVALIDATE_SECONDS;
 
 export default function Home(): ReactNode {
   return (
     <>
-      <SiteHeader links={NAV_LINKS} heroImage="/images/show-hero.jpg" heroImagePosition="40%" />
+      <SiteHeader links={NAV_LINKS} heroImage="/images/show-hero.jpg" heroImagePosition="60%" />
 
       <main className="w-100 px-3 position-relative">
         <div role="img" aria-label="Batería de LINKIN ZERØ en vivo" className="home-side-photo">
           <div className="home-side-photo__img" />
         </div>
-        <div role="img" aria-label="Guitarra de LINKIN ZERØ en vivo" className="home-side-photo home-side-photo--left">
+        <div role="img" aria-label="Público en un show de LINKIN ZERØ" className="home-side-photo home-side-photo--left">
           <div className="home-side-photo__img" />
         </div>
 
@@ -44,7 +42,7 @@ export default function Home(): ReactNode {
 
         <div className="section-gap">
           <FadeInSection>
-            <Container as="section" id="contacto" className="contact-section" style={{ maxWidth: 960 }}>
+            <Container as="section" id="contacto" className="contact-section container-narrow">
               <h2 className="mb-1">Contacto</h2>
               <div className="section-divider" />
               <ContactButtons />

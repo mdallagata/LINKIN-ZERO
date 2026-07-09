@@ -7,8 +7,14 @@ export default function BackToTop(): ReactNode {
   const [visible, setVisible] = useState<boolean>(false);
 
   useEffect((): void | (() => void) => {
+    let ticking = false;
     function onScroll(): void {
-      setVisible(window.scrollY > 300);
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame((): void => {
+        setVisible(window.scrollY > 300);
+        ticking = false;
+      });
     }
     window.addEventListener("scroll", onScroll, { passive: true });
     return (): void => window.removeEventListener("scroll", onScroll);

@@ -67,6 +67,15 @@ h3 {
   letter-spacing: 0.04em;
 }
 
+/* Variante de h1 solo para el código de error de la página 404. */
+.error-code {
+  font-size: clamp(4rem, 12vw, 8rem);
+}
+
+.error-subtitle {
+  font-size: clamp(1.2rem, 3vw, 1.5rem);
+}
+
 .text-brand {
   color: var(--brand) !important;
 }
@@ -88,6 +97,7 @@ h3 {
   border-top: 0;
   height: 2px;
   background: linear-gradient(90deg, var(--brand), var(--ink-2), var(--brand));
+  box-shadow: 0 0 8px var(--brand), 0 0 16px rgba(95, 158, 160, 0.4);
   opacity: 1;
 }
 
@@ -110,21 +120,42 @@ h3 {
   font-size: clamp(0.85rem, 1.8vw, 1.1rem);
 }
 
-.member-photo-wrap {
+.photo-trigger {
   position: relative;
   display: inline-block;
   width: 100%;
-  max-width: 480px;
   border-radius: 12px;
   overflow: hidden;
   border: 1px solid var(--hairline);
   cursor: pointer;
+}
+
+.photo-trigger::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--brand);
+  mix-blend-mode: color;
+  pointer-events: none;
+}
+
+.photo-trigger--member {
+  max-width: 480px;
   transition: box-shadow 0.3s, border-color 0.3s;
 }
 
-.member-photo-wrap:hover {
+.photo-trigger--member:hover {
   border-color: var(--brand);
   box-shadow: 0 0 20px rgba(95, 158, 160, 0.3);
+}
+
+.photo-trigger--member::after {
+  opacity: 0.3;
+  transition: opacity 0.3s;
+}
+
+.photo-trigger--member:hover::after {
+  opacity: 0.5;
 }
 
 .home-side-photo {
@@ -138,7 +169,7 @@ h3 {
     top: 0;
     bottom: 0;
     right: -1rem;
-    width: 680px;
+    width: 540px;
     overflow: hidden;
     -webkit-mask-image: linear-gradient(to left, black 35%, transparent 100%);
     mask-image: linear-gradient(to left, black 35%, transparent 100%);
@@ -150,7 +181,7 @@ h3 {
     inset: 0;
     background:
       linear-gradient(to bottom, black 0%, transparent 22%, transparent 78%, black 100%),
-      url("/images/linkin-zero-34.jpg");
+      url("/images/baterista-en-vivo.jpg");
     background-size: cover;
     background-position: center, 80% center;
     background-repeat: no-repeat;
@@ -177,27 +208,12 @@ h3 {
   .home-side-photo--left .home-side-photo__img {
     background-image:
       linear-gradient(to bottom, black 0%, transparent 22%, transparent 78%, black 100%),
-      url("/images/linkin-zero-7.jpg");
+      url("/images/publico-en-vivo.jpg");
     background-position: center, 55% center;
     filter: none;
   }
 }
 
-
-.member-photo-wrap::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: var(--brand);
-  mix-blend-mode: color;
-  opacity: 0.3;
-  pointer-events: none;
-  transition: opacity 0.3s;
-}
-
-.member-photo-wrap:hover::after {
-  opacity: 0.5;
-}
 
 .member-photo {
   width: 100%;
@@ -206,16 +222,19 @@ h3 {
   display: block;
 }
 
-.member-instagram-link {
+.icon-link {
   display: inline-flex;
   color: var(--brand);
-  font-size: 1.4rem;
   transition: color 0.2s, filter 0.2s;
 }
 
-.member-instagram-link:hover {
+.icon-link:hover {
   color: #fff;
   filter: drop-shadow(0 0 8px var(--brand));
+}
+
+.icon-link--member {
+  font-size: 1.4rem;
 }
 
 .site-hero {
@@ -238,19 +257,13 @@ h3 {
   z-index: 0 !important;
 }
 
-.site-hero .brand-hr,
-footer .brand-hr {
-  background: linear-gradient(90deg, var(--brand), var(--ink-2), var(--brand));
-  box-shadow: 0 0 8px var(--brand), 0 0 16px rgba(95, 158, 160, 0.4);
-}
-
 .site-hero>* {
   position: relative;
   z-index: 1;
 }
 
 .site-hero--photo {
-  min-height: 70vh;
+  min-height: 55vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -376,31 +389,18 @@ footer .brand-hr {
   padding: 0;
 }
 
-.photo-frame-wrap {
-  position: relative;
-  display: inline-block;
-  width: 100%;
+.photo-trigger--frame {
   max-width: 500px;
-  border-radius: 12px;
-  overflow: hidden;
-  border: 1px solid var(--hairline);
   margin-bottom: 1.5rem;
-  cursor: pointer;
   transition: border-color 0.2s;
 }
 
-.photo-frame-wrap:hover {
+.photo-trigger--frame:hover {
   border-color: var(--brand);
 }
 
-.photo-frame-wrap::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: var(--brand);
-  mix-blend-mode: color;
+.photo-trigger--frame::after {
   opacity: 0.05;
-  pointer-events: none;
 }
 
 /* Misma curva y gesto que .fade-in-section (los textos de la página): entra
@@ -496,26 +496,22 @@ footer .brand-hr {
   background: rgba(95, 158, 160, 0.04);
 }
 
-.instagram-link {
-  display: inline-flex;
+.icon-link--text {
   align-items: center;
   gap: 0.4rem;
-  color: var(--brand);
   font-weight: 600;
-  transition: color 0.2s, filter 0.2s;
 }
 
-.instagram-link:hover {
-  color: #fff;
-  filter: drop-shadow(0 0 8px var(--brand));
-}
-
-.instagram-link svg {
+.icon-link--text svg {
   font-size: 1.2rem;
 }
 
 .section-gap {
   margin-bottom: 7rem;
+}
+
+.container-narrow {
+  max-width: 960px;
 }
 
 .contact-section {

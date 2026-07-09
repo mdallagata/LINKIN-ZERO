@@ -48,6 +48,7 @@ const PAST_SHOWS: PastShow[] = [
     venue: "Mendoza 1084",
     city: "Tucumán, Argentina",
     event: "OBSCENE FEST — Nü Sessions · VOL. I",
+    invitedBy: PORN_BAND_NAME,
     description: `Tres tributos en una noche de Nü Metal: ${PORN_BAND_NAME} (Korn), LINKIN ZERØ (Linkin Park) y Def Party (Deftones), más DJ set de 2000s.`,
     embedUrl: "https://www.instagram.com/p/DSYwsETDNQ8/embed",
   },

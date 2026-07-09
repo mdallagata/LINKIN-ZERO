@@ -9,6 +9,10 @@ export const WHATSAPP_URL: string = "https://wa.me/543816176275";
 export const LEGAL_DISCLAIMER: string =
   "Tributo independiente. Sin afiliación con LINKIN PARK.";
 
+// Revalida a diario: sin esto, el año del footer (new Date().getFullYear())
+// queda fijo en el HTML del último build hasta el próximo deploy.
+export const DAILY_REVALIDATE_SECONDS: number = 86400;
+
 // Imagen compartida por el openGraph de todas las páginas, para que compartir
 // cualquier link (no solo la home) muestre preview con foto en redes sociales.
 export const OG_IMAGE = {

@@ -1,5 +1,3 @@
-"use client";
-
 import type { ReactNode } from "react";
 import Link from "next/link";
 import Container from "react-bootstrap/Container";
@@ -7,8 +5,10 @@ import { SiInstagram } from "react-icons/si";
 import type { PastShow, PressLink, UpcomingShow } from "@/data/shows";
 import { SORTED_PAST_SHOWS, UPCOMING_SHOWS } from "@/data/shows";
 
+const EMBED_SUFFIX_RE = /\/embed\/?$/;
+
 function instagramPostUrl(embedUrl: string): string {
-  return embedUrl.replace(/\/embed\/?$/, "");
+  return embedUrl.replace(EMBED_SUFFIX_RE, "");
 }
 
 function PastShowCard({ show, featured = false }: { show: PastShow; featured?: boolean }): ReactNode {
@@ -29,7 +29,7 @@ function PastShowCard({ show, featured = false }: { show: PastShow; featured?: b
         {show.embedUrl && (
           <a
             href={instagramPostUrl(show.embedUrl)}
-            className="instagram-link"
+            className="icon-link icon-link--text"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -49,7 +49,7 @@ function PastShowCard({ show, featured = false }: { show: PastShow; featured?: b
 
 export function UpcomingShowsSection(): ReactNode {
   return (
-    <Container as="section" id="fechas" className="mb-5 pb-4" style={{ maxWidth: 960 }}>
+    <Container as="section" id="fechas" className="mb-5 pb-4 container-narrow">
       <h2 className="mb-1 mt-5">Próximos Shows</h2>
       <div className="section-divider" />
       {UPCOMING_SHOWS.length === 0 ? (
@@ -88,8 +88,8 @@ export function LatestShowSection(): ReactNode {
     <Container
       as="section"
       id="ultimo-show"
-      className="pb-4"
-      style={{ maxWidth: 960, marginTop: "4.5rem", marginBottom: "4.5rem" }}
+      className="pb-4 container-narrow"
+      style={{ marginTop: "4.5rem", marginBottom: "4.5rem" }}
     >
       <h2 className="mb-1">Último Show</h2>
       <div className="section-divider" />
@@ -102,7 +102,7 @@ export function LatestShowSection(): ReactNode {
 
 export function PastShowsSection(): ReactNode {
   return (
-    <Container as="section" id="shows-anteriores" className="mb-5 pb-4" style={{ maxWidth: 960 }}>
+    <Container as="section" id="shows-anteriores" className="mb-5 pb-4 container-narrow">
       <h2 className="mb-1">Shows Anteriores</h2>
       <div className="section-divider" />
       <div className="text-start">

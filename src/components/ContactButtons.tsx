@@ -1,5 +1,3 @@
-"use client";
-
 import type { ComponentType, ReactNode } from "react";
 import { SiGmail, SiInstagram, SiWhatsapp } from "react-icons/si";
 import { CONTACT_EMAIL, INSTAGRAM_URL, WHATSAPP_URL } from "@/data/band";

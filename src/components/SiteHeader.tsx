@@ -35,71 +35,68 @@ export default function SiteHeader({
   const wordmarkClass: string = `site-wordmark${isPhotoHero ? " site-wordmark--glow" : ""}`;
   const objectPosition: string = `center ${heroImagePosition ?? "45%"}`;
 
-
   return (
-    <>
-      <div className={heroClass}>
-        {heroImage && (
-          <FadeInImage
-            src={heroImage}
-            alt=""
-            fill
-            preload
-            sizes="100vw"
-            className="hero-bg-image"
-            style={{ objectFit: "cover", objectPosition }}
-          />
-        )}
-        <nav className="pt-3 pb-2">
-          <Link href="/" className="text-decoration-none">
-            <div className={wordmarkClass}>[ {BAND_NAME} ]</div>
-          </Link>
-          <p className={`hero-tagline mb-0${isPhotoHero ? " hero-tagline--reveal" : ""}`}>
-            {isPhotoHero
-              ? BAND_TAGLINE.split("").map((char: string, i: number): ReactNode => {
-                const style: CSSProperties = {
-                  animationDelay: `${i * 0.04}s`,
-                };
-                return (
-                  <span key={i} className="tagline-char" style={style}>
-                    {char === " " ? "\u00A0" : char}
-                  </span>
-                );
-              })
-              : BAND_TAGLINE}
-          </p>
-        </nav>
-
-        <header className="w-100 px-3 pb-4 pb-md-5">
-          <hr className="brand-hr my-2" />
-          <Nav className="justify-content-center flex-wrap gap-4 gap-md-5 py-2">
-            {links.map((link: NavLink) => {
-              const isActive: boolean = link.href === pathname || (link.href !== "/" && pathname.startsWith(link.href));
+    <div className={heroClass}>
+      {heroImage && (
+        <FadeInImage
+          src={heroImage}
+          alt=""
+          fill
+          preload
+          sizes="100vw"
+          className="hero-bg-image"
+          style={{ objectFit: "cover", objectPosition }}
+        />
+      )}
+      <nav className="pt-3 pb-2">
+        <Link href="/" className="text-decoration-none">
+          <div className={wordmarkClass}>[ {BAND_NAME} ]</div>
+        </Link>
+        <p className={`hero-tagline mb-0${isPhotoHero ? " hero-tagline--reveal" : ""}`}>
+          {isPhotoHero
+            ? BAND_TAGLINE.split("").map((char: string, i: number): ReactNode => {
+              const style: CSSProperties = {
+                animationDelay: `${i * 0.04}s`,
+              };
               return (
-                <Nav.Link
-                  key={link.href}
-                  as={Link}
-                  className="site-nav-link text-white p-0"
-                  href={link.href}
-                  onClick={(e: MouseEvent<HTMLAnchorElement>): void => handleNavClick(e, link.href)}
-                  aria-current={isActive ? "page" : undefined}
-                  aria-label={link.label}
-                >
-                  {link.label}
-                </Nav.Link>
+                <span key={i} className="tagline-char" style={style}>
+                  {char === " " ? " " : char}
+                </span>
               );
-            })}
-          </Nav>
-          <hr className="brand-hr my-2" />
-        </header>
-        {isPhotoHero && (
-          <div className="scroll-indicator" aria-hidden="true">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M6 9l6 6 6-6" />
-            </svg>
-          </div>
-        )}
-      </div>
-    </>
+            })
+            : BAND_TAGLINE}
+        </p>
+      </nav>
+
+      <header className="w-100 px-3 pb-4 pb-md-5">
+        <hr className="brand-hr my-2" />
+        <Nav className="justify-content-center flex-wrap gap-4 gap-md-5 py-2">
+          {links.map((link: NavLink) => {
+            const isActive: boolean = link.href === pathname || (link.href !== "/" && pathname.startsWith(link.href));
+            return (
+              <Nav.Link
+                key={link.href}
+                as={Link}
+                className="site-nav-link text-white p-0"
+                href={link.href}
+                onClick={(e: MouseEvent<HTMLAnchorElement>): void => handleNavClick(e, link.href)}
+                aria-current={isActive ? "page" : undefined}
+                aria-label={link.label}
+              >
+                {link.label}
+              </Nav.Link>
+            );
+          })}
+        </Nav>
+        <hr className="brand-hr my-2" />
+      </header>
+      {isPhotoHero && (
+        <div className="scroll-indicator" aria-hidden="true">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M6 9l6 6 6-6" />
+          </svg>
+        </div>
+      )}
+    </div>
   );
 }

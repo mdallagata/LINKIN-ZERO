@@ -5,7 +5,7 @@ import FadeInSection from "@/components/FadeInSection";
 import MemberSection from "@/components/MemberSection";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
-import { BAND_NAME, BAND_TAGLINE, OG_IMAGE, SITE_URL } from "@/data/band";
+import { BAND_NAME, BAND_TAGLINE, DAILY_REVALIDATE_SECONDS, OG_IMAGE, SITE_URL } from "@/data/band";
 import { Member, MEMBERS } from "@/data/members";
 import { NAV_LINKS } from "@/data/nav";
 
@@ -25,9 +25,7 @@ export const metadata: Metadata = {
   },
 };
 
-// Revalida a diario: sin esto, el año del footer (new Date().getFullYear())
-// queda fijo en el HTML del último build hasta el próximo deploy.
-export const revalidate = 86400;
+export const revalidate = DAILY_REVALIDATE_SECONDS;
 
 export default function MembersPage(): ReactNode {
   return (
@@ -35,7 +33,7 @@ export default function MembersPage(): ReactNode {
       <SiteHeader links={NAV_LINKS} heroImage="/images/members-hero.jpg" heroImagePosition="30%" />
 
       <main className="w-100 px-3">
-        <Container className="text-center mb-4" style={{ maxWidth: 960 }}>
+        <Container className="text-center mb-4 container-narrow">
           <h1 className="mb-1">Miembros</h1>
           <div className="section-divider" />
         </Container>

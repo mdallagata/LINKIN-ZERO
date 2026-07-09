@@ -18,7 +18,7 @@ export default function Error({
       <SiteHeader links={NAV_LINKS} />
 
       <main className="w-100 px-3">
-        <Container as="section" className="mb-5 pb-4" style={{ maxWidth: 960 }}>
+        <Container as="section" className="mb-5 pb-4 container-narrow">
           <h1 className="mb-1">Algo salió mal</h1>
           <div className="section-divider" />
           <p className="text-muted">

@@ -11,23 +11,14 @@ import FadeInImage from "@/components/FadeInImage";
 type MemberSectionProps = {
   name: string;
   role: string;
-  imageSrc?: string;
-  imageAlt?: string;
-  imageWidth?: number;
-  imageHeight?: number;
+  imageSrc: string;
+  imageAlt: string;
+  imageWidth: number;
+  imageHeight: number;
   reverse?: boolean;
   priority?: boolean;
-  instagramUrl?: string;
+  instagramUrl: string;
 };
-
-function initials(name: string): string {
-  return name
-    .split(" ")
-    .map((word: string): string => word[0])
-    .join("")
-    .slice(0, 2)
-    .toUpperCase();
-}
 
 export default function MemberSection({
   name,
@@ -50,61 +41,51 @@ export default function MemberSection({
       <h2 className="mb-1">{name}</h2>
       <p className="member-role text-brand mb-0">
         {role}
-        {instagramUrl && (
-          <a
-            href={instagramUrl}
-            className="member-instagram-link"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={`Instagram de ${name}`}
-          >
-            <SiInstagram aria-hidden />
-          </a>
-        )}
+        <a
+          href={instagramUrl}
+          className="member-instagram-link"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`Instagram de ${name}`}
+        >
+          <SiInstagram aria-hidden />
+        </a>
       </p>
     </Col>
   );
 
   const imageCol: ReactNode = (
     <Col md={5} className={`text-center mb-4 mb-md-0 ${reverse ? "order-md-first" : ""}`}>
-      {imageSrc ? (
-        <>
-          <button
-            type="button"
-            className="member-photo-wrap photo-modal-trigger"
-            onClick={() => setShow(true)}
-            aria-label={`Ver foto completa de ${name}`}
-          >
-            <FadeInImage
-              className="member-photo"
-              src={imageSrc}
-              alt={imageAlt ?? name}
-              width={imageWidth}
-              height={imageHeight}
-              priority={priority}
-              unoptimized={imageSrc.endsWith(".gif")}
-            />
-          </button>
+      <button
+        type="button"
+        className="member-photo-wrap photo-modal-trigger"
+        onClick={() => setShow(true)}
+        aria-label={`Ver foto completa de ${name}`}
+      >
+        <FadeInImage
+          className="member-photo"
+          src={imageSrc}
+          alt={imageAlt}
+          width={imageWidth}
+          height={imageHeight}
+          priority={priority}
+        />
+      </button>
 
-          <Modal show={show} onHide={() => setShow(false)} centered size="xl" className="photo-modal">
-            <Modal.Header closeButton className="border-0 pb-0" />
-            <Modal.Body className="p-0 d-flex justify-content-center">
-              <FadeInImage
-                src={imageSrc}
-                alt={imageAlt ?? name}
-                width={imageWidth}
-                height={imageHeight}
-                className="h-auto"
-                style={{ maxHeight: "85vh", width: "100%", objectFit: "contain" }}
-                priority={priority}
-                unoptimized={imageSrc.endsWith(".gif")}
-              />
-            </Modal.Body>
-          </Modal>
-        </>
-      ) : (
-        <div className="placeholder-avatar">{initials(name)}</div>
-      )}
+      <Modal show={show} onHide={() => setShow(false)} centered size="xl" className="photo-modal">
+        <Modal.Header closeButton className="border-0 pb-0" />
+        <Modal.Body className="p-0 d-flex justify-content-center">
+          <FadeInImage
+            src={imageSrc}
+            alt={imageAlt}
+            width={imageWidth}
+            height={imageHeight}
+            className="h-auto"
+            style={{ maxHeight: "85vh", width: "100%", objectFit: "contain" }}
+            priority={priority}
+          />
+        </Modal.Body>
+      </Modal>
     </Col>
   );
 

@@ -25,6 +25,23 @@ body {
   overflow-x: hidden;
 }
 
+main {
+  animation: page-fade-in 0.4s ease-out;
+}
+
+@keyframes page-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+
 /* Type scale — one h1 per page (page title), h2 for recurring section headings,
    h3 for card-level headings. Anton is display-only (single weight, gets cramped
    below ~28px); Space Grotesk carries small headings and all UI/body text. */
@@ -69,14 +86,14 @@ h3 {
 .brand-hr {
   border-top: 0;
   height: 2px;
-  background: var(--brand);
+  background: linear-gradient(90deg, var(--brand), var(--ink-2), var(--brand));
   opacity: 1;
 }
 
 .section-divider {
   width: 60px;
   height: 2px;
-  background: var(--brand);
+  background: linear-gradient(90deg, var(--brand), var(--ink-2), var(--brand));
   margin: 0.25rem auto 1.5rem;
   border-radius: 1px;
 }
@@ -196,6 +213,12 @@ h3 {
   z-index: 0 !important;
 }
 
+.site-hero .brand-hr,
+footer .brand-hr {
+  background: linear-gradient(90deg, var(--brand), var(--ink-2), var(--brand));
+  box-shadow: 0 0 8px var(--brand), 0 0 16px rgba(95, 158, 160, 0.4);
+}
+
 .site-hero>* {
   position: relative;
   z-index: 1;
@@ -206,6 +229,7 @@ h3 {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding-top: 4rem;
 }
 
 .site-hero--photo::before {
@@ -228,6 +252,7 @@ h3 {
   font-size: clamp(3rem, 9vw, 6.5rem);
   letter-spacing: 0.02em;
   color: #fff;
+  margin-top: -1.5rem;
 }
 
 .site-wordmark--glow {
@@ -261,6 +286,45 @@ h3 {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   margin-top: 0;
+  padding-bottom: 2rem;
+}
+
+.hero-tagline--reveal .tagline-char {
+  display: inline;
+  animation: char-reveal 0.3s ease-out both;
+}
+
+@keyframes char-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.scroll-indicator {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255, 255, 255, 0.5);
+  animation: scroll-bounce 2s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 2;
+}
+
+@keyframes scroll-bounce {
+  0%, 100% {
+    transform: translateX(-50%) translateY(0);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translateX(-50%) translateY(8px);
+    opacity: 1;
+  }
 }
 
 .hero-description {
@@ -381,6 +445,16 @@ h3 {
   transform: scaleX(1);
 }
 
+.site-nav-link:hover::after {
+  background: #fff;
+  box-shadow: 0 0 8px #fff;
+}
+
+.site-nav-link[aria-current="page"]::after {
+  background: var(--brand);
+  box-shadow: 0 0 8px var(--brand), 0 0 16px rgba(95, 158, 160, 0.4);
+}
+
 .placeholder-box {
   border: 2px solid var(--brand);
   border-radius: 10px;
@@ -423,6 +497,29 @@ h3 {
   font-size: 1.2rem;
 }
 
+.section-gap {
+  margin-bottom: 7rem;
+}
+
+.contact-section {
+  position: relative;
+  padding: 2rem 1.5rem 2rem 2.5rem;
+  background: rgba(95, 158, 160, 0.04);
+  border-radius: 0 12px 12px 0;
+}
+
+.contact-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(180deg, var(--brand), var(--ink-2));
+  border-radius: 2px;
+  box-shadow: 0 0 10px var(--brand);
+}
+
 .contact-buttons {
   display: flex;
   flex-wrap: wrap;
@@ -434,7 +531,7 @@ h3 {
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
-  border: 1px solid var(--brand);
+  border: 1px solid transparent;
   border-radius: 8px;
   padding: 0.75rem 1.75rem;
   color: #fff;
@@ -443,6 +540,8 @@ h3 {
   letter-spacing: 0.04em;
   font-size: clamp(0.85rem, 1.6vw, 1rem);
   transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+  background: linear-gradient(#000, #000) padding-box,
+              linear-gradient(90deg, var(--brand), var(--ink-2), var(--brand)) border-box;
 }
 
 .contact-button svg {
@@ -458,22 +557,25 @@ h3 {
 /* Show cards — replaces the old shows-accordion. Real, finished content
    (past shows) is always visible, no click required to see the proof. */
 .show-card {
-  background: var(--surface-2);
-  border: 1px solid var(--hairline);
+  border: 1px solid transparent;
   border-radius: 10px;
   padding: 1.25rem 1.5rem;
   margin-bottom: 1rem;
   text-align: left;
-  transition: border-color 0.3s;
+  transition: background 0.3s;
+  background: linear-gradient(var(--surface-2), var(--surface-2)) padding-box,
+              linear-gradient(var(--hairline), var(--hairline)) border-box;
 }
 
 .show-card:hover {
-  border-color: var(--brand);
+  background: linear-gradient(var(--surface-2), var(--surface-2)) padding-box,
+              linear-gradient(90deg, var(--brand), var(--ink-2), var(--brand)) border-box;
 }
 
 .show-card--featured {
-  border-color: var(--brand);
   padding: 1.75rem 2rem;
+  background: linear-gradient(var(--surface-2), var(--surface-2)) padding-box,
+              linear-gradient(90deg, var(--brand), var(--ink-2), var(--brand)) border-box;
 }
 
 .show-badge {
@@ -533,9 +635,10 @@ h3 {
 .loading-spinner {
   width: 48px;
   height: 48px;
-  border: 3px solid var(--brand);
-  border-top-color: transparent;
   border-radius: 50%;
+  background: conic-gradient(from 0deg, var(--brand), var(--ink-2), var(--brand));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #fff calc(100% - 3px));
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #fff calc(100% - 3px));
   animation: spin 0.8s linear infinite, glow-pulse 1.6s ease-in-out infinite;
   box-shadow: 0 0 12px rgba(95, 158, 160, 0.4);
 }

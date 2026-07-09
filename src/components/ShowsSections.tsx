@@ -4,29 +4,8 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 import Container from "react-bootstrap/Container";
 import { SiInstagram } from "react-icons/si";
-import FadeInImage from "@/components/FadeInImage";
 import type { PastShow, PressLink, UpcomingShow } from "@/data/shows";
 import { PAST_SHOWS, UPCOMING_SHOWS } from "@/data/shows";
-
-function ShowPhotos({ photos }: { photos?: string[] }): ReactNode {
-  if (!photos || photos.length === 0) return null;
-  return (
-    <div className="d-flex flex-wrap gap-2 mt-3">
-      {photos.map((photo: string) => (
-        <FadeInImage
-          key={photo}
-          src={photo}
-          alt=""
-          width={160}
-          height={160}
-          className="rounded"
-          loading="lazy"
-          style={{ objectFit: "cover", height: 120, width: 120 }}
-        />
-      ))}
-    </div>
-  );
-}
 
 function instagramPostUrl(embedUrl: string): string {
   return embedUrl.replace(/\/embed\/?$/, "");
@@ -46,7 +25,6 @@ function PastShowCard({ show, featured = false }: { show: PastShow; featured?: b
         {show.venue} — {show.city}
       </p>
       {show.description && <p className="text-muted mt-3">{show.description}</p>}
-      <ShowPhotos photos={show.photos} />
       <div className="d-flex flex-wrap gap-3 mt-3">
         {show.embedUrl && (
           <a
@@ -92,7 +70,6 @@ export function UpcomingShowsSection(): ReactNode {
                 {show.venue} — {show.city}
               </h3>
               {show.description && <p className="text-muted">{show.description}</p>}
-              <ShowPhotos photos={show.photos} />
               <a href={show.ticketUrl} className="glow-hover text-brand d-inline-block mt-3">
                 Entradas →
               </a>

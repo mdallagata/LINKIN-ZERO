@@ -4,7 +4,6 @@ export type UpcomingShow = {
   city: string;
   ticketUrl: string;
   description?: string;
-  photos?: string[];
 };
 
 export type PressLink = {
@@ -22,7 +21,6 @@ export type PastShow = {
   invitedBy?: string;
   pressLinks?: PressLink[];
   description?: string;
-  photos?: string[];
   embedUrl?: string;
 };
 

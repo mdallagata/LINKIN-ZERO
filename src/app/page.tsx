@@ -19,7 +19,8 @@ export default function Home(): ReactNode {
 
         <Container
           as="section"
-          style={{ maxWidth: 700, marginBottom: "4.5rem" }}
+          className="section-gap"
+          style={{ maxWidth: 700 }}
         >
           <h1 className="mb-1">¿Quiénes somos?</h1>
           <div className="section-divider" />
@@ -27,21 +28,27 @@ export default function Home(): ReactNode {
           <p className="hero-description mb-0">{BAND_DESCRIPTION}</p>
         </Container>
 
-        <FadeInSection>
-          <UpcomingShowsSection />
-        </FadeInSection>
+        <div className="section-gap">
+          <FadeInSection>
+            <Container as="section" id="contacto" className="contact-section" style={{ maxWidth: 960 }}>
+              <h2 className="mb-1">Contacto</h2>
+              <div className="section-divider" />
+              <ContactButtons />
+            </Container>
+          </FadeInSection>
+        </div>
 
-        <FadeInSection>
-          <LatestShowSection />
-        </FadeInSection>
+        <div className="section-gap">
+          <FadeInSection>
+            <UpcomingShowsSection />
+          </FadeInSection>
+        </div>
 
-        <FadeInSection>
-          <Container as="section" id="contacto" className="mb-5 pb-4" style={{ maxWidth: 960 }}>
-            <h2 className="mb-1">Contacto</h2>
-            <div className="section-divider" />
-            <ContactButtons />
-          </Container>
-        </FadeInSection>
+        <div className="section-gap">
+          <FadeInSection>
+            <LatestShowSection />
+          </FadeInSection>
+        </div>
       </main>
 
       <SiteFooter />

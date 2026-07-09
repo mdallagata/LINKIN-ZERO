@@ -5,7 +5,7 @@ import FadeInSection from "@/components/FadeInSection";
 import MemberSection from "@/components/MemberSection";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
-import { BAND_NAME, BAND_TAGLINE, DAILY_REVALIDATE_SECONDS, OG_IMAGE, SITE_URL } from "@/data/band";
+import { BAND_NAME, BAND_TAGLINE, OG_IMAGE, SITE_URL } from "@/data/band";
 import { Member, MEMBERS } from "@/data/members";
 import { NAV_LINKS } from "@/data/nav";
 
@@ -25,7 +25,9 @@ export const metadata: Metadata = {
   },
 };
 
-export const revalidate = DAILY_REVALIDATE_SECONDS;
+// Revalida a diario: sin esto, el año del footer (new Date().getFullYear())
+// queda fijo en el HTML del último build hasta el próximo deploy.
+export const revalidate = 86400;
 
 export default function MembersPage(): ReactNode {
   return (

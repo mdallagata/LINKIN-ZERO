@@ -7,17 +7,19 @@ export default function BackToTop(): ReactNode {
   const [visible, setVisible] = useState<boolean>(false);
 
   useEffect((): void | (() => void) => {
-    let ticking = false;
+    let rafId: number | null = null;
     function onScroll(): void {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame((): void => {
+      if (rafId !== null) return;
+      rafId = requestAnimationFrame((): void => {
         setVisible(window.scrollY > 300);
-        ticking = false;
+        rafId = null;
       });
     }
     window.addEventListener("scroll", onScroll, { passive: true });
-    return (): void => window.removeEventListener("scroll", onScroll);
+    return (): void => {
+      window.removeEventListener("scroll", onScroll);
+      if (rafId !== null) cancelAnimationFrame(rafId);
+    };
   }, []);
 
   function scrollToTop(): void {

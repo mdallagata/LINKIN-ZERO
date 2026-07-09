@@ -1,6 +1,6 @@
 "use client";
 
-import type { CSSProperties, MouseEvent, ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Nav from "react-bootstrap/Nav";
@@ -20,7 +20,7 @@ export default function SiteHeader({
   const pathname: string = usePathname();
   const isPhotoHero: boolean = Boolean(heroImage);
 
-  const handleNavClick = (e: MouseEvent<HTMLAnchorElement>, href: string): void => {
+  const handleNavClick = (href: string): void => {
     const hashIndex: number = href.indexOf("#");
     if (hashIndex === -1) return;
     const hash: string = href.slice(hashIndex);
@@ -79,7 +79,7 @@ export default function SiteHeader({
                 as={Link}
                 className="site-nav-link text-white p-0"
                 href={link.href}
-                onClick={(e: MouseEvent<HTMLAnchorElement>): void => handleNavClick(e, link.href)}
+                onClick={(): void => handleNavClick(link.href)}
                 aria-current={isActive ? "page" : undefined}
                 aria-label={link.label}
               >

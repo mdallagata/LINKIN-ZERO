@@ -9,7 +9,7 @@ import Nav from "react-bootstrap/Nav";
 import { BAND_NAME, BAND_TAGLINE } from "@/data/band";
 import type { NavLink } from "@/data/nav";
 
-const DEFAULT_HERO = "/images/show-hero.jpg";
+const DEFAULT_HERO: string = "/images/show-hero.jpg";
 
 export default function SiteHeader({
   links,
@@ -24,10 +24,10 @@ export default function SiteHeader({
   heroImage?: string;
   heroImagePosition?: string;
 }): ReactNode {
-  const pathname = usePathname();
+  const pathname: string = usePathname();
   const [heroLoaded, setHeroLoaded] = useState<boolean>(false);
 
-  const heroClass = [
+  const heroClass: string = [
     "site-hero",
     "w-100",
     (heroPhoto || heroCompact) && "site-hero--photo",
@@ -36,10 +36,10 @@ export default function SiteHeader({
     .filter(Boolean)
     .join(" ");
 
-  const wordmarkClass = `site-wordmark${heroPhoto ? " site-wordmark--glow" : ""}`;
+  const wordmarkClass: string = `site-wordmark${heroPhoto ? " site-wordmark--glow" : ""}`;
 
-  const activeHeroImage = heroImage || (heroPhoto ? DEFAULT_HERO : undefined);
-  const objectPosition = heroImagePosition ?? "45%";
+  const activeHeroImage: string | undefined = heroImage || (heroPhoto ? DEFAULT_HERO : undefined);
+  const objectPosition: string = `center ${heroImagePosition ?? "45%"}`;
 
   return (
     <>

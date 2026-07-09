@@ -150,9 +150,9 @@ h3 {
     inset: 0;
     background:
       linear-gradient(to bottom, black 0%, transparent 22%, transparent 78%, black 100%),
-      url("/images/bateria.jpg");
+      url("/images/linkin-zero-34.jpg");
     background-size: cover;
-    background-position: center, 60% center;
+    background-position: center, 100% center;
     background-repeat: no-repeat;
     opacity: 0.35;
   }
@@ -176,7 +176,7 @@ h3 {
   .home-side-photo--left .home-side-photo__img {
     background-image:
       linear-gradient(to bottom, black 0%, transparent 22%, transparent 78%, black 100%),
-      url("/images/guitarra.jpg");
+      url("/images/mauricio-home.jpg");
     background-position: center, 60% center;
   }
 
@@ -190,6 +190,7 @@ h3 {
     background-size: cover, cover;
   }
 }
+
 
 .member-photo-wrap::after {
   content: "";
@@ -383,7 +384,7 @@ footer .brand-hr {
   padding: 0;
 }
 
-.quienes-somos-photo-wrap {
+.photo-frame-wrap {
   position: relative;
   display: inline-block;
   width: 100%;
@@ -396,11 +397,11 @@ footer .brand-hr {
   transition: border-color 0.2s;
 }
 
-.quienes-somos-photo-wrap:hover {
+.photo-frame-wrap:hover {
   border-color: var(--brand);
 }
 
-.quienes-somos-photo-wrap::after {
+.photo-frame-wrap::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -444,7 +445,7 @@ footer .brand-hr {
   box-shadow: none;
 }
 
-.quienes-somos-photo {
+.photo-frame {
   width: 100%;
   height: auto;
   display: block;

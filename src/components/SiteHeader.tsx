@@ -32,10 +32,9 @@ export default function SiteHeader({
   };
 
   const heroClass: string = ["site-hero", "w-100", isPhotoHero && "site-hero--photo"].filter(Boolean).join(" ");
-
   const wordmarkClass: string = `site-wordmark${isPhotoHero ? " site-wordmark--glow" : ""}`;
-
   const objectPosition: string = `center ${heroImagePosition ?? "45%"}`;
+
 
   return (
     <>
@@ -58,15 +57,15 @@ export default function SiteHeader({
           <p className={`hero-tagline mb-0${isPhotoHero ? " hero-tagline--reveal" : ""}`}>
             {isPhotoHero
               ? BAND_TAGLINE.split("").map((char: string, i: number): ReactNode => {
-                  const style: CSSProperties = {
-                    animationDelay: `${i * 0.04}s`,
-                  };
-                  return (
-                    <span key={i} className="tagline-char" style={style}>
-                      {char === " " ? "\u00A0" : char}
-                    </span>
-                  );
-                })
+                const style: CSSProperties = {
+                  animationDelay: `${i * 0.04}s`,
+                };
+                return (
+                  <span key={i} className="tagline-char" style={style}>
+                    {char === " " ? "\u00A0" : char}
+                  </span>
+                );
+              })
               : BAND_TAGLINE}
           </p>
         </nav>

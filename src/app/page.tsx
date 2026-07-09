@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import Container from "react-bootstrap/Container";
 import ContactButtons from "@/components/ContactButtons";
 import FadeInSection from "@/components/FadeInSection";
-import QuienesSomosPhoto from "@/components/QuienesSomosPhoto";
+import PhotoShowcase from "@/components/PhotoShowcase";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
 import { LatestShowSection, UpcomingShowsSection } from "@/components/ShowsSections";
@@ -33,7 +33,12 @@ export default function Home(): ReactNode {
         >
           <h1 className="mb-1">¿Quiénes somos?</h1>
           <div className="section-divider" />
-          <QuienesSomosPhoto />
+          <PhotoShowcase
+            src="/images/todos.jpg"
+            alt="Los integrantes de LINKIN ZERØ en Obscene Fest"
+            width={1400}
+            height={932}
+          />
           <p className="hero-description mb-0">{BAND_DESCRIPTION}</p>
         </Container>
 

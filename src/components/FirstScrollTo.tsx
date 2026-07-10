@@ -26,6 +26,19 @@ export default function FirstScrollTo({ steps, disableUp = false }: Props): null
       window.scrollTo({ top, behavior: "smooth" });
     };
 
+    // Auto-scroll on mount if URL hash matches a step
+    const hash = window.location.hash;
+    if (hash) {
+      const stepIndex = steps.findIndex(s => s.selector === hash);
+      if (stepIndex >= 0) {
+        idx.current = stepIndex;
+        // Double rAF to wait for DOM paint after navigation
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => scrollToStep(stepIndex));
+        });
+      }
+    }
+
     const wheelHandler = (e: WheelEvent): void => {
       const goingDown = e.deltaY > 0;
       const goingUp = e.deltaY < 0;

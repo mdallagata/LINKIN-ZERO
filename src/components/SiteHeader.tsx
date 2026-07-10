@@ -2,7 +2,7 @@
 
 import type { CSSProperties, MouseEvent, ReactNode } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Nav from "react-bootstrap/Nav";
 import FadeInImage from "@/components/FadeInImage";
 import { BAND_NAME, BAND_TAGLINE } from "@/data/band";
@@ -18,6 +18,7 @@ export default function SiteHeader({
   heroImagePosition?: string;
 }): ReactNode {
   const pathname: string = usePathname();
+  const router = useRouter();
   const isPhotoHero: boolean = Boolean(heroImage);
 
   const handleNavClick = (e: MouseEvent, href: string): void => {
@@ -25,13 +26,16 @@ export default function SiteHeader({
     if (hashIndex === -1) return;
     const hash: string = href.slice(hashIndex);
     const path: string = href.slice(0, hashIndex) || "/";
-    if (pathname === path && hash) {
-      e.preventDefault();
+    if (!hash) return;
+    e.preventDefault();
+    if (pathname === path) {
       const parent: Element | null = document.querySelector(hash);
       if (!parent) return;
       const el: Element = parent.querySelector("h1, h2") ?? parent;
       const top: number = el.getBoundingClientRect().top + window.scrollY - 20;
       window.scrollTo({ top, behavior: "smooth" });
+    } else {
+      router.push(href);
     }
   };
 

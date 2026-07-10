@@ -105,15 +105,29 @@ function PastShowCard({
 function PastShowsContent(): ReactNode {
   const [gallery, setGallery] = useState<{ show: PastShow; index: number } | null>(null);
 
+  // Group shows by year extracted from sortKey
+  const byYear: Map<string, PastShow[]> = new Map();
+  for (const show of SORTED_PAST_SHOWS) {
+    const year: string = show.sortKey.slice(0, 4);
+    const group: PastShow[] = byYear.get(year) ?? [];
+    group.push(show);
+    byYear.set(year, group);
+  }
+
   return (
     <>
-      <div className="text-start">
-        {SORTED_PAST_SHOWS.map((show: PastShow) => (
-          <PastShowCard
-            key={`${show.date}-${show.venue}`}
-            show={show}
-            onShowPhotos={(s: PastShow, i: number) => setGallery({ show: s, index: i })}
-          />
+      <div className="text-start timeline">
+        {Array.from(byYear.entries()).map(([year, shows]: [string, PastShow[]]) => (
+          <div key={year}>
+            <h3 className="timeline-year">{year}</h3>
+            {shows.map((show: PastShow) => (
+              <PastShowCard
+                key={`${show.date}-${show.venue}`}
+                show={show}
+                onShowPhotos={(s: PastShow, i: number) => setGallery({ show: s, index: i })}
+              />
+            ))}
+          </div>
         ))}
       </div>
       {gallery && gallery.show.photos && (

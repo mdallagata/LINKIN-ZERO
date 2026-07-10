@@ -296,10 +296,12 @@ h3 {
 
 .site-wordmark--glow {
   text-shadow:
-    0 0 6px var(--brand),
-    0 0 12px var(--brand),
-    0 0 24px rgba(95, 158, 160, 0.4);
-  animation: wordmark-breath 5s ease-in-out infinite;
+    0 0 2px #fff,
+    0 0 8px #fff,
+    0 0 15px var(--brand),
+    0 0 35px rgba(95, 158, 160, 0.6),
+    0 0 70px rgba(95, 158, 160, 0.3);
+  animation: wordmark-breath 8s ease-in-out infinite;
 }
 
 @keyframes wordmark-breath {
@@ -307,16 +309,50 @@ h3 {
   0%,
   100% {
     text-shadow:
-      0 0 6px var(--brand),
-      0 0 12px var(--brand),
-      0 0 24px rgba(95, 158, 160, 0.4);
+      0 0 2px #fff,
+      0 0 8px #fff,
+      0 0 15px var(--brand),
+      0 0 35px rgba(95, 158, 160, 0.6),
+      0 0 70px rgba(95, 158, 160, 0.3);
+  }
+
+  12.5%,
+  87.5% {
+    text-shadow:
+      0 0 1.75px #fff,
+      0 0 7px #fff,
+      0 0 13.25px var(--brand),
+      0 0 30.75px rgba(95, 158, 160, 0.525),
+      0 0 61.25px rgba(95, 158, 160, 0.255);
+  }
+
+  25%,
+  75% {
+    text-shadow:
+      0 0 1.5px #fff,
+      0 0 6px #fff,
+      0 0 11.5px var(--brand),
+      0 0 26.5px rgba(95, 158, 160, 0.45),
+      0 0 52.5px rgba(95, 158, 160, 0.21);
+  }
+
+  37.5%,
+  62.5% {
+    text-shadow:
+      0 0 1.25px #fff,
+      0 0 5px #fff,
+      0 0 9.75px var(--brand),
+      0 0 22.25px rgba(95, 158, 160, 0.375),
+      0 0 43.75px rgba(95, 158, 160, 0.165);
   }
 
   50% {
     text-shadow:
-      0 0 10px var(--brand),
-      0 0 20px var(--brand),
-      0 0 40px rgba(95, 158, 160, 0.8);
+      0 0 1px #fff,
+      0 0 4px #fff,
+      0 0 8px var(--brand),
+      0 0 18px rgba(95, 158, 160, 0.35),
+      0 0 35px rgba(95, 158, 160, 0.12);
   }
 }
 
@@ -460,12 +496,13 @@ h3 {
   content: "";
   position: absolute;
   left: 0;
-  right: 0;
   bottom: 0;
+  width: 100%;
   height: 2px;
   background: var(--brand);
   transform: scaleX(0);
-  transition: transform 0.25s ease;
+  transform-origin: left;
+  transition: transform 0.3s ease;
 }
 
 .site-nav-link:hover {
@@ -556,6 +593,50 @@ h3 {
   box-shadow: 0 0 16px var(--brand);
 }
 
+/* Timeline */
+.timeline {
+  position: relative;
+  padding-left: 2rem;
+}
+
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, transparent, var(--brand) 15%, var(--brand) 85%, transparent);
+  border-radius: 1px;
+}
+
+.timeline-year {
+  font-family: var(--font-heading), sans-serif;
+  font-size: 1.75rem;
+  color: #fff;
+  font-weight: 400;
+  position: relative;
+  margin-bottom: 1.5rem;
+  margin-top: 2rem;
+}
+
+.timeline-year:first-of-type {
+  margin-top: 0;
+}
+
+.timeline-year::before {
+  content: "";
+  position: absolute;
+  left: calc(-2rem + 1px);
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #fff;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.5);
+}
+
 /* Show cards — replaces the old shows-accordion. Real, finished content
    (past shows) is always visible, no click required to see the proof. */
 .show-card {
@@ -564,12 +645,14 @@ h3 {
   padding: 1.25rem 1.5rem;
   margin-bottom: 1rem;
   text-align: left;
-  transition: background 0.3s;
+  transition: background 0.3s, box-shadow 0.3s, transform 0.3s;
   background: linear-gradient(var(--surface-2), var(--surface-2)) padding-box,
     linear-gradient(var(--hairline), var(--hairline)) border-box;
 }
 
 .show-card:hover {
+  transform: scale(1.01);
+  box-shadow: 0 0 20px rgba(95, 158, 160, 0.15);
   background: linear-gradient(var(--surface-2), var(--surface-2)) padding-box,
     linear-gradient(var(--brand), var(--brand)) border-box;
 }
@@ -751,9 +834,10 @@ h3 {
   .site-wordmark--glow {
     animation: none;
     text-shadow:
-      0 0 8px var(--brand),
-      0 0 16px var(--brand),
-      0 0 32px rgba(95, 158, 160, 0.6);
+      0 0 2px #fff,
+      0 0 8px #fff,
+      0 0 15px var(--brand),
+      0 0 35px rgba(95, 158, 160, 0.6);
   }
 
   .loading-spinner {
@@ -769,14 +853,10 @@ h3 {
     opacity: 1;
     transform: none;
   }
+}
 
-  .scroll-indicator {
-    animation: none;
-  }
-
-  .photo-modal .modal-dialog {
-    transition: none;
-    transform: none;
-    opacity: 1;
-  }
+.photo-modal .modal-dialog {
+  transition: none;
+  transform: none;
+  opacity: 1;
 }

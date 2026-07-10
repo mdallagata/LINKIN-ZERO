@@ -6,6 +6,7 @@ export type Member = {
   imageWidth: number;
   imageHeight: number;
   instagramUrl: string;
+  imagePosition?: string;
 };
 
 export const MEMBERS: Member[] = [
@@ -17,6 +18,7 @@ export const MEMBERS: Member[] = [
     imageWidth: 480,
     imageHeight: 720,
     instagramUrl: "https://www.instagram.com/emirxsorroza/",
+    imagePosition: "center 60%",
   },
   {
     name: "Gustavo Monjes",
@@ -26,6 +28,7 @@ export const MEMBERS: Member[] = [
     imageWidth: 480,
     imageHeight: 720,
     instagramUrl: "https://www.instagram.com/gustavomonjes/",
+    imagePosition: "center 20%",
   },
   {
     name: "Mariano Cruz",
@@ -35,6 +38,7 @@ export const MEMBERS: Member[] = [
     imageWidth: 480,
     imageHeight: 720,
     instagramUrl: "https://www.instagram.com/marianoncrz/",
+    imagePosition: "center 25%",
   },
   {
     name: "Mauricio Dall'Agata",
@@ -44,6 +48,7 @@ export const MEMBERS: Member[] = [
     imageWidth: 480,
     imageHeight: 720,
     instagramUrl: "https://www.instagram.com/m_dallagata/",
+    imagePosition: "center 40%",
   },
   {
     name: "Exequiel Arias",
@@ -53,5 +58,6 @@ export const MEMBERS: Member[] = [
     imageWidth: 480,
     imageHeight: 720,
     instagramUrl: "https://www.instagram.com/perfect.hatred.2048/",
+    imagePosition: "center 65%",
   },
 ];

@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 import Modal from "react-bootstrap/Modal";
 import FadeInImage from "@/components/FadeInImage";
 import PhotoModalTrigger from "@/components/PhotoModalTrigger";
+import ZoomableImage from "@/components/ZoomableImage";
 
 export default function PhotoShowcase({
   src,
@@ -23,7 +24,14 @@ export default function PhotoShowcase({
       thumbnail={<FadeInImage src={src} alt={alt} width={width} height={height} className="photo-frame" />}
     >
       <Modal.Body className="p-0">
-        <FadeInImage src={src} alt={alt} width={width} height={height} className="w-100 h-auto" />
+        <ZoomableImage
+          src={src}
+          alt={alt}
+          width={width}
+          height={height}
+          className="w-100 h-auto"
+          style={{ maxHeight: "85vh", objectFit: "contain" }}
+        />
       </Modal.Body>
     </PhotoModalTrigger>
   );

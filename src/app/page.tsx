@@ -16,7 +16,7 @@ export const revalidate: number = 86400;
 export default function Home(): ReactNode {
   return (
     <>
-      <SiteHeader links={NAV_LINKS} heroImage="/images/show-hero.jpg" heroImagePosition="60%" />
+      <SiteHeader links={NAV_LINKS} heroImage="/images/show-hero.jpg" heroImagePosition="55%" />
 
       <main className="w-100 px-3 position-relative">
         <div role="img" aria-label="Batería de LINKIN ZERØ en vivo" className="home-side-photo">

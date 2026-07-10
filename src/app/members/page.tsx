@@ -32,7 +32,7 @@ export const revalidate = 86400;
 export default function MembersPage(): ReactNode {
   return (
     <>
-      <SiteHeader links={NAV_LINKS} heroImage="/images/members-hero.jpg" heroImagePosition="30%" />
+      <SiteHeader links={NAV_LINKS} heroImage="/images/members-hero.jpg" heroImagePosition="50%" />
 
       <main className="w-100 px-3">
         <Container className="text-center mb-4 container-narrow">
@@ -43,7 +43,7 @@ export default function MembersPage(): ReactNode {
         <Container fluid>
           {MEMBERS.map((member: Member, i: number) => (
             <FadeInSection key={member.name} delay={i * 150}>
-              <MemberSection {...member} reverse={i % 2 !== 0} />
+              <MemberSection {...member} reverse={i % 2 !== 0} loading="eager" />
             </FadeInSection>
           ))}
         </Container>

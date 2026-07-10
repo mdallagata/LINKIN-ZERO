@@ -17,6 +17,8 @@ type MemberSectionProps = {
   imageHeight: number;
   reverse?: boolean;
   instagramUrl: string;
+  loading?: "lazy" | "eager";
+  imagePosition?: string;
 };
 
 export default function MemberSection({
@@ -28,6 +30,8 @@ export default function MemberSection({
   imageHeight,
   reverse = false,
   instagramUrl,
+  loading,
+  imagePosition,
 }: MemberSectionProps): ReactNode {
   const textCol: ReactNode = (
     <Col
@@ -63,6 +67,8 @@ export default function MemberSection({
             width={imageWidth}
             height={imageHeight}
             sizes="(min-width: 768px) 480px, 100vw"
+            loading={loading}
+            style={imagePosition ? { objectPosition: imagePosition } : undefined}
           />
         }
       >
@@ -74,6 +80,7 @@ export default function MemberSection({
             height={imageHeight}
             className="h-auto"
             style={{ maxHeight: "85vh", width: "100%", objectFit: "contain" }}
+            loading={loading}
           />
         </Modal.Body>
       </PhotoModalTrigger>

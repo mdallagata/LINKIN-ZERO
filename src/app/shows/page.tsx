@@ -31,7 +31,7 @@ export const revalidate: number = 86400;
 export default function ShowsPage(): ReactNode {
   return (
     <>
-      <SiteHeader links={NAV_LINKS} heroImage="/images/shows-hero.jpg" heroImagePosition="30%" />
+      <SiteHeader links={NAV_LINKS} heroImage="/images/shows-hero.jpg" heroImagePosition="65%" />
 
       <main className="w-100 px-3">
         <Container className="text-center mb-4 container-narrow">

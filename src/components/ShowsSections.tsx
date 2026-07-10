@@ -1,7 +1,12 @@
-import type { ReactNode } from "react";
+"use client";
+
+import type { MouseEvent, ReactNode } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import Container from "react-bootstrap/Container";
 import { SiInstagram } from "react-icons/si";
+import FadeInImage from "@/components/FadeInImage";
+import ShowPhotoGallery from "@/components/ShowPhotoGallery";
 import type { PastShow, PressLink, UpcomingShow } from "@/data/shows";
 import { SORTED_PAST_SHOWS, UPCOMING_SHOWS } from "@/data/shows";
 
@@ -11,7 +16,18 @@ function instagramPostUrl(embedUrl: string): string {
   return embedUrl.replace(EMBED_SUFFIX_RE, "");
 }
 
-function PastShowCard({ show, featured = false }: { show: PastShow; featured?: boolean }): ReactNode {
+function PastShowCard({
+  show,
+  featured = false,
+  onShowPhotos,
+}: {
+  show: PastShow;
+  featured?: boolean;
+  onShowPhotos?: (show: PastShow, index: number) => void;
+}): ReactNode {
+  const hasPhotos: boolean = Boolean(show.photos && show.photos.length > 0);
+  const photoCount: number = show.photos?.length ?? 0;
+
   return (
     <div className={`show-card${featured ? " show-card--featured" : ""}`}>
       <div className="d-flex justify-content-between align-items-baseline flex-wrap gap-2">
@@ -43,7 +59,73 @@ function PastShowCard({ show, featured = false }: { show: PastShow; featured?: b
           </a>
         ))}
       </div>
+
+      {hasPhotos && (
+        <div className="d-flex gap-2 mt-3 flex-wrap justify-content-center">
+          {show.photos!.slice(0, 3).map((photo: string, i: number) => (
+            <button
+              key={photo}
+              type="button"
+              className="show-card-thumb"
+              onClick={(e: MouseEvent) => {
+                e.stopPropagation();
+                onShowPhotos?.(show, i);
+              }}
+              aria-label={`Ver foto ${i + 1}`}
+            >
+              <FadeInImage
+                src={photo}
+                alt={`${show.event} — Foto ${i + 1}`}
+                width={120}
+                height={90}
+                className="show-card-thumb-img"
+                loading="eager"
+              />
+            </button>
+          ))}
+          {photoCount > 3 && (
+            <button
+              type="button"
+              className="show-card-thumb show-card-thumb--more"
+              onClick={(e: MouseEvent) => {
+                e.stopPropagation();
+                onShowPhotos?.(show, 0);
+              }}
+              aria-label="Ver todas las fotos"
+            >
+              <span>+{photoCount - 3}</span>
+            </button>
+          )}
+        </div>
+      )}
     </div>
+  );
+}
+
+function PastShowsContent(): ReactNode {
+  const [gallery, setGallery] = useState<{ show: PastShow; index: number } | null>(null);
+
+  return (
+    <>
+      <div className="text-start">
+        {SORTED_PAST_SHOWS.map((show: PastShow) => (
+          <PastShowCard
+            key={`${show.date}-${show.venue}`}
+            show={show}
+            onShowPhotos={(s: PastShow, i: number) => setGallery({ show: s, index: i })}
+          />
+        ))}
+      </div>
+      {gallery && gallery.show.photos && (
+        <ShowPhotoGallery
+          eventName={gallery.show.event}
+          photos={gallery.show.photos}
+          photoIndex={gallery.index}
+          show={Boolean(gallery)}
+          onHide={() => setGallery(null)}
+        />
+      )}
+    </>
   );
 }
 
@@ -82,6 +164,7 @@ export function UpcomingShowsSection(): ReactNode {
 }
 
 export function LatestShowSection(): ReactNode {
+  const [gallery, setGallery] = useState<{ show: PastShow; index: number } | null>(null);
   const latest: PastShow | undefined = SORTED_PAST_SHOWS[0];
   if (!latest) return null;
   return (
@@ -93,9 +176,16 @@ export function LatestShowSection(): ReactNode {
     >
       <h2 className="mb-1">Último Show</h2>
       <div className="section-divider" />
-      <div className="text-start">
-        <PastShowCard show={latest} featured />
-      </div>
+      <PastShowCard show={latest} featured onShowPhotos={(s: PastShow, i: number) => setGallery({ show: s, index: i })} />
+      {gallery && gallery.show.photos && (
+        <ShowPhotoGallery
+          eventName={gallery.show.event}
+          photos={gallery.show.photos}
+          photoIndex={gallery.index}
+          show={Boolean(gallery)}
+          onHide={() => setGallery(null)}
+        />
+      )}
     </Container>
   );
 }
@@ -105,11 +195,7 @@ export function PastShowsSection(): ReactNode {
     <Container as="section" id="shows-anteriores" className="mb-5 pb-4 container-narrow">
       <h2 className="mb-1">Shows Anteriores</h2>
       <div className="section-divider" />
-      <div className="text-start">
-        {SORTED_PAST_SHOWS.map((show: PastShow) => (
-          <PastShowCard key={`${show.date}-${show.venue}`} show={show} />
-        ))}
-      </div>
+      <PastShowsContent />
     </Container>
   );
 }

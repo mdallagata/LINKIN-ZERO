@@ -264,7 +264,7 @@ h3 {
 }
 
 .site-hero--photo {
-  min-height: 55vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -601,6 +601,72 @@ h3 {
   color: var(--brand);
 }
 
+/* Show card — mini thumbnails */
+.show-card-thumb {
+  width: 60px;
+  height: 45px;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid var(--hairline);
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+  transition: border-color 0.2s, transform 0.2s;
+  flex-shrink: 0;
+}
+
+.show-card-thumb:hover {
+  border-color: var(--brand);
+  transform: scale(1.05);
+}
+
+.show-card-thumb-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.show-card-thumb--more {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface-2);
+  color: var(--brand);
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-color: var(--hairline);
+}
+
+.show-card-thumb--more:hover {
+  background: var(--brand);
+  color: #000;
+  border-color: var(--brand);
+}
+
+/* Photo gallery modal — full-size */
+.show-photo-full {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #000;
+  border-radius: 8px;
+  min-height: 300px;
+  overflow: hidden;
+}
+
+.zoomable-wrap {
+  overflow: hidden;
+}
+
+.zoomable-wrap.zoomed {
+  overflow: hidden;
+}
+
+.zoomable-wrap.zoomed {
+  overflow: auto;
+}
+
 .fade-in-section {
   opacity: 0;
   transform: translateY(20px);
@@ -689,7 +755,8 @@ h3 {
 
   .site-nav-link::after,
   .back-to-top,
-  .show-card {
+  .show-card,
+  .show-card-thumb {
     transition: none;
   }
 

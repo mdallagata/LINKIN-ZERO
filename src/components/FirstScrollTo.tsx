@@ -24,8 +24,7 @@ export default function FirstScrollTo({ steps, disableUp = false }: Props): null
       const { selector } = steps[i];
       const parent = document.querySelector(selector);
       if (!parent) return;
-      const el = parent.querySelector("h1, h2") ?? parent;
-      const top: number = el.getBoundingClientRect().top + window.scrollY - 20;
+      const top: number = parent.getBoundingClientRect().top + window.scrollY - 20;
       window.scrollTo({ top, behavior: "smooth" });
     };
 
@@ -63,21 +62,27 @@ export default function FirstScrollTo({ steps, disableUp = false }: Props): null
       const goingDown = e.deltaY > 0;
       const goingUp = e.deltaY < 0;
       if (!goingDown && !goingUp) return;
+      const shouldGoDown = goingDown && idx.current < steps.length - 1;
+      const shouldGoUp = goingUp && !disableUp && idx.current >= 0;
+      if (!shouldGoDown && !shouldGoUp) return;
       e.preventDefault();
       advance(goingDown);
     };
 
     // --- Touch (mobile) ---
     const touchStartHandler = (e: TouchEvent): void => {
-      if (idx.current >= steps.length - 1) return;
       touchStartY.current = e.touches[0].clientY;
     };
 
     const touchEndHandler = (e: TouchEvent): void => {
       const dy = touchStartY.current - e.changedTouches[0].clientY;
       if (Math.abs(dy) < SWIPE_THRESHOLD) return;
+      const goingDown = dy > 0;
+      const shouldGoDown = goingDown && idx.current < steps.length - 1;
+      const shouldGoUp = !goingDown && !disableUp && idx.current >= 0;
+      if (!shouldGoDown && !shouldGoUp) return;
       e.preventDefault();
-      advance(dy > 0);
+      advance(goingDown);
     };
 
     const keyHandler = (e: KeyboardEvent): void => {

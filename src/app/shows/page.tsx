@@ -32,7 +32,7 @@ export const revalidate: number = 86400;
 export default function ShowsPage(): ReactNode {
   return (
     <>
-      <SiteHeader links={NAV_LINKS} heroImage="/images/shows-hero.jpg" heroImagePosition="65%" />
+      <SiteHeader links={NAV_LINKS} heroImage="/images/shows-hero.webp" heroImagePosition="65%" />
 
       <FirstScrollTo steps={[{ selector: "#shows-heading" }]} disableUp />
 

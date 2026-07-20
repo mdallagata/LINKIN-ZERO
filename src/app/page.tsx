@@ -17,7 +17,7 @@ export const revalidate: number = 86400;
 export default function Home(): ReactNode {
   return (
     <>
-      <SiteHeader links={NAV_LINKS} heroImage="/images/show-hero.jpg" heroImagePosition="55%" />
+      <SiteHeader links={NAV_LINKS} heroImage="/images/show-hero.webp" heroImagePosition="55%" />
 
       <FirstScrollTo steps={[{ selector: "#quienes-somos" }, { selector: "#proximos-shows" }]} />
 
@@ -38,7 +38,7 @@ export default function Home(): ReactNode {
           <h1 className="mb-1">¿Quiénes somos?</h1>
           <div className="section-divider" />
           <PhotoShowcase
-            src="/images/todos.jpg"
+            src="/images/todos.webp"
             alt="Los integrantes de LINKIN ZERØ en Obscene Fest"
             width={1400}
             height={932}

@@ -13,7 +13,7 @@ export const MEMBERS: Member[] = [
   {
     name: "Lucas Emir Sorroza",
     role: "Batería",
-    imageSrc: "/images/lucas.jpg",
+    imageSrc: "/images/lucas.webp",
     imageAlt: "Lucas Emir Sorroza",
     imageWidth: 480,
     imageHeight: 720,
@@ -23,7 +23,7 @@ export const MEMBERS: Member[] = [
   {
     name: "Gustavo Monjes",
     role: "Bajo",
-    imageSrc: "/images/gustavo.jpg",
+    imageSrc: "/images/gustavo.webp",
     imageAlt: "Gustavo Monjes",
     imageWidth: 480,
     imageHeight: 720,
@@ -33,7 +33,7 @@ export const MEMBERS: Member[] = [
   {
     name: "Mariano Cruz",
     role: "Voces",
-    imageSrc: "/images/mariano.jpg",
+    imageSrc: "/images/mariano.webp",
     imageAlt: "Mariano Cruz",
     imageWidth: 480,
     imageHeight: 720,
@@ -43,7 +43,7 @@ export const MEMBERS: Member[] = [
   {
     name: "Mauricio Dall'Agata",
     role: "Guitarra principal",
-    imageSrc: "/images/mauricio.jpg",
+    imageSrc: "/images/mauricio.webp",
     imageAlt: "Mauricio Dall'Agata",
     imageWidth: 480,
     imageHeight: 720,
@@ -53,7 +53,7 @@ export const MEMBERS: Member[] = [
   {
     name: "Exequiel Arias",
     role: "Voces / Guitarra rítmica",
-    imageSrc: "/images/exequiel.jpg",
+    imageSrc: "/images/exequiel.webp",
     imageAlt: "Exequiel Arias",
     imageWidth: 480,
     imageHeight: 720,

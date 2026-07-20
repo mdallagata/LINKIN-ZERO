@@ -2,7 +2,6 @@ import type { ReactNode } from "react";
 import Container from "react-bootstrap/Container";
 import ContactButtons from "@/components/ContactButtons";
 import FadeInSection from "@/components/FadeInSection";
-import FirstScrollTo from "@/components/FirstScrollTo";
 import PhotoShowcase from "@/components/PhotoShowcase";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
@@ -19,8 +18,6 @@ export default function Home(): ReactNode {
     <>
       <SiteHeader links={NAV_LINKS} heroImage="/images/show-hero.webp" heroImagePosition="55%" />
 
-      <FirstScrollTo steps={[{ selector: "#quienes-somos" }, { selector: "#proximos-shows" }]} />
-
       <main className="w-100 px-3 position-relative">
         <div role="img" aria-label="Batería de LINKIN ZERØ en vivo" className="home-side-photo">
           <div className="home-side-photo__img" />
@@ -28,6 +25,19 @@ export default function Home(): ReactNode {
         <div role="img" aria-label="Público en un show de LINKIN ZERØ" className="home-side-photo home-side-photo--left">
           <div className="home-side-photo__img" />
         </div>
+
+        <Container
+          as="section"
+          id="contacto"
+          className="section-gap"
+          style={{ maxWidth: 700 }}
+        >
+          <div className="contact-section">
+            <h2 className="mb-1">Contacto</h2>
+            <div className="section-divider" />
+            <ContactButtons />
+          </div>
+        </Container>
 
         <Container
           as="section"
@@ -44,14 +54,6 @@ export default function Home(): ReactNode {
             height={932}
           />
           <p className="hero-description mb-0">{BAND_DESCRIPTION}</p>
-
-          <hr className="brand-hr my-5" />
-
-          <div className="contact-section" id="contacto">
-            <h2 className="mb-1">Contacto</h2>
-            <div className="section-divider" />
-            <ContactButtons />
-          </div>
         </Container>
 
         <div className="section-gap" id="proximos-shows">

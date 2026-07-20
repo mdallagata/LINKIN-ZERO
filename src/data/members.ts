@@ -51,13 +51,13 @@ export const MEMBERS: Member[] = [
     imagePosition: "center 40%",
   },
   {
-    name: "Exequiel Arias",
+    name: "Exequiel Mleziva",
     role: "Voces / Guitarra rítmica",
     imageSrc: "/images/exequiel.webp",
-    imageAlt: "Exequiel Arias",
+    imageAlt: "Exequiel Mleziva",
     imageWidth: 480,
     imageHeight: 720,
-    instagramUrl: "https://www.instagram.com/perfect.hatred.2048/",
+    instagramUrl: "https://www.instagram.com/who_is_hyan/",
     imagePosition: "center 65%",
   },
 ];

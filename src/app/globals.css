@@ -16,7 +16,13 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 5rem;
+  scroll-padding-top: 7rem;
+}
+
+@media (max-width: 767px) {
+  html {
+    scroll-padding-top: 8.5rem;
+  }
 }
 
 body {
@@ -478,6 +484,29 @@ h3 {
   width: 100%;
   height: auto;
   display: block;
+}
+
+.site-nav-bar--stuck {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1030;
+  padding-bottom: 0.5rem !important;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(95, 158, 160, 0.25);
+  animation: navSlideDown 0.3s ease;
+}
+
+@keyframes navSlideDown {
+  from {
+    transform: translateY(-100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
 }
 
 .site-nav-link {

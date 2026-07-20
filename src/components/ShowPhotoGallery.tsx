@@ -1,7 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import ZoomableImage from "@/components/ZoomableImage";
 
@@ -19,9 +19,14 @@ export default function ShowPhotoGallery({
   onHide: () => void;
 }): ReactNode {
   const [offset, setOffset] = useState<number>(0);
-  const displayIndex: number = photoIndex + offset;
+  const [prevPhotoIndex, setPrevPhotoIndex] = useState<number>(photoIndex);
 
-  useEffect((): void => { setOffset(0); }, [photoIndex]);
+  if (photoIndex !== prevPhotoIndex) {
+    setPrevPhotoIndex(photoIndex);
+    setOffset(0);
+  }
+
+  const displayIndex: number = photoIndex + offset;
 
   if (!show) return null;
 

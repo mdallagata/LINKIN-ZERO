@@ -33,7 +33,7 @@ export const revalidate: number = 86400;
 export default function MembersPage(): ReactNode {
   return (
     <>
-      <SiteHeader links={NAV_LINKS} heroImage="/images/members-hero.jpg" heroImagePosition="50%" />
+      <SiteHeader links={NAV_LINKS} heroImage="/images/members-hero.webp" heroImagePosition="50%" />
 
       <FirstScrollTo steps={[{ selector: "#members-heading" }]} disableUp />
 

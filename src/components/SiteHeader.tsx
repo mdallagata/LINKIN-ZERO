@@ -1,6 +1,7 @@
 "use client";
 
 import type { CSSProperties, MouseEvent, ReactNode } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import Nav from "react-bootstrap/Nav";
@@ -21,6 +22,20 @@ export default function SiteHeader({
   const router = useRouter();
   const isPhotoHero: boolean = Boolean(heroImage);
 
+  const sentinelRef = useRef<HTMLDivElement>(null);
+  const [stuck, setStuck] = useState<boolean>(false);
+
+  useEffect(() => {
+    const sentinel = sentinelRef.current;
+    if (!sentinel) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setStuck(!entry.isIntersecting && entry.boundingClientRect.top < 0),
+      { threshold: 0 },
+    );
+    observer.observe(sentinel);
+    return (): void => observer.disconnect();
+  }, []);
+
   const handleNavClick = (e: MouseEvent, href: string): void => {
     const hashIndex: number = href.indexOf("#");
     if (hashIndex === -1) return;
@@ -32,8 +47,7 @@ export default function SiteHeader({
       const parent: Element | null = document.querySelector(hash);
       if (!parent) return;
       const el: Element = parent.querySelector("h1, h2") ?? parent;
-      const top: number = el.getBoundingClientRect().top + window.scrollY - 20;
-      window.scrollTo({ top, behavior: "smooth" });
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
     } else {
       router.push(href);
     }
@@ -76,7 +90,9 @@ export default function SiteHeader({
         </p>
       </nav>
 
-      <header className="w-100 px-3 pb-4 pb-md-5">
+      <div ref={sentinelRef} aria-hidden="true" />
+
+      <header className={`site-nav-bar w-100 px-3 pb-4 pb-md-5${stuck ? " site-nav-bar--stuck" : ""}`}>
         <hr className="brand-hr my-2" />
         <Nav className="justify-content-center flex-wrap gap-4 gap-md-5 py-2">
           {links.map((link: NavLink) => {

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import Container from "react-bootstrap/Container";
 import FadeInSection from "@/components/FadeInSection";
-import FirstScrollTo from "@/components/FirstScrollTo";
+import ScrollToContent from "@/components/ScrollToContent";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
 import { PastShowsSection, UpcomingShowsSection } from "@/components/ShowsSections";
@@ -34,7 +34,7 @@ export default function ShowsPage(): ReactNode {
     <>
       <SiteHeader links={NAV_LINKS} heroImage="/images/shows-hero.webp" heroImagePosition="65%" />
 
-      <FirstScrollTo steps={[{ selector: "#shows-heading" }]} disableUp />
+      <ScrollToContent selector="#shows-heading" />
 
       <main className="w-100 px-3">
         <Container className="text-center mb-4 container-narrow" id="shows-heading">

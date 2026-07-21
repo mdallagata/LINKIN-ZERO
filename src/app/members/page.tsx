@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import Container from "react-bootstrap/Container";
 import FadeInSection from "@/components/FadeInSection";
-import FirstScrollTo from "@/components/FirstScrollTo";
 import MemberSection from "@/components/MemberSection";
+import ScrollToContent from "@/components/ScrollToContent";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
 import { BAND_NAME, BAND_TAGLINE, OG_IMAGE, SITE_URL } from "@/data/band";
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   title: "Miembros",
   description:
     `Conocé a los integrantes de ${BAND_NAME}: Lucas Sorroza (batería), Gustavo Monjes (bajo), ` +
-    `Mariano Cruz (voz), Mauricio Dall'Agata (guitarra) y Exequiel Arias (voz/guitarra).`,
+    `Mariano Cruz (voz), Mauricio Dall'Agata (guitarra) y Exequiel Mleziva (voz/guitarra).`,
   openGraph: {
     title: `Miembros — ${BAND_NAME}`,
     description: BAND_TAGLINE,
@@ -35,7 +35,7 @@ export default function MembersPage(): ReactNode {
     <>
       <SiteHeader links={NAV_LINKS} heroImage="/images/members-hero.webp" heroImagePosition="50%" />
 
-      <FirstScrollTo steps={[{ selector: "#members-heading" }]} disableUp />
+      <ScrollToContent selector="#members-heading" />
 
       <main className="w-100 px-3">
         <Container className="text-center mb-4 container-narrow" id="members-heading">

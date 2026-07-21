@@ -70,6 +70,7 @@ export default function RootLayout({
       <html
         lang="es"
         data-bs-theme="dark"
+        data-scroll-behavior="smooth"
         className={`${anton.variable} ${spaceGrotesk.variable}`}
       >
         <body className="d-flex flex-column min-vh-100 align-items-center">

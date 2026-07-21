@@ -23,7 +23,9 @@ export default function SiteHeader({
   const isPhotoHero: boolean = Boolean(heroImage);
 
   const sentinelRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLElement>(null);
   const [stuck, setStuck] = useState<boolean>(false);
+  const [placeholderHeight, setPlaceholderHeight] = useState<number>(0);
 
   useEffect(() => {
     const sentinel = sentinelRef.current;
@@ -35,6 +37,19 @@ export default function SiteHeader({
     observer.observe(sentinel);
     return (): void => observer.disconnect();
   }, []);
+
+  // While the nav bar is fixed it leaves the flow; a spacer of its in-flow
+  // height keeps the centered hero flex column from re-centering (and moving
+  // the sentinel), which would otherwise oscillate the stuck state.
+  useEffect(() => {
+    const header = headerRef.current;
+    if (!header) return;
+    const measure = new ResizeObserver(() => {
+      if (!stuck) setPlaceholderHeight(header.offsetHeight);
+    });
+    measure.observe(header);
+    return (): void => measure.disconnect();
+  }, [stuck]);
 
   const handleNavClick = (e: MouseEvent, href: string): void => {
     const hashIndex: number = href.indexOf("#");
@@ -92,7 +107,7 @@ export default function SiteHeader({
 
       <div ref={sentinelRef} aria-hidden="true" />
 
-      <header className={`site-nav-bar w-100 px-3 pb-4 pb-md-5${stuck ? " site-nav-bar--stuck" : ""}`}>
+      <header ref={headerRef} className={`site-nav-bar w-100 px-3 pb-4 pb-md-5${stuck ? " site-nav-bar--stuck" : ""}`}>
         <hr className="brand-hr my-2" />
         <Nav className="justify-content-center flex-wrap gap-4 gap-md-5 py-2">
           {links.map((link: NavLink) => {
@@ -114,6 +129,7 @@ export default function SiteHeader({
         </Nav>
         <hr className="brand-hr my-2" />
       </header>
+      {stuck && <div aria-hidden="true" style={{ height: placeholderHeight }} />}
       {isPhotoHero && (
         <div className="scroll-indicator" aria-hidden="true">
           <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">

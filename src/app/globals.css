@@ -188,7 +188,7 @@ h3 {
     inset: 0;
     background:
       linear-gradient(to bottom, black 0%, transparent 22%, transparent 78%, black 100%),
-      url("/images/baterista-en-vivo.jpg");
+      url("/images/baterista-en-vivo.webp");
     background-size: cover;
     background-position: center, 80% center;
     background-repeat: no-repeat;
@@ -215,7 +215,7 @@ h3 {
   .home-side-photo--left .home-side-photo__img {
     background-image:
       linear-gradient(to bottom, black 0%, transparent 22%, transparent 78%, black 100%),
-      url("/images/publico-en-vivo.jpg");
+      url("/images/publico-en-vivo.webp");
     background-position: center, 55% center;
     filter: none;
   }

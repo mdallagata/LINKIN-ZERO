@@ -1,7 +1,7 @@
 # LINKIN ZERØ — Style Guide
 
-**Platform:** Next.js 16 · React Bootstrap 5
-**Last updated:** 2026-07-07
+**Platform:** Next.js 16 · React Bootstrap 2 (Bootstrap 5)
+**Last updated:** 2026-07-21
 
 > For coding rules and architecture conventions, see [PROJECT_GUIDE.md](./PROJECT_GUIDE.md).
 
@@ -17,31 +17,31 @@ LINKIN ZERØ is a LINKIN PARK tribute band. The site keeps an early-2000s, sligh
 
 Source of truth: [src/app/globals.css](src/app/globals.css)
 
-| Token             | Value                | Usage                               |
-| ----------------- | -------------------- | ------------------------------------ |
-| Brand (cadetblue) | `#5f9ea0`             | Links, nav, headings glow, borders   |
-| Background        | `#000000`             | Page background (`--bs-body-bg`)     |
-| Text              | `#ffffff`             | Body text (`--bs-body-color`)        |
-| Paragraph text    | `rgb(174, 214, 214)`  | Body copy inside articles            |
+| Token                 | Value                      | Usage                                       |
+| --------------------- | -------------------------- | ------------------------------------------- |
+| Brand (cadetblue)     | `--brand` `#5f9ea0`         | Links, nav, headings glow, borders          |
+| Background            | `--bs-body-bg` `#000000`    | Page background                             |
+| Text                  | `--bs-body-color` `#ffffff` | Body text                                   |
+| Secondary/muted text  | `--ink-2` `rgba(255,255,255,0.7)` | Roles, descriptions, muted copy (`.text-muted`) |
+| Surface (elevated)    | `--surface-2` `#121212`     | Card backgrounds for finished content       |
+| Hairline              | `--hairline` `rgba(255,255,255,0.12)` | Subtle borders around cards/photos    |
 
 ## 3. Typography
 
-System monospace stack (`--bs-body-font-family` override), centered text throughout.
+Display type via `next/font/google` (see [src/app/layout.tsx](src/app/layout.tsx)): **Anton** for headings and the wordmark (`--font-heading`), **Space Grotesk** for body copy (`--font-body`, wired into `--bs-body-font-family`). Text is centered throughout.
 
 ## 4. Effects
 
-| Class                  | Effect                                                                                                      |
-| ---------------------- | ------------------------------------------------------------------------------------------------------------ |
-| `.glow-lg`             | Large text-shadow glow (headings)                                                                           |
-| `.glow-sm`             | Smaller text-shadow glow (body text)                                                                        |
-| `.glow-hover`          | White glow on hover (links/nav)                                                                             |
-| `.glow-box`            | Box-shadow glow (social icons)                                                                              |
-| `.brand-hr`            | Solid cadetblue `<hr>` (default Bootstrap hr is a faint inherited-color line, doesn't work for this theme) |
-| `.brand-dotted-border` | Dotted cadetblue border                                                                                      |
-| `.member-photo`        | Large border-radius on member portraits/gifs                                                                |
-| `.site-wordmark`       | Fluid-sized text logo (`[ BAND NAME ]`) in the header                                                       |
-| `.placeholder-avatar`  | Dashed-border circle with initials — fallback when a member has no photo yet                               |
-| `.placeholder-box`     | Dashed-border box for "coming soon" content (e.g. the featured video slot)                                  |
+| Class                   | Effect                                                                                                       |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------ |
+| `.text-brand`           | Brand-colored (cadetblue) text                                                                              |
+| `.text-muted`           | Secondary/muted text (`--ink-2`)                                                                            |
+| `.glow-hover`           | White text + brand glow on hover (links/nav)                                                               |
+| `.brand-hr`             | Glowing cadetblue gradient `<hr>` (default Bootstrap hr is a faint inherited-color line, doesn't work here) |
+| `.section-divider`      | Short centered cadetblue rule under section headings                                                        |
+| `.member-photo`         | Large border-radius on member portraits                                                                     |
+| `.site-wordmark`        | Fluid-sized text logo (`[ BAND NAME ]`) in the header; `.site-wordmark--glow` adds the glow variant         |
+| `.placeholder-box`      | Dashed-border box for "coming soon" content                                                                 |
 
 ## 5. Layout
 

@@ -16,13 +16,16 @@ A page that exports `metadata` **cannot** be a Client Component (Next.js require
 
 ## Images
 
-- Static photos (`.jpg`/`.png`) go through `next/image` normally — it optimizes them automatically.
-- Animated `.gif`s must have `unoptimized` set on `next/image`, otherwise Next's image optimizer can break the animation.
-- All images live in `public/images/`.
+- Photos are `.webp` and go through `next/image`, which optimizes them automatically.
+- All images live in `public/images/` (show photos under `public/images/shows/`).
+
+## Fonts
+
+Two Google fonts are loaded via `next/font/google` in [src/app/layout.tsx](src/app/layout.tsx) and exposed as CSS variables: **Anton** (`--font-heading`, headings/wordmark) and **Space Grotesk** (`--font-body`, body copy). `globals.css` wires these into `--bs-body-font-family` and the heading rules — there is no monospace anymore.
 
 ## Theming
 
-There's no Sass build step. The site's look (black background, cadetblue glow, monospace) is done by overriding Bootstrap 5.3's CSS variables (`--bs-body-bg`, `--bs-body-color`, `--bs-link-color`, etc.) plus a handful of custom utility classes, all in [src/app/globals.css](src/app/globals.css). See STYLEGUIDE.md for the actual tokens.
+There's no Sass build step. The site's look (black background, cadetblue glow) is done by overriding Bootstrap 5.3's CSS variables (`--bs-body-bg`, `--bs-body-color`, `--bs-link-color`, etc.) plus custom design tokens (`--brand`, `--ink-2`, `--surface-2`, `--hairline`) and utility classes, all in [src/app/globals.css](src/app/globals.css). See STYLEGUIDE.md for the actual tokens.
 
 ## Propósito del sitio
 
@@ -35,7 +38,7 @@ Cada decisión de contenido y layout debe responder a: **¿esto ayuda a vender u
 
 ## Content
 
-This is a tribute-band site, not the real LINKIN PARK's — all editable content (band name/tagline, nav links, shows, member bios) lives in [src/data/](src/data/), currently filled with placeholders. When replacing placeholders with real content:
+This is a tribute-band site, not the real LINKIN PARK's — all editable content (band name/tagline, nav links, shows, member bios) lives in [src/data/](src/data/). When editing content:
 
-- `MemberSection` falls back to a placeholder initials avatar when `imageSrc` is omitted; use that until real member photos exist.
+- `MemberSection` requires an `imageSrc` (member photo); there is no automatic placeholder-avatar fallback, so every member needs a real photo in `public/images/`.
 - Keep the footer's tribute disclaimer (`LEGAL_DISCLAIMER` in `src/data/band.ts`) — this is a tribute act, not the official band, and the site shouldn't imply otherwise.

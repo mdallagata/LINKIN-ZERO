@@ -41,8 +41,8 @@ export default function ShowPhotoGallery({
             alt={`${eventName} — Foto ${displayIndex + 1}`}
             width={1200}
             height={800}
-            className="w-100 h-auto"
-            style={{ maxHeight: "80vh", objectFit: "contain" }}
+            className="w-100 h-100"
+            style={{ objectFit: "contain" }}
             loading="eager"
           />
         </div>

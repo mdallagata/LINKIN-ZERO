@@ -2,12 +2,15 @@ import type { ReactNode } from "react";
 import Container from "react-bootstrap/Container";
 import ContactButtons from "@/components/ContactButtons";
 import FadeInSection from "@/components/FadeInSection";
+import InstagramEmbed from "@/components/InstagramEmbed";
 import PhotoShowcase from "@/components/PhotoShowcase";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
 import { LatestShowSection, UpcomingShowsSection } from "@/components/ShowsSections";
 import { BAND_DESCRIPTION } from "@/data/band";
 import { NAV_LINKS } from "@/data/nav";
+import { REEL_URL } from "@/data/instagram";
+import { UPCOMING_SHOWS } from "@/data/shows";
 
 // Revalida a diario: sin esto, el año del footer (new Date().getFullYear())
 // queda fijo en el HTML del último build hasta el próximo deploy.
@@ -28,21 +31,8 @@ export default function Home(): ReactNode {
 
         <Container
           as="section"
-          id="contacto"
-          className="section-gap"
-          style={{ maxWidth: 700 }}
-        >
-          <div className="contact-section">
-            <h2 className="mb-1">Contacto</h2>
-            <div className="section-divider" />
-            <ContactButtons />
-          </div>
-        </Container>
-
-        <Container
-          as="section"
           id="quienes-somos"
-          className="section-gap"
+          className="mb-5"
           style={{ maxWidth: 700 }}
         >
           <h1 className="mb-1">¿Quiénes somos?</h1>
@@ -54,15 +44,28 @@ export default function Home(): ReactNode {
             height={932}
           />
           <p className="hero-description mb-0">{BAND_DESCRIPTION}</p>
+
+          <div className="contact-section mt-5" id="contacto">
+            <h2 className="mb-1">Contacto</h2>
+            <div className="section-divider" />
+            <ContactButtons />
+          </div>
         </Container>
 
-        <div className="section-gap" id="proximos-shows">
-          <FadeInSection>
-            <UpcomingShowsSection />
-          </FadeInSection>
+        <div className="section-gap" id="proximos-shows" style={{ paddingTop: "3rem" }}>
+          {UPCOMING_SHOWS.length > 0 && (
+            <FadeInSection>
+              <UpcomingShowsSection />
+            </FadeInSection>
+          )}
           <FadeInSection>
             <LatestShowSection />
           </FadeInSection>
+          <div style={{ marginTop: "-3.5rem" }}>
+            <FadeInSection>
+              <InstagramEmbed url={REEL_URL} />
+            </FadeInSection>
+          </div>
         </div>
       </main>
 

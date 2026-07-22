@@ -589,6 +589,7 @@ h3 {
   position: relative;
   padding: 2rem 1.5rem;
   background: rgba(95, 158, 160, 0.04);
+  border: 1px solid rgba(95, 158, 160, 0.25);
   border-radius: 12px;
 }
 
@@ -752,11 +753,17 @@ h3 {
 .show-photo-full {
   display: flex;
   justify-content: center;
-  align-items: center;
   background: #000;
   border-radius: 8px;
-  min-height: 300px;
   overflow: hidden;
+  aspect-ratio: 16 / 9;
+  max-height: 80vh;
+}
+
+@media (max-width: 576px) {
+  .show-photo-full {
+    aspect-ratio: 4 / 5;
+  }
 }
 
 .zoomable-wrap {
@@ -845,6 +852,15 @@ h3 {
   }
 }
 
+.instagram-skeleton {
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes skeleton-pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .fade-in-section {
     transition: none;
@@ -875,6 +891,10 @@ h3 {
 
   .loading-spinner {
     animation-duration: 2.4s;
+  }
+
+  .instagram-skeleton {
+    animation: none;
   }
 
   main {

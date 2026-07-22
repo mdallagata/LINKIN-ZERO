@@ -22,6 +22,20 @@ export default function SiteHeader({
   const router = useRouter();
   const isPhotoHero: boolean = Boolean(heroImage);
 
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+
+  useEffect(() => {
+    const mq: MediaQueryList = window.matchMedia("(max-width: 576px)");
+    setIsMobile(mq.matches);
+    const handler = (e: MediaQueryListEvent): void => { setIsMobile(e.matches); };
+    mq.addEventListener("change", handler);
+    return (): void => { mq.removeEventListener("change", handler); };
+  }, []);
+
+  const mobileHeroImage: string = "/images/show-hero.webp";
+  const effectiveHeroImage: string | undefined = isMobile ? mobileHeroImage : heroImage;
+  const effectiveHeroPosition: string = isMobile ? "55%" : (heroImagePosition ?? "45%");
+
   const sentinelRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLElement>(null);
   const [stuck, setStuck] = useState<boolean>(false);
@@ -70,13 +84,13 @@ export default function SiteHeader({
 
   const heroClass: string = ["site-hero", "w-100", isPhotoHero && "site-hero--photo"].filter(Boolean).join(" ");
   const wordmarkClass: string = `site-wordmark${isPhotoHero ? " site-wordmark--glow" : ""}`;
-  const objectPosition: string = `center ${heroImagePosition ?? "45%"}`;
+  const objectPosition: string = `center ${effectiveHeroPosition}`;
 
   return (
     <div className={heroClass}>
-      {heroImage && (
+      {effectiveHeroImage && (
         <FadeInImage
-          src={heroImage}
+          src={effectiveHeroImage}
           alt=""
           fill
           preload

@@ -84,7 +84,7 @@ const PAST_SHOWS: PastShow[] = [
     ],
     description: `Una noche de rock alternativo y metal junto a ${PORN_BAND_NAME} (Korn) y Aeon (Tool), en un evento cultural y familiar con música en vivo, feria de artesanos y gastronomía.`,
     embedUrl: "https://www.instagram.com/p/DOXS0a2DDJ7/embed",
-    photos: ["/images/shows/1/1.webp", "/images/shows/1/2.webp", "/images/shows/1/3.webp", "/images/shows/1/4.webp", "/images/shows/1/5.webp", "/images/shows/1/6.webp", "/images/shows/1/7.webp"],
+    photos: ["/images/shows/1/1.jpg", "/images/shows/1/2.jpg", "/images/shows/1/3.jpg", "/images/shows/1/4.jpg", "/images/shows/1/5.jpg", "/images/shows/1/6.jpg"],
   },
 ];
 

@@ -46,7 +46,7 @@ export default function ShowPhotoGallery({
             loading="eager"
           />
         </div>
-        <div className="d-flex justify-content-center mt-3 position-relative">
+        <div className="d-flex flex-column flex-sm-row align-items-center justify-content-center mt-3 gap-2">
           <div className="d-flex gap-4">
           <button
             type="button"
@@ -71,7 +71,7 @@ export default function ShowPhotoGallery({
             </svg>
           </button>
           </div>
-          <small className="text-white text-opacity-50 position-absolute end-0 top-50 translate-middle-y">{eventName}</small>
+          <small className="text-white text-opacity-50 text-nowrap" style={{ fontSize: "0.75rem" }}>{eventName}</small>
         </div>
       </Modal.Body>
     </Modal>

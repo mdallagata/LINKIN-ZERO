@@ -7,7 +7,7 @@ import SiteHeader from "@/components/SiteHeader";
 import { NAV_LINKS } from "@/data/nav";
 
 export default function Error({
-  error,
+  error: _error,
   reset,
 }: {
   error: Error & { digest?: string };

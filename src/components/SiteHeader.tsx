@@ -22,11 +22,13 @@ export default function SiteHeader({
   const router = useRouter();
   const isPhotoHero: boolean = Boolean(heroImage);
 
-  const [isMobile, setIsMobile] = useState<boolean>(false);
+  const [isMobile, setIsMobile] = useState<boolean>(
+    typeof window !== "undefined" && window.matchMedia("(max-width: 576px)").matches
+  );
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
     const mq: MediaQueryList = window.matchMedia("(max-width: 576px)");
-    setIsMobile(mq.matches);
     const handler = (e: MediaQueryListEvent): void => { setIsMobile(e.matches); };
     mq.addEventListener("change", handler);
     return (): void => { mq.removeEventListener("change", handler); };

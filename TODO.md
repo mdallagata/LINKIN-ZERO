@@ -1,0 +1,2 @@
+- [ ] Hero image rotativa — que cambie automáticamente entre varias fotos
+- [ ] Hook pre-push que corra `npm run lint`

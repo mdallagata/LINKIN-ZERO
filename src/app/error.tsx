@@ -13,6 +13,7 @@ export default function Error({
   error: Error & { digest?: string };
   reset: () => void;
 }): ReactNode {
+  void _error;
   return (
     <>
       <SiteHeader links={NAV_LINKS} />

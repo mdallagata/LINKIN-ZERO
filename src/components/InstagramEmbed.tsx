@@ -35,7 +35,7 @@ export default function InstagramEmbed({ url, caption }: Props): ReactNode {
   const containerStyle: CSSProperties = {
     position: "relative",
     width: "100%",
-    maxWidth: info.label === "Reel" ? 400 : 540,
+    maxWidth: info.label === "Reel" ? 400 : 350,
     margin: "0 auto",
     aspectRatio,
   };

@@ -18,7 +18,7 @@ export const MEMBERS: Member[] = [
     imageWidth: 480,
     imageHeight: 720,
     instagramUrl: "https://www.instagram.com/emirxsorroza/",
-    imagePosition: "center 60%",
+    imagePosition: "center 80%",
   },
   {
     name: "Gustavo Monjes",
@@ -48,7 +48,7 @@ export const MEMBERS: Member[] = [
     imageWidth: 480,
     imageHeight: 720,
     instagramUrl: "https://www.instagram.com/m_dallagata/",
-    imagePosition: "center 40%",
+    imagePosition: "center 20%",
   },
   {
     name: "Exequiel Mleziva",
@@ -58,6 +58,6 @@ export const MEMBERS: Member[] = [
     imageWidth: 480,
     imageHeight: 720,
     instagramUrl: "https://www.instagram.com/who_is_hyan/",
-    imagePosition: "center 65%",
+    imagePosition: "center 45%",
   },
 ];

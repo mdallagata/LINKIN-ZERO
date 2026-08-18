@@ -1,7 +1,7 @@
 # LINKIN ZERØ — Style Guide
 
 **Platform:** Next.js 16 · React Bootstrap 2 (Bootstrap 5)
-**Last updated:** 2026-07-21
+**Last updated:** 2026-08-18
 
 > For coding rules and architecture conventions, see [PROJECT_GUIDE.md](./PROJECT_GUIDE.md).
 
@@ -20,6 +20,7 @@ Source of truth: [src/app/globals.css](src/app/globals.css)
 | Token                 | Value                      | Usage                                       |
 | --------------------- | -------------------------- | ------------------------------------------- |
 | Brand (cadetblue)     | `--brand` `#5f9ea0`         | Links, nav, headings glow, borders          |
+| Brand (RGB)           | `--brand-rgb` `95, 158, 160` | Canales RGB del brand para `rgba(var(--brand-rgb), <alpha>)` |
 | Background            | `--bs-body-bg` `#000000`    | Page background                             |
 | Text                  | `--bs-body-color` `#ffffff` | Body text                                   |
 | Secondary/muted text  | `--ink-2` `rgba(255,255,255,0.7)` | Roles, descriptions, muted copy (`.text-muted`) |
@@ -41,7 +42,14 @@ Display type via `next/font/google` (see [src/app/layout.tsx](src/app/layout.tsx
 | `.section-divider`      | Short centered cadetblue rule under section headings                                                        |
 | `.member-photo`         | Large border-radius on member portraits                                                                     |
 | `.site-wordmark`        | Fluid-sized text logo (`[ BAND NAME ]`) in the header; `.site-wordmark--glow` adds the glow variant         |
-| `.placeholder-box`      | Dashed-border box for "coming soon" content                                                                 |
+| `.placeholder-box`      | Brand-glow box for "no hay fechas" placeholder (solid border, not dashed)                                   |
+| `.entry-badge`          | Pill badge for show access info (ej. "Entrada: alimento no perecedero")                                     |
+| `.contact-section`      | Bordered brand panel around the contact block (home)                                                        |
+| `.show-card`            | Surface card for shows (past & upcoming); `.show-card--featured` resalta el último show                     |
+| `.show-photo-full`      | Fixed-ratio photo frame (16/9, 4/5 on mobile) inside the gallery modal                                      |
+| `.fade-in-section`      | Scroll-reveal (fade + translate) via IntersectionObserver                                                    |
+| `.back-to-top`          | Floating button that appears after scrolling 300px                                                          |
+| `.timeline`             | Vertical timeline for past shows grouped by year (shows page)                                               |
 
 ## 5. Layout
 

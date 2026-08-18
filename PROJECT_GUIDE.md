@@ -4,9 +4,25 @@
 
 ## Stack
 
-Next.js 16 (App Router, Turbopack) · React 19 · TypeScript · react-bootstrap 5 + Bootstrap 5 (CSS only, no Bootstrap JS bundle). Package manager is **Yarn** — commit `yarn.lock`, never `package-lock.json`.
+Next.js 16 (App Router, Turbopack) · React 19 · TypeScript · react-bootstrap 2 + Bootstrap 5 (CSS only, no Bootstrap JS bundle). Package manager is **Yarn** — commit `yarn.lock`, never `package-lock.json`.
 
 Node version is pinned in [.nvmrc](.nvmrc). Run `nvm use` before installing/running.
+
+## Idioma
+
+- **Código en inglés**: identificadores, variables, props, tipos y nombres de archivos — siempre en inglés.
+- **Texto al usuario en español**: todo lo que renderiza la UI (labels, descripciones, `alt`, `aria-label`, metadatos, contenido de `src/data/`) — en español, con acentos y ñ correctos.
+- Los comentarios son libres (inglés o español); lo visible al usuario no.
+
+## TypeScript
+
+Strict mode (`"strict": true`) está activo. Convención de tipado en todo el código:
+
+- **Nada implícito**: parámetros de funciones, props de componentes, retornos y variables (incluidas `useState`/`useRef`/`Map`) llevan anotación explícita — incluso cuando TS los infiere.
+- **Prohibido `any`**: si algo no tiene tipo, hay que definirlo (tipo local, `unknown` + narrowing, o tipo de `next`/`react`), no usar `any`.
+- **Exports de datos tipados**: toda constante de `src/data/` declara su tipo (`export const X: Tipo[] = ...`), incluidos literales como `OG_IMAGE` en `band.ts`.
+- **Tipos de eventos**: usar los de React (`MouseEvent`, `TouchEvent`, `WheelEvent`, `SyntheticEvent`), no los del DOM, para handlers de JSX.
+- Los retornos de componentes se anotan `: ReactNode`; los handlers de eventos, `: void`.
 
 ## Server vs Client Components
 
@@ -16,8 +32,9 @@ A page that exports `metadata` **cannot** be a Client Component (Next.js require
 
 ## Images
 
-- Photos are `.webp` and go through `next/image`, which optimizes them automatically.
+- Photos go through `next/image` (`.webp`; the Septiembre Musical set is `.jpg`), which optimizes them automatically.
 - All images live in `public/images/` (show photos under `public/images/shows/`).
+- Member photos are 480×720 (1200×1800 source) with `objectPosition` tuning per member in `src/data/members.ts`.
 
 ## Fonts
 
@@ -25,7 +42,7 @@ Two Google fonts are loaded via `next/font/google` in [src/app/layout.tsx](src/a
 
 ## Theming
 
-There's no Sass build step. The site's look (black background, cadetblue glow) is done by overriding Bootstrap 5.3's CSS variables (`--bs-body-bg`, `--bs-body-color`, `--bs-link-color`, etc.) plus custom design tokens (`--brand`, `--ink-2`, `--surface-2`, `--hairline`) and utility classes, all in [src/app/globals.css](src/app/globals.css). See STYLEGUIDE.md for the actual tokens.
+There's no Sass build step. The site's look (black background, cadetblue glow) is done by overriding Bootstrap 5.3's CSS variables (`--bs-body-bg`, `--bs-body-color`, `--bs-link-color`, etc.) plus custom design tokens (`--brand`, `--brand-rgb`, `--ink-2`, `--surface-2`, `--hairline`) and utility classes, all in [src/app/globals.css](src/app/globals.css). See STYLEGUIDE.md for the actual tokens.
 
 ## Propósito del sitio
 

@@ -61,7 +61,7 @@ export default function Home(): ReactNode {
           <FadeInSection>
             <LatestShowSection />
           </FadeInSection>
-          <div style={{ marginTop: "-3.5rem" }}>
+          <div style={{ marginTop: "1rem" }}>
             <FadeInSection>
               <InstagramEmbed url={REEL_URL} />
             </FadeInSection>

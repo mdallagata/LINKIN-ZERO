@@ -6,10 +6,14 @@ import { SiInstagram } from "react-icons/si";
 
 type Props = {
   url: string;
-  caption?: string;
 };
 
-function embedInfo(url: string): { src: string; label: string } | null {
+type EmbedInfo = {
+  src: string;
+  label: "Post" | "Reel";
+};
+
+function embedInfo(url: string): EmbedInfo | null {
   const postMatch = url.match(/instagram\.com\/p\/([^/?]+)/);
   if (postMatch) return { src: `https://www.instagram.com/p/${postMatch[1]}/embed`, label: "Post" };
   const reelMatch = url.match(/instagram\.com\/reel\/([^/?]+)/);
@@ -17,10 +21,10 @@ function embedInfo(url: string): { src: string; label: string } | null {
   return null;
 }
 
-export default function InstagramEmbed({ url, caption }: Props): ReactNode {
-  const info = embedInfo(url);
-  const [loaded, setLoaded] = useState(false);
-  const [error, setError] = useState(false);
+export default function InstagramEmbed({ url }: Props): ReactNode {
+  const info: EmbedInfo | null = embedInfo(url);
+  const [loaded, setLoaded] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
 
   if (!info) {
     return (
@@ -30,7 +34,7 @@ export default function InstagramEmbed({ url, caption }: Props): ReactNode {
     );
   }
 
-  const aspectRatio = info.label === "Reel" ? "9 / 16" : "1 / 1.2";
+  const aspectRatio: string = info.label === "Reel" ? "9 / 16" : "1 / 1.2";
 
   const containerStyle: CSSProperties = {
     position: "relative",
@@ -112,12 +116,6 @@ export default function InstagramEmbed({ url, caption }: Props): ReactNode {
           />
         )}
       </div>
-
-      {caption && (
-        <p className="text-muted mt-2 mb-0" style={{ fontSize: "0.9rem", maxWidth: 540, margin: "0.5rem auto 0" }}>
-          {caption}
-        </p>
-      )}
     </div>
   );
 }

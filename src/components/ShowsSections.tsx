@@ -4,6 +4,7 @@ import type { MouseEvent, ReactNode } from "react";
 import { useState } from "react";
 import Link from "next/link";
 import Container from "react-bootstrap/Container";
+import { FiCalendar } from "react-icons/fi";
 import { SiInstagram } from "react-icons/si";
 import FadeInImage from "@/components/FadeInImage";
 import ShowPhotoGallery from "@/components/ShowPhotoGallery";
@@ -31,7 +32,10 @@ function PastShowCard({
   return (
     <div className={`show-card${featured ? " show-card--featured" : ""}`}>
       <div className="d-flex justify-content-between align-items-baseline flex-wrap gap-2">
-        <p className="text-brand mb-0 fw-bold">{show.date}</p>
+        <p className="text-brand mb-0 fw-bold d-inline-flex align-items-center gap-2">
+          <FiCalendar aria-hidden="true" />
+          {show.date}
+        </p>
         <p className="show-badge mb-0">
           {show.invitedBy ? `Invitados por ${show.invitedBy}` : "Fecha propia"}
         </p>
@@ -146,7 +150,7 @@ function PastShowsContent(): ReactNode {
 export function UpcomingShowsSection(): ReactNode {
   return (
     <Container as="section" id="fechas" className="mb-5 pb-4 container-narrow">
-      <h2 className="mb-1 mt-5">Próximos Shows</h2>
+      <h2 className="mb-1 mt-5">Próximo Show</h2>
       <div className="section-divider" />
       {UPCOMING_SHOWS.length === 0 ? (
         <div className="placeholder-box">
@@ -161,14 +165,38 @@ export function UpcomingShowsSection(): ReactNode {
         <div className="text-start">
           {UPCOMING_SHOWS.map((show: UpcomingShow) => (
             <div className="show-card" key={`${show.date}-${show.venue}`}>
-              <p className="text-brand mb-0 fw-bold">{show.date}</p>
+              <div className="d-flex justify-content-between align-items-baseline flex-wrap gap-2">
+                <p className="text-brand mb-0 fw-bold d-inline-flex align-items-center gap-2">
+                  <FiCalendar aria-hidden="true" />
+                  {show.date}
+                </p>
+                {show.invitedBy && <span className="show-badge">Invitados por {show.invitedBy}</span>}
+              </div>
               <h3 className="mb-2 mt-1">
                 {show.venue} — {show.city}
               </h3>
-              {show.description && <p className="text-muted">{show.description}</p>}
-              <a href={show.ticketUrl} className="glow-hover text-brand d-inline-block mt-3">
-                Entradas →
-              </a>
+              {show.description && <p className="text-muted mt-3 mb-0">{show.description}</p>}
+              <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mt-3">
+                <div className="d-flex flex-wrap gap-3">
+                  {show.promoUrl && (
+                    <a
+                      href={show.promoUrl}
+                      className="icon-link icon-link--text"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <SiInstagram aria-hidden />
+                      {show.promoLabel ?? "Promo"} ↗
+                    </a>
+                  )}
+                  {show.ticketUrl && (
+                    <a href={show.ticketUrl} className="glow-hover text-brand d-inline-block">
+                      Entradas →
+                    </a>
+                  )}
+                </div>
+                {show.entry && <span className="entry-badge">{show.entry}</span>}
+              </div>
             </div>
           ))}
         </div>
@@ -186,7 +214,7 @@ export function LatestShowSection(): ReactNode {
       as="section"
       id="ultimo-show"
       className="pb-4 container-narrow"
-      style={{ marginTop: "4.5rem", marginBottom: "4.5rem" }}
+      style={{ marginTop: "4.5rem" }}
     >
       <h2 className="mb-1">Último Show</h2>
       <div className="section-divider" />

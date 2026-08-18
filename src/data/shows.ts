@@ -2,7 +2,15 @@ export type UpcomingShow = {
   date: string;
   venue: string;
   city: string;
-  ticketUrl: string;
+  ticketUrl?: string;
+  /** Link a la publicación de Instagram con la promo del show. */
+  promoUrl?: string;
+  /** Texto del link de promo (por defecto "Promo"). */
+  promoLabel?: string;
+  /** Info de acceso al show, se muestra como badge (ej. entrada gratuita). */
+  entry?: string;
+  /** Banda o entidad que invitó/anfitriona del show. */
+  invitedBy?: string;
   description?: string;
 };
 
@@ -29,8 +37,19 @@ export type PastShow = {
 const PORN_BAND_NAME: string = "PORN";
 const BREAKPOINT_BAND_NAME: string = "BREAKPOINT";
 
-// Sin fechas confirmadas por el momento.
-export const UPCOMING_SHOWS: UpcomingShow[] = [];
+// Fechas confirmadas, ordenadas por cronología.
+export const UPCOMING_SHOWS: UpcomingShow[] = [
+  {
+    date: "28 de Noviembre, 2026",
+    venue: "Tuc-Man Expo Tattoo",
+    city: "Tucumán, Argentina",
+    entry: "Entrada: alimento no perecedero",
+    invitedBy: "Tuc-Man Expo Tattoo",
+    promoUrl: "https://www.instagram.com/p/DcAQ0yEtPay/",
+    promoLabel: "Ver publicación PROMO",
+    description: "Tocamos en vivo en la Tuc-Man Expo Tattoo, el evento de tatuajes más grande del NOA, con más de 200 artistas en la Sociedad Rural de Tucumán.",
+  },
+];
 
 const PAST_SHOWS: PastShow[] = [
   {

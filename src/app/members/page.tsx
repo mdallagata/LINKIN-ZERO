@@ -46,7 +46,7 @@ export default function MembersPage(): ReactNode {
         <Container fluid>
           {MEMBERS.map((member: Member, i: number) => (
             <FadeInSection key={member.name} delay={i * 150}>
-              <MemberSection {...member} reverse={i % 2 !== 0} loading="eager" />
+              <MemberSection {...member} reverse={i % 2 !== 0} loading="lazy" />
             </FadeInSection>
           ))}
         </Container>

@@ -11,7 +11,14 @@ export const LEGAL_DISCLAIMER: string =
 
 // Imagen compartida por el openGraph de todas las páginas, para que compartir
 // cualquier link (no solo la home) muestre preview con foto en redes sociales.
-export const OG_IMAGE = {
+export type OGImage = {
+  url: string;
+  width: number;
+  height: number;
+  alt: string;
+};
+
+export const OG_IMAGE: OGImage = {
   url: "/icon.png",
   width: 256,
   height: 256,

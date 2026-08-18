@@ -8,7 +8,7 @@ type Props = {
 
 export default function ScrollToContent({ selector }: Props): null {
   useEffect(() => {
-    const el = document.querySelector(selector);
+    const el: Element | null = document.querySelector(selector);
     if (!el) return;
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {

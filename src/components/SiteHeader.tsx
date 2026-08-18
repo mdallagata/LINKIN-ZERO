@@ -35,7 +35,7 @@ export default function SiteHeader({
   }, []);
 
   const mobileHeroImage: string = "/images/show-hero.webp";
-  const effectiveHeroImage: string | undefined = isMobile ? mobileHeroImage : heroImage;
+  const effectiveHeroImage: string | undefined = isMobile && heroImage ? mobileHeroImage : heroImage;
   const effectiveHeroPosition: string = isMobile ? "55%" : (heroImagePosition ?? "45%");
 
   const sentinelRef = useRef<HTMLDivElement>(null);

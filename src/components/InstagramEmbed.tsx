@@ -1,7 +1,7 @@
 "use client";
 
 import type { CSSProperties, ReactNode } from "react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { SiInstagram } from "react-icons/si";
 
 type Props = {
@@ -12,6 +12,11 @@ type EmbedInfo = {
   src: string;
   label: "Post" | "Reel";
 };
+
+// Si el embed queda colgado (post borrado/privado, red lenta) el iframe igual
+// dispara onLoad al renderizar la página de error de Instagram — este timeout
+// es la única red de seguridad para no dejar el skeleton girando para siempre.
+const LOAD_TIMEOUT_MS: number = 8000;
 
 function embedInfo(url: string): EmbedInfo | null {
   const postMatch = url.match(/instagram\.com\/p\/([^/?]+)/);
@@ -25,6 +30,34 @@ export default function InstagramEmbed({ url }: Props): ReactNode {
   const info: EmbedInfo | null = embedInfo(url);
   const [loaded, setLoaded] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
+  const loadedRef = useRef<boolean>(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect((): void => {
+    loadedRef.current = loaded;
+  }, [loaded]);
+
+  useEffect((): void | (() => void) => {
+    const el: HTMLDivElement | null = containerRef.current;
+    if (!el || !info) return;
+    let timeoutId: number | null = null;
+    const observer = new IntersectionObserver(
+      ([entry]: IntersectionObserverEntry[]) => {
+        if (!entry.isIntersecting) return;
+        observer.disconnect();
+        timeoutId = window.setTimeout(() => {
+          if (!loadedRef.current) setError(true);
+        }, LOAD_TIMEOUT_MS);
+      },
+      { threshold: 0.1 }
+    );
+    observer.observe(el);
+    return (): void => {
+      observer.disconnect();
+      if (timeoutId !== null) window.clearTimeout(timeoutId);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [info?.src]);
 
   if (!info) {
     return (
@@ -60,7 +93,7 @@ export default function InstagramEmbed({ url }: Props): ReactNode {
 
   return (
     <div className="text-center">
-      <div style={containerStyle}>
+      <div ref={containerRef} style={containerStyle}>
         {!loaded && !error && (
           <div
             className="instagram-skeleton"

@@ -23,7 +23,7 @@ Abrí [http://localhost:3010](http://localhost:3010).
 - [React](https://react.dev) 19
 - [react-bootstrap](https://react-bootstrap.github.io) 2 + [Bootstrap](https://getbootstrap.com) 5 (solo CSS)
 - TypeScript + ESLint
-- Deploy: [Cloudflare Workers](https://developers.cloudflare.com/workers/) (`wrangler`)
+- Deploy: [Cloudflare Pages](https://pages.cloudflare.com/) — sitio 100% estático (`output: "export"` + `wrangler deploy`)
 - Fuentes: [Anton](https://fonts.google.com/specimen/Anton) (títulos) + [Space Grotesk](https://fonts.google.com/specimen/Space+Grotesk) (cuerpo), vía `next/font/google`
 
 ## Estructura
@@ -32,9 +32,9 @@ Abrí [http://localhost:3010](http://localhost:3010).
 - `src/app/members/page.tsx` — integrantes de la banda
 - `src/app/shows/page.tsx` — historial de shows
 - `src/app/{loading,error,not-found}.tsx` — estados de carga/error/404
-- `src/app/{robots,sitemap}.ts` — SEO
+- `src/app/{robots,sitemap,manifest}.ts` — SEO y PWA
 - `src/app/icon.png` — favicon de la banda
-- `src/components/` — SiteHeader, SiteFooter, MemberSection, ShowsSections, y utilidades de UI (BackToTop, ContactButtons, FadeInImage/Section, InstagramEmbed, LoadingSpinner, ScrollToContent, y los visores de fotos PhotoShowcase / ShowPhotoGallery / PhotoModalTrigger / ZoomableImage)
+- `src/components/` — SiteHeader, SiteFooter, MemberSection, ShowsSections, JsonLd, y utilidades de UI (BackToTop, ContactButtons, FadeInImage/Section, InstagramEmbed, LoadingSpinner, ScrollToContent, y los visores de fotos PhotoShowcase / ShowPhotoGallery / PhotoModalTrigger / ZoomableImage)
 - `src/data/` — contenido editable: nombre/descripción (`band.ts`), navegación (`nav.ts`), shows (`shows.ts`), integrantes (`members.ts`), reel de Instagram de la home (`instagram.ts`)
 
 ## Contacto

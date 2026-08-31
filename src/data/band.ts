@@ -19,8 +19,8 @@ export type OGImage = {
 };
 
 export const OG_IMAGE: OGImage = {
-  url: "/icon.png",
-  width: 256,
-  height: 256,
-  alt: BAND_NAME,
+  url: "/og-image.jpg",
+  width: 1200,
+  height: 630,
+  alt: `${BAND_NAME} en vivo`,
 };

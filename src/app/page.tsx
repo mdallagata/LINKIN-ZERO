@@ -12,10 +12,6 @@ import { NAV_LINKS } from "@/data/nav";
 import { REEL_URL } from "@/data/instagram";
 import { UPCOMING_SHOWS } from "@/data/shows";
 
-// Revalida a diario: sin esto, el año del footer (new Date().getFullYear())
-// queda fijo en el HTML del último build hasta el próximo deploy.
-export const revalidate: number = 86400;
-
 export default function Home(): ReactNode {
   return (
     <>

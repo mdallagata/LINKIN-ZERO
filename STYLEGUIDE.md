@@ -1,7 +1,7 @@
 # LINKIN ZERØ — Style Guide
 
 **Platform:** Next.js 16 · React Bootstrap 2 (Bootstrap 5)
-**Last updated:** 2026-08-18
+**Last updated:** 2026-08-21
 
 > For coding rules and architecture conventions, see [PROJECT_GUIDE.md](./PROJECT_GUIDE.md).
 

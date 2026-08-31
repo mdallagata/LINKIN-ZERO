@@ -30,11 +30,20 @@ Strict mode (`"strict": true`) está activo. Convención de tipado en todo el c�
 
 A page that exports `metadata` **cannot** be a Client Component (Next.js requirement). If a page needs both `metadata` and react-bootstrap layout, keep `metadata` in the page (Server Component) and push the react-bootstrap usage down into child components (e.g. `SiteHeader`, `SiteFooter`, `MemberSection`) that are themselves `"use client"`.
 
+## Deploy
+
+El sitio es **100% estático** (`output: "export"` en `next.config.ts`). Esto implica:
+
+- `next/image` necesita `images: { unoptimized: true }` — no hay servidor de optimización.
+- **No existe ISR**: `export const revalidate` no hace nada en un export estático; no agregarlo.
+- El deploy se hace a **Cloudflare Pages** con `wrangler deploy` (script `deploy` en `package.json`).
+
 ## Images
 
-- Photos go through `next/image` (`.webp`; the Septiembre Musical set is `.jpg`), which optimizes them automatically.
+- Photos go through `next/image` (`.webp`). Como el deploy es estático, `unoptimized: true` está activo — la optimización de tamaño corre en tiempo de build o se hace manualmente.
 - All images live in `public/images/` (show photos under `public/images/shows/`).
 - Member photos are 480×720 (1200×1800 source) with `objectPosition` tuning per member in `src/data/members.ts`.
+- **Thumbnails**: cada foto de show tiene una versión `*-thumb.webp` chica (aprox. 120×90) en la misma carpeta, generada manualmente con `cwebp`. `ShowsSections` usa `thumbUrl()` para derivar el path (`photo.replace(/\.(\w+)$/, "-thumb.$1")`). Al agregar un show nuevo, hay que generar los thumbs antes de deployar.
 
 ## Fonts
 
@@ -52,6 +61,15 @@ Este sitio es una **herramienta de publicidad y captación de contrataciones**. 
 - Contactarnos para contratarnos
 
 Cada decisión de contenido y layout debe responder a: **¿esto ayuda a vender un show?**
+
+## SEO y datos estructurados
+
+- Metadatos OpenGraph y Twitter están en `layout.tsx` (global) y en cada página (título/descripción específicos).
+- `viewport` (`themeColor`) se exporta **por separado** como `export const viewport: Viewport` — **no** dentro de `metadata`; Next 16 lo exige así.
+- JSON-LD (schema.org) se renderiza con el componente `JsonLd` (`<script type="application/ld+json">`):
+  - `layout.tsx` inyecta un `MusicGroup` global.
+  - `ShowsSections` inyecta un `MusicEvent` por cada próximo show.
+- `UpcomingShow` requiere `startDate: string` (ISO 8601, ej. `"2026-11-28"`) para el JSON-LD — el campo `date` es solo display.
 
 ## Content
 

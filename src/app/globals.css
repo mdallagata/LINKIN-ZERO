@@ -915,6 +915,10 @@ h3 {
     transform: none;
   }
 
+  .scroll-indicator {
+    animation: none;
+  }
+
   .photo-modal.modal.fade .modal-dialog,
   .photo-modal.modal.show .modal-dialog {
     transition: none;

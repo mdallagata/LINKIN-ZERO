@@ -11,6 +11,7 @@ export default function FadeInImage({
   ...rest
 }: ImageProps): ReactNode {
   const [loaded, setLoaded] = useState<boolean>(false);
+  const fadeTransition: string = "opacity 0.4s ease-in";
 
   return (
     <Image
@@ -19,7 +20,7 @@ export default function FadeInImage({
       style={{
         ...style,
         opacity: loaded ? 1 : 0,
-        transition: "opacity 0.4s ease-in",
+        transition: style?.transition ? `${style.transition}, ${fadeTransition}` : fadeTransition,
       }}
       onLoad={(e: SyntheticEvent<HTMLImageElement>) => {
         setLoaded(true);

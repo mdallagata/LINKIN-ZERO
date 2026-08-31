@@ -1,11 +1,12 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import type { NextFontWithVariable } from "next/dist/compiled/@next/font/dist/types";
 import { Anton, Space_Grotesk } from "next/font/google";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./globals.css";
 import BackToTop from "@/components/BackToTop";
-import { BAND_NAME, BAND_TAGLINE, SITE_URL } from "@/data/band";
+import JsonLd from "@/components/JsonLd";
+import { BAND_DESCRIPTION, BAND_NAME, BAND_TAGLINE, INSTAGRAM_URL, OG_IMAGE, SITE_URL } from "@/data/band";
 
 const anton: NextFontWithVariable = Anton({
   subsets: ["latin"],
@@ -18,6 +19,10 @@ const spaceGrotesk: NextFontWithVariable = Space_Grotesk({
   weight: ["400", "500", "700"],
   variable: "--font-body",
 });
+
+export const viewport: Viewport = {
+  themeColor: "#5f9ea0",
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -44,20 +49,28 @@ export const metadata: Metadata = {
     siteName: BAND_NAME,
     locale: "es_AR",
     type: "website",
-    images: [
-      {
-        url: "/icon.png",
-        width: 256,
-        height: 256,
-        alt: BAND_NAME,
-      },
-    ],
+    images: [OG_IMAGE],
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: BAND_NAME,
     description: BAND_TAGLINE,
-    images: ["/icon.png"],
+    images: [OG_IMAGE.url],
+  },
+};
+
+const MUSIC_GROUP_JSON_LD = {
+  "@context": "https://schema.org",
+  "@type": "MusicGroup",
+  name: BAND_NAME,
+  description: BAND_DESCRIPTION,
+  genre: "Nu Metal",
+  url: SITE_URL,
+  image: `${SITE_URL}${OG_IMAGE.url}`,
+  sameAs: [INSTAGRAM_URL],
+  foundingLocation: {
+    "@type": "Place",
+    name: "Tucumán, Argentina",
   },
 };
 
@@ -73,6 +86,7 @@ export default function RootLayout({
         className={`${anton.variable} ${spaceGrotesk.variable}`}
       >
         <body className="d-flex flex-column min-vh-100 align-items-center">
+        <JsonLd data={MUSIC_GROUP_JSON_LD} />
         {children}
         <BackToTop />
       </body>

@@ -1,5 +1,7 @@
 export type UpcomingShow = {
   date: string;
+  /** Fecha en formato ISO (AAAA-MM-DD), para datos estructurados (JSON-LD) — `date` es el texto que se muestra. */
+  startDate: string;
   venue: string;
   city: string;
   ticketUrl?: string;
@@ -41,13 +43,14 @@ const BREAKPOINT_BAND_NAME: string = "BREAKPOINT";
 export const UPCOMING_SHOWS: UpcomingShow[] = [
   {
     date: "28 de Noviembre, 2026",
+    startDate: "2026-11-28",
     venue: "Tuc-Man Expo Tattoo",
     city: "Tucumán, Argentina",
     entry: "Entrada: alimento no perecedero",
     invitedBy: "Tuc-Man Expo Tattoo",
     promoUrl: "https://www.instagram.com/p/DcAQ0yEtPay/",
     promoLabel: "Ver publicación PROMO",
-    description: "Tocamos en vivo en la Tuc-Man Expo Tattoo, el evento de tatuajes más grande del NOA, con más de 200 artistas en la Sociedad Rural de Tucumán.",
+    description: "Formamos parte de la Tuc-Man Expo Tattoo, el evento de tatuajes más grande del NOA, con más de 200 artistas en la Sociedad Rural de Tucumán.",
   },
 ];
 
@@ -59,7 +62,7 @@ const PAST_SHOWS: PastShow[] = [
     city: "Tucumán, Argentina",
     event: "Noche Nu Metal",
     invitedBy: BREAKPOINT_BAND_NAME,
-    description: `Tocamos como banda invitada en la fecha debut de ${BREAKPOINT_BAND_NAME}, compartiendo escenario en una noche a puro nu metal.`,
+    description: `Formamos parte de la fecha debut de ${BREAKPOINT_BAND_NAME}, compartiendo escenario en una noche a puro nu metal.`,
     embedUrl: "https://www.instagram.com/p/DaRebBYDFNT/embed",
     photos: ["/images/shows/4/1.webp", "/images/shows/4/2.webp", "/images/shows/4/3.webp", "/images/shows/4/4.webp", "/images/shows/4/5.webp", "/images/shows/4/6.webp"],
   },
@@ -103,7 +106,7 @@ const PAST_SHOWS: PastShow[] = [
     ],
     description: `Una noche de rock alternativo y metal junto a ${PORN_BAND_NAME} (Korn) y Aeon (Tool), en un evento cultural y familiar con música en vivo, feria de artesanos y gastronomía.`,
     embedUrl: "https://www.instagram.com/p/DOXS0a2DDJ7/embed",
-    photos: ["/images/shows/1/1.jpg", "/images/shows/1/2.jpg", "/images/shows/1/3.jpg", "/images/shows/1/4.jpg", "/images/shows/1/5.jpg", "/images/shows/1/6.jpg"],
+    photos: ["/images/shows/1/1.webp", "/images/shows/1/2.webp", "/images/shows/1/3.webp", "/images/shows/1/4.webp", "/images/shows/1/5.webp", "/images/shows/1/6.webp"],
   },
 ];
 

@@ -1,0 +1,16 @@
+# Cloudflare Pages headers — ver https://developers.cloudflare.com/pages/configuration/headers/
+
+# Los archivos de _next/static/* tienen el hash de su contenido en el nombre,
+# así que un cambio de contenido siempre implica una URL distinta: se pueden
+# cachear "para siempre" sin riesgo de servir una versión vieja.
+/_next/static/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Las imágenes no tienen hash en el nombre y a veces se reemplazan sin cambiar
+# la ruta — un cache largo serviría la foto vieja hasta que expire. Un día es
+# un buen equilibrio entre repetir menos descargas y no trabarse con la última.
+/images/*
+  Cache-Control: public, max-age=86400
+
+/og-image.jpg
+  Cache-Control: public, max-age=86400

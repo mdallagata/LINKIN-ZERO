@@ -1,2 +1,5 @@
 - [ ] Hero image rotativa — que cambie automáticamente entre varias fotos
 - [ ] Hook pre-push que corra `yarn lint`
+- [ ] LCP: el CSS completo de Bootstrap bloquea el render del hero — reducir la dependencia de Bootstrap (cambio grande, riesgo de romper estilos)
+- [ ] Activar Cloudflare Web Analytics desde el dashboard (requiere acceso al panel)
+- [ ] Probar zoom táctil y swipe de la galería en un celular real

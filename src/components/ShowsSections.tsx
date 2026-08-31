@@ -7,14 +7,73 @@ import Container from "react-bootstrap/Container";
 import { FiCalendar } from "react-icons/fi";
 import { SiInstagram } from "react-icons/si";
 import FadeInImage from "@/components/FadeInImage";
+import JsonLd from "@/components/JsonLd";
 import ShowPhotoGallery from "@/components/ShowPhotoGallery";
+import { BAND_NAME, SITE_URL } from "@/data/band";
 import type { PastShow, PressLink, UpcomingShow } from "@/data/shows";
 import { SORTED_PAST_SHOWS, UPCOMING_SHOWS } from "@/data/shows";
 
+function upcomingShowJsonLd(show: UpcomingShow): object {
+  return {
+    "@context": "https://schema.org",
+    "@type": "MusicEvent",
+    name: `${BAND_NAME} en ${show.venue}`,
+    startDate: show.startDate,
+    location: {
+      "@type": "Place",
+      name: show.venue,
+      address: show.city,
+    },
+    performer: {
+      "@type": "MusicGroup",
+      name: BAND_NAME,
+      url: SITE_URL,
+    },
+    ...(show.description ? { description: show.description } : {}),
+    ...(show.ticketUrl ? { offers: { "@type": "Offer", url: show.ticketUrl } } : {}),
+  };
+}
+
 const EMBED_SUFFIX_RE = /\/embed\/?$/;
+const EXTENSION_RE = /\.(\w+)$/;
 
 function instagramPostUrl(embedUrl: string): string {
   return embedUrl.replace(EMBED_SUFFIX_RE, "");
+}
+
+// Las miniaturas de show-card usan una versión chica pre-generada
+// (ver public/images/shows/*/*-thumb.webp) en vez de la foto completa —
+// mostrar un archivo de foto completa en un recuadro de 120x90 desperdicia
+// la mayor parte de la descarga.
+function thumbUrl(photo: string): string {
+  return photo.replace(EXTENSION_RE, "-thumb.$1");
+}
+
+type GalleryTarget = { show: PastShow; index: number };
+
+// Mantiene los datos de la galería vivos hasta que termina la animación de
+// cierre del modal (onExited) — si se limpiaran en onHide, el modal se
+// vaciaría de golpe a mitad del fade en vez de cerrarse suave.
+function useShowGallery(): {
+  target: GalleryTarget | null;
+  visible: boolean;
+  open: (show: PastShow, index: number) => void;
+  hide: () => void;
+  clear: () => void;
+} {
+  const [target, setTarget] = useState<GalleryTarget | null>(null);
+  const [visible, setVisible] = useState<boolean>(false);
+
+  return {
+    target,
+    visible,
+    open: (show: PastShow, index: number): void => {
+      setTarget({ show, index });
+      setVisible(true);
+    },
+    hide: (): void => setVisible(false),
+    clear: (): void => setTarget(null),
+  };
 }
 
 function PastShowCard({
@@ -36,9 +95,7 @@ function PastShowCard({
           <FiCalendar aria-hidden="true" />
           {show.date}
         </p>
-        <p className="show-badge mb-0">
-          {show.invitedBy ? `Invitados por ${show.invitedBy}` : "Fecha propia"}
-        </p>
+        {!show.invitedBy && <p className="show-badge mb-0">Fecha propia</p>}
       </div>
       <h3 className="mb-2 mt-1">{show.event}</h3>
       <p className="text-muted mb-0">
@@ -78,7 +135,7 @@ function PastShowCard({
               aria-label={`Ver foto ${i + 1}`}
             >
               <FadeInImage
-                src={photo}
+                src={thumbUrl(photo)}
                 alt={`${show.event} — Foto ${i + 1}`}
                 width={120}
                 height={90}
@@ -107,7 +164,7 @@ function PastShowCard({
 }
 
 function PastShowsContent(): ReactNode {
-  const [gallery, setGallery] = useState<{ show: PastShow; index: number } | null>(null);
+  const gallery = useShowGallery();
 
   // Group shows by year extracted from sortKey
   const byYear: Map<string, PastShow[]> = new Map();
@@ -128,19 +185,20 @@ function PastShowsContent(): ReactNode {
               <PastShowCard
                 key={`${show.date}-${show.venue}`}
                 show={show}
-                onShowPhotos={(s: PastShow, i: number) => setGallery({ show: s, index: i })}
+                onShowPhotos={gallery.open}
               />
             ))}
           </div>
         ))}
       </div>
-      {gallery && gallery.show.photos && (
+      {gallery.target && gallery.target.show.photos && (
         <ShowPhotoGallery
-          eventName={gallery.show.event}
-          photos={gallery.show.photos}
-          photoIndex={gallery.index}
-          show={Boolean(gallery)}
-          onHide={() => setGallery(null)}
+          eventName={gallery.target.show.event}
+          photos={gallery.target.show.photos}
+          photoIndex={gallery.target.index}
+          show={gallery.visible}
+          onHide={gallery.hide}
+          onExited={gallery.clear}
         />
       )}
     </>
@@ -150,6 +208,9 @@ function PastShowsContent(): ReactNode {
 export function UpcomingShowsSection(): ReactNode {
   return (
     <Container as="section" id="fechas" className="mb-5 pb-4 container-narrow">
+      {UPCOMING_SHOWS.map((show: UpcomingShow) => (
+        <JsonLd key={show.startDate} data={upcomingShowJsonLd(show)} />
+      ))}
       <h2 className="mb-1 mt-5">Próximo Show</h2>
       <div className="section-divider" />
       {UPCOMING_SHOWS.length === 0 ? (
@@ -170,7 +231,7 @@ export function UpcomingShowsSection(): ReactNode {
                   <FiCalendar aria-hidden="true" />
                   {show.date}
                 </p>
-                {show.invitedBy && <span className="show-badge">Invitados por {show.invitedBy}</span>}
+                {!show.invitedBy && <span className="show-badge">Fecha propia</span>}
               </div>
               <h3 className="mb-2 mt-1">
                 {show.venue} — {show.city}
@@ -206,7 +267,7 @@ export function UpcomingShowsSection(): ReactNode {
 }
 
 export function LatestShowSection(): ReactNode {
-  const [gallery, setGallery] = useState<{ show: PastShow; index: number } | null>(null);
+  const gallery = useShowGallery();
   const latest: PastShow | undefined = SORTED_PAST_SHOWS[0];
   if (!latest) return null;
   return (
@@ -218,14 +279,15 @@ export function LatestShowSection(): ReactNode {
     >
       <h2 className="mb-1">Último Show</h2>
       <div className="section-divider" />
-      <PastShowCard show={latest} featured onShowPhotos={(s: PastShow, i: number) => setGallery({ show: s, index: i })} />
-      {gallery && gallery.show.photos && (
+      <PastShowCard show={latest} featured onShowPhotos={gallery.open} />
+      {gallery.target && gallery.target.show.photos && (
         <ShowPhotoGallery
-          eventName={gallery.show.event}
-          photos={gallery.show.photos}
-          photoIndex={gallery.index}
-          show={Boolean(gallery)}
-          onHide={() => setGallery(null)}
+          eventName={gallery.target.show.event}
+          photos={gallery.target.show.photos}
+          photoIndex={gallery.target.index}
+          show={gallery.visible}
+          onHide={gallery.hide}
+          onExited={gallery.clear}
         />
       )}
     </Container>

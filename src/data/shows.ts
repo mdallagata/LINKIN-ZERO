@@ -48,8 +48,8 @@ export const UPCOMING_SHOWS: UpcomingShow[] = [
     city: "Tucumán, Argentina",
     entry: "Entrada: alimento no perecedero",
     invitedBy: "Tuc-Man Expo Tattoo",
-    promoUrl: "https://www.instagram.com/p/DcAQ0yEtPay/",
-    promoLabel: "Ver publicación PROMO",
+    promoUrl: "https://www.instagram.com/p/Dcr8pDARsA_/",
+    promoLabel: "Ver publicación",
     description: "Formamos parte de la Tuc-Man Expo Tattoo, el evento de tatuajes más grande del NOA, con más de 200 artistas en la Sociedad Rural de Tucumán.",
   },
 ];

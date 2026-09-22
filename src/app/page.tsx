@@ -54,6 +54,11 @@ export default function Home(): ReactNode {
               <UpcomingShowsSection />
             </FadeInSection>
           )}
+          {UPCOMING_SHOWS.length > 0 && (
+            <Container className="container-narrow">
+              <hr className="brand-hr my-4" />
+            </Container>
+          )}
           <FadeInSection>
             <LatestShowSection />
           </FadeInSection>

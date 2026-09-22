@@ -7,6 +7,7 @@ import Container from "react-bootstrap/Container";
 import { FiCalendar } from "react-icons/fi";
 import { SiInstagram } from "react-icons/si";
 import FadeInImage from "@/components/FadeInImage";
+import InstagramEmbed from "@/components/InstagramEmbed";
 import JsonLd from "@/components/JsonLd";
 import ShowPhotoGallery from "@/components/ShowPhotoGallery";
 import { BAND_NAME, SITE_URL } from "@/data/band";
@@ -225,39 +226,46 @@ export function UpcomingShowsSection(): ReactNode {
       ) : (
         <div className="text-start">
           {UPCOMING_SHOWS.map((show: UpcomingShow) => (
-            <div className="show-card" key={`${show.date}-${show.venue}`}>
-              <div className="d-flex justify-content-between align-items-baseline flex-wrap gap-2">
-                <p className="text-brand mb-0 fw-bold d-inline-flex align-items-center gap-2">
-                  <FiCalendar aria-hidden="true" />
-                  {show.date}
-                </p>
-                {!show.invitedBy && <span className="show-badge">Fecha propia</span>}
-              </div>
-              <h3 className="mb-2 mt-1">
-                {show.venue} — {show.city}
-              </h3>
-              {show.description && <p className="text-muted mt-3 mb-0">{show.description}</p>}
-              <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mt-3">
-                <div className="d-flex flex-wrap gap-3">
-                  {show.promoUrl && (
-                    <a
-                      href={show.promoUrl}
-                      className="icon-link icon-link--text"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <SiInstagram aria-hidden />
-                      {show.promoLabel ?? "Promo"} ↗
-                    </a>
-                  )}
-                  {show.ticketUrl && (
-                    <a href={show.ticketUrl} className="glow-hover text-brand d-inline-block">
-                      Entradas →
-                    </a>
-                  )}
+            <div key={`${show.date}-${show.venue}`}>
+              <div className="show-card">
+                <div className="d-flex justify-content-between align-items-baseline flex-wrap gap-2">
+                  <p className="text-brand mb-0 fw-bold d-inline-flex align-items-center gap-2">
+                    <FiCalendar aria-hidden="true" />
+                    {show.date}
+                  </p>
+                  {!show.invitedBy && <span className="show-badge">Fecha propia</span>}
                 </div>
-                {show.entry && <span className="entry-badge">{show.entry}</span>}
+                <h3 className="mb-2 mt-1">
+                  {show.venue} — {show.city}
+                </h3>
+                {show.description && <p className="text-muted mt-3 mb-0">{show.description}</p>}
+                <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mt-3">
+                  <div className="d-flex flex-wrap gap-3">
+                    {show.promoUrl && (
+                      <a
+                        href={show.promoUrl}
+                        className="icon-link icon-link--text"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <SiInstagram aria-hidden />
+                        {show.promoLabel ?? "Promo"} ↗
+                      </a>
+                    )}
+                    {show.ticketUrl && (
+                      <a href={show.ticketUrl} className="glow-hover text-brand d-inline-block">
+                        Entradas →
+                      </a>
+                    )}
+                  </div>
+                  {show.entry && <span className="entry-badge">{show.entry}</span>}
+                </div>
               </div>
+              {show.promoUrl && (
+                <div className="mt-4">
+                  <InstagramEmbed url={show.promoUrl} />
+                </div>
+              )}
             </div>
           ))}
         </div>

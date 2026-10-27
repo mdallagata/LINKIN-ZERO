@@ -27,26 +27,30 @@ export default function SiteHeader({ links, heroImage, heroImagePosition, brandA
   const [stuck, setStuck] = useState<boolean>(false);
   const [placeholderHeight, setPlaceholderHeight] = useState<number>(0);
 
-  useEffect(() => {
-    const sentinel = sentinelRef.current;
-    if (!sentinel) return;
-    const observer = new IntersectionObserver(([entry]) => setStuck(!entry.isIntersecting && entry.boundingClientRect.top < 0), { threshold: 0 });
+  // Cuando el centinela (justo arriba de la barra) sale por arriba de la
+  // pantalla, la barra pasa a position: fixed. Mientras está fija deja un hueco
+  // de la altura que tenía en el hero (medida justo antes de soltarse): sin él
+  // la columna centrada se reacomodaría, movería el centinela y el estado
+  // oscilaría. (Con position: sticky no alcanza: la barra está dentro del hero
+  // de 100svh y sticky no la deja salir de ahí.)
+  useEffect((): (() => void) | void => {
+    const sentinel: HTMLDivElement | null = sentinelRef.current;
+    const navBar: HTMLElement | null = navBarRef.current;
+    if (!sentinel || !navBar) return;
+    let wasStuck: boolean = false;
+    const observer = new IntersectionObserver(
+      ([entry]: IntersectionObserverEntry[]) => {
+        if (!entry) return;
+        const isStuck: boolean = !entry.isIntersecting && entry.boundingClientRect.top < 0;
+        if (isStuck && !wasStuck) setPlaceholderHeight(navBar.offsetHeight);
+        wasStuck = isStuck;
+        setStuck(isStuck);
+      },
+      { threshold: 0 },
+    );
     observer.observe(sentinel);
     return (): void => observer.disconnect();
   }, []);
-
-  // While the nav bar is fixed it leaves the flow; a spacer of its in-flow
-  // height keeps the centered hero flex column from re-centering (and moving
-  // the sentinel), which would otherwise oscillate the stuck state.
-  useEffect(() => {
-    const navBar = navBarRef.current;
-    if (!navBar) return;
-    const measure = new ResizeObserver(() => {
-      if (!stuck) setPlaceholderHeight(navBar.offsetHeight);
-    });
-    measure.observe(navBar);
-    return (): void => measure.disconnect();
-  }, [stuck]);
 
   const handleNavClick = (e: MouseEvent, href: string): void => {
     const hashIndex: number = href.indexOf("#");

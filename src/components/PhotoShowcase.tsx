@@ -9,9 +9,17 @@ export default function PhotoShowcase({ src, alt, width, height }: { src: string
       triggerClassName="photo-trigger photo-trigger--frame"
       bodyClassName="p-0"
       triggerLabel={`Ver imagen completa: ${alt}`}
-      thumbnail={<FadeInImage src={src} alt={alt} width={width} height={height} className="photo-frame" />}
+      thumbnail={<FadeInImage src={src} alt={alt} width={width} height={height} sizes="(min-width: 540px) 500px, 100vw" className="photo-frame" />}
     >
-      <ZoomableImage src={src} alt={alt} width={width} height={height} className="w-100 h-auto" style={{ maxHeight: "85vh", objectFit: "contain" }} />
+      <ZoomableImage
+        src={src}
+        alt={alt}
+        width={width}
+        height={height}
+        sizes="(min-width: 1200px) 1140px, 100vw"
+        className="w-100 h-auto"
+        style={{ maxHeight: "85vh", objectFit: "contain" }}
+      />
     </PhotoModalTrigger>
   );
 }

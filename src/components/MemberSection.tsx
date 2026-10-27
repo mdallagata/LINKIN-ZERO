@@ -58,6 +58,7 @@ export default function MemberSection({
           alt={imageAlt}
           width={imageWidth}
           height={imageHeight}
+          sizes="(min-width: 768px) 57vh, 100vw"
           className="h-auto"
           style={{ maxHeight: "85vh", width: "100%", objectFit: "contain" }}
           loading={loading}

@@ -4,9 +4,10 @@
   "private": true,
   "packageManager": "pnpm@12.15.0",
   "scripts": {
-    "dev": "next dev -p 3010",
-    "build": "next build",
+    "dev": "pnpm images && next dev -p 3010",
+    "build": "pnpm images && next build",
     "start": "next start -p 3010",
+    "images": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/generate-images.mts",
     "lint": "eslint",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
@@ -29,6 +30,7 @@
     "eslint-config-next": "16.4.3",
     "prettier": "3.9.10",
     "sass": "1.106.1",
+    "sharp": "0.35.5",
     "typescript": "^6.0.3",
     "wrangler": "^4.154.0"
   }

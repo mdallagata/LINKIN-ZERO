@@ -10,6 +10,9 @@
 /.next/
 /out/
 
+# fotos redimensionadas por scripts/generate-images.mts
+/public/generated/
+
 # production
 /build
 

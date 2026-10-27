@@ -1,0 +1,306 @@
+.siteHero {
+  position: relative;
+  overflow: hidden;
+}
+
+.siteHero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 30%, color-mix(in srgb, var(--brand) 6%, transparent), transparent);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Onda sutil arriba de todo en el hero sin foto (404, error). Va como máscara
+   para que el color salga de --brand en vez de estar fijo dentro del SVG. */
+.siteHero:not(.siteHeroPhoto)::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: color-mix(in srgb, var(--brand) 3%, transparent);
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120'%3E%3Cpath d='M0,60 C200,20 400,100 600,60 C800,20 1000,100 1200,60 L1200,0 L0,0 Z'/%3E%3C/svg%3E")
+    center top / 100% 40px no-repeat;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* El <picture> no debe generar caja: si no, toma el position: relative de
+   `.siteHero > *` y la imagen (absolute, 100%) queda medida contra él (0×0). */
+.siteHero > picture {
+  display: contents;
+}
+
+.heroBgImage {
+  z-index: 0 !important;
+  object-position: center var(--hero-position, 45%);
+  animation: heroFadeIn 0.4s ease-in;
+}
+
+@media (max-width: 576px) {
+  .heroBgImage {
+    object-position: center 55%;
+  }
+}
+
+@keyframes heroFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.siteHero > * {
+  position: relative;
+  z-index: 1;
+}
+
+.siteHeroPhoto {
+  height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 4rem;
+}
+
+.siteHeroPhoto::before {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0.75) 70%, #000 100%);
+}
+
+.siteHeroPhoto::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--brand);
+  mix-blend-mode: color;
+  opacity: 0.15;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.siteWordmark {
+  font-family: var(--font-heading), sans-serif;
+  font-size: clamp(3rem, 9vw, 6.5rem);
+  letter-spacing: 0.02em;
+  color: #fff;
+  margin-top: -1.5rem;
+  /* En la home es un h1: sin esto tomaría el interlineado, margen y peso de los títulos. */
+  line-height: 1.5;
+  margin-bottom: 0;
+  font-weight: 400;
+}
+
+/* Brillo que "respira": el texto tiene el brillo más tenue y una copia
+   transparente encima (::after, con el texto de data-text) suma el resto. Solo
+   se anima la opacidad de esa copia, que el navegador compone sin volver a
+   pintar cinco capas de text-shadow en cada cuadro. */
+.siteWordmarkGlow {
+  position: relative;
+  text-shadow:
+    0 0 1px #fff,
+    0 0 4px #fff,
+    0 0 8px var(--brand),
+    0 0 18px color-mix(in srgb, var(--brand) 35%, transparent),
+    0 0 35px color-mix(in srgb, var(--brand) 12%, transparent);
+}
+
+.siteWordmarkGlow::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  color: transparent;
+  text-shadow:
+    0 0 2px #fff,
+    0 0 8px #fff,
+    0 0 15px var(--brand),
+    0 0 35px color-mix(in srgb, var(--brand) 60%, transparent),
+    0 0 70px color-mix(in srgb, var(--brand) 30%, transparent);
+  pointer-events: none;
+  animation: wordmarkBreath 8s ease-in-out infinite;
+}
+
+/* 0.55 y no 1: la copia se suma al brillo base; así el pico iguala al de la
+   versión anterior, que animaba el text-shadow (medido con capturas). */
+@keyframes wordmarkBreath {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+
+  50% {
+    opacity: 0;
+  }
+}
+
+.heroTagline {
+  font-weight: 500;
+  font-size: clamp(0.9rem, 2.2vw, 1.3rem);
+  color: var(--ink-2);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-top: 0;
+  padding-bottom: 2rem;
+}
+
+.heroTaglineReveal .taglineChar {
+  display: inline;
+  animation: charReveal 0.3s ease-out both;
+}
+
+@keyframes charReveal {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.scrollIndicator {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255, 255, 255, 0.5);
+  animation: scrollBounce 2s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 2;
+}
+
+@keyframes scrollBounce {
+  0%,
+  100% {
+    transform: translateX(-50%) translateY(0);
+    opacity: 0.5;
+  }
+
+  50% {
+    transform: translateX(-50%) translateY(8px);
+    opacity: 1;
+  }
+}
+
+.siteNavBarStuck {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1030;
+  padding-bottom: 0.5rem !important;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid color-mix(in srgb, var(--brand) 25%, transparent);
+  animation: navSlideDown 0.3s ease;
+}
+
+@keyframes navSlideDown {
+  from {
+    transform: translateY(-100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+.siteNavList {
+  display: flex;
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+.siteNavList > li {
+  display: flex;
+}
+
+.siteNavLink {
+  position: relative;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: clamp(0.9rem, 1.6vw, 1.15rem) !important;
+  transition:
+    color 0.2s,
+    text-shadow 0.2s;
+  display: inline-block;
+  touch-action: manipulation;
+  color: #fff;
+  text-decoration: none;
+}
+
+.siteNavLink::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--brand);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+@media (hover: hover) {
+  .siteNavLink:hover {
+    color: #fff !important;
+    text-shadow: 0 0 10px var(--brand);
+  }
+
+  .siteNavLink:hover::after,
+  .siteNavLink[aria-current="page"]::after {
+    transform: scaleX(1);
+  }
+
+  .siteNavLink:hover::after {
+    background: #fff;
+    box-shadow: 0 0 8px #fff;
+  }
+}
+
+.siteNavLink[aria-current="page"]::after {
+  transform: scaleX(1);
+  background: var(--brand);
+  box-shadow:
+    0 0 8px var(--brand),
+    0 0 16px color-mix(in srgb, var(--brand) 40%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heroBgImage {
+    animation: none;
+  }
+
+  .siteNavLink::after {
+    transition: none;
+  }
+
+  .siteWordmarkGlow::after {
+    content: none;
+  }
+
+  .siteWordmarkGlow {
+    text-shadow:
+      0 0 2px #fff,
+      0 0 8px #fff,
+      0 0 15px var(--brand),
+      0 0 35px color-mix(in srgb, var(--brand) 60%, transparent);
+  }
+
+  .heroTaglineReveal .taglineChar {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .scrollIndicator {
+    animation: none;
+  }
+}

@@ -1,0 +1,5 @@
+@media (scripting: enabled) {
+  .fadeInImage:not(.isLoaded) {
+    opacity: 0;
+  }
+}

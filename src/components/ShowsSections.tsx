@@ -10,6 +10,8 @@ import type { PressLink, Show } from "@/data/shows";
 import { instagramPoster } from "@/lib/instagram-poster";
 import { formatShowDate } from "@/lib/show-schedule";
 import { PAST_SHOWS, UPCOMING_SHOWS } from "@/lib/shows";
+import { cx } from "@/lib/cx";
+import styles from "./ShowsSections.module.css";
 
 function upcomingShowJsonLd(show: Show): object {
   return {
@@ -40,7 +42,7 @@ function ShowCardHeader({ show }: { show: Show }): ReactNode {
         <FiCalendar aria-hidden="true" />
         {formatShowDate(show.date)}
       </p>
-      {!show.invitedBy && <span className="show-badge">Fecha propia</span>}
+      {!show.invitedBy && <span className={styles.showBadge}>Fecha propia</span>}
     </div>
   );
 }
@@ -48,7 +50,7 @@ function ShowCardHeader({ show }: { show: Show }): ReactNode {
 function PastShowCard({ show, featured = false }: { show: Show; featured?: boolean }): ReactNode {
   const title: string = show.event ?? show.venue;
   return (
-    <div className={`show-card${featured ? " show-card--featured" : ""}`}>
+    <div className={cx(styles.showCard, featured && styles.showCardFeatured)}>
       <ShowCardHeader show={show} />
       <h3 className="mb-2 mt-1">{title}</h3>
       <p className="text-muted mb-0">{show.event ? `${show.venue} — ${show.city}` : show.city}</p>
@@ -74,7 +76,7 @@ function PastShowCard({ show, featured = false }: { show: Show; featured?: boole
 function UpcomingShowCard({ show }: { show: Show }): ReactNode {
   return (
     <div>
-      <div className="show-card">
+      <div className={styles.showCard}>
         <ShowCardHeader show={show} />
         <h3 className="mb-2 mt-1">
           {show.venue} — {show.city}
@@ -94,7 +96,7 @@ function UpcomingShowCard({ show }: { show: Show }): ReactNode {
               </a>
             )}
           </div>
-          {show.entry && <span className="entry-badge">{show.entry}</span>}
+          {show.entry && <span className={styles.entryBadge}>{show.entry}</span>}
         </div>
       </div>
       {show.postUrl && (
@@ -115,7 +117,7 @@ export function UpcomingShowsSection(): ReactNode {
       <h2 className="mb-1 mt-5">Próximo Show</h2>
       <div className="section-divider" />
       {UPCOMING_SHOWS.length === 0 ? (
-        <div className="placeholder-box">
+        <div className={styles.placeholderBox}>
           <p className="mb-0">
             No hay fechas confirmadas en este momento. ¿Querés que toquemos en tu evento?{" "}
             <Link href="/#contacto" className="glow-hover text-brand">
@@ -138,7 +140,7 @@ export function LatestShowSection(): ReactNode {
   const latest: Show | undefined = PAST_SHOWS[0];
   if (!latest) return null;
   return (
-    <section id="ultimo-show" className="container pb-4 container-narrow" style={{ marginTop: "4.5rem" }}>
+    <section id="ultimo-show" className={cx("container pb-4 container-narrow", styles.latest)}>
       <h2 className="mb-1">Último Show</h2>
       <div className="section-divider" />
       <PastShowCard show={latest} featured />
@@ -152,10 +154,10 @@ export function PastShowsSection(): ReactNode {
     <section id="shows-anteriores" className="container mb-5 pb-4 container-narrow">
       <h2 className="mb-1">Shows Anteriores</h2>
       <div className="section-divider" />
-      <div className="text-start timeline">
+      <div className={cx("text-start", styles.timeline)}>
         {Array.from(byYear.entries()).map(([year, shows]: [string, Show[]]) => (
           <div key={year}>
-            <h3 className="timeline-year">{year}</h3>
+            <h3 className={styles.timelineYear}>{year}</h3>
             {shows.map((show: Show) => (
               <PastShowCard key={`${show.date}-${show.venue}`} show={show} />
             ))}

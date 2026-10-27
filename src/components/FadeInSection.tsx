@@ -2,6 +2,8 @@
 
 import type { CSSProperties, ReactNode } from "react";
 import { useEffect, useRef, useState } from "react";
+import { cx } from "@/lib/cx";
+import styles from "./FadeInSection.module.css";
 
 export default function FadeInSection({ children, delay }: { children: ReactNode; delay?: number }): ReactNode {
   const ref = useRef<HTMLDivElement>(null);
@@ -26,7 +28,7 @@ export default function FadeInSection({ children, delay }: { children: ReactNode
   const style: CSSProperties | undefined = delay !== undefined ? { transitionDelay: `${delay}ms` } : undefined;
 
   return (
-    <div ref={ref} className={`fade-in-section${visible ? " is-visible" : ""}`} style={style}>
+    <div ref={ref} className={cx(styles.fadeInSection, visible && styles.isVisible)} style={style}>
       {children}
     </div>
   );

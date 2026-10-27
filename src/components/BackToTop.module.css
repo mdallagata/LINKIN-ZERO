@@ -1,0 +1,44 @@
+.backToTop {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 1020;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  background: var(--brand);
+  color: #000;
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(10px);
+  transition:
+    opacity 0.3s,
+    transform 0.3s,
+    color 0.2s,
+    border-color 0.2s,
+    box-shadow 0.2s;
+  pointer-events: none;
+}
+
+.backToTop.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.backToTop:hover {
+  background: #fff;
+  color: #000;
+  box-shadow: 0 0 12px var(--brand);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .backToTop {
+    transition: none;
+  }
+}

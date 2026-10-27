@@ -1,0 +1,117 @@
+.placeholderBox {
+  border: 2px solid var(--brand);
+  border-radius: 10px;
+  padding: 3rem 1.5rem;
+  color: var(--brand);
+  box-shadow:
+    0 0 24px color-mix(in srgb, var(--brand) 35%, transparent),
+    inset 0 0 20px color-mix(in srgb, var(--brand) 8%, transparent);
+  background: color-mix(in srgb, var(--brand) 4%, transparent);
+}
+
+/* Timeline */
+.timeline {
+  position: relative;
+  padding-left: 2rem;
+}
+
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, transparent, var(--brand) 15%, var(--brand) 85%, transparent);
+  border-radius: 1px;
+}
+
+.timelineYear {
+  font-family: var(--font-heading), sans-serif;
+  font-size: 1.75rem;
+  color: #fff;
+  font-weight: 400;
+  position: relative;
+  margin-bottom: 1.5rem;
+  margin-top: 2rem;
+}
+
+/* Cada año está en su propio <div>: :first-of-type marcaría a todos. */
+.timeline > :first-child > .timelineYear {
+  margin-top: 0;
+}
+
+.timelineYear::before {
+  content: "";
+  position: absolute;
+  left: calc(-2rem + 1px);
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #fff;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.5);
+}
+
+/* Show cards — replaces the old shows-accordion. Real, finished content
+   (past shows) is always visible, no click required to see the proof. */
+.showCard {
+  border: 1px solid transparent;
+  border-radius: 10px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1rem;
+  text-align: left;
+  transition:
+    background 0.3s,
+    box-shadow 0.3s,
+    transform 0.3s;
+  background:
+    linear-gradient(var(--surface-2), var(--surface-2)) padding-box,
+    linear-gradient(var(--hairline), var(--hairline)) border-box;
+}
+
+.showCard:hover {
+  transform: scale(1.01);
+  box-shadow: 0 0 20px color-mix(in srgb, var(--brand) 15%, transparent);
+  background:
+    linear-gradient(var(--surface-2), var(--surface-2)) padding-box,
+    linear-gradient(var(--brand), var(--brand)) border-box;
+}
+
+.showCardFeatured {
+  padding: 1.75rem 2rem;
+  background:
+    linear-gradient(var(--surface-2), var(--surface-2)) padding-box,
+    linear-gradient(var(--brand), var(--brand)) border-box;
+}
+
+.showBadge {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--brand);
+}
+
+.entryBadge {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--brand);
+  background: color-mix(in srgb, var(--brand) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--brand) 35%, transparent);
+  border-radius: 999px;
+  padding: 0.35rem 0.9rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .showCard {
+    transition: none;
+  }
+}
+
+.latest {
+  margin-top: 4.5rem;
+}

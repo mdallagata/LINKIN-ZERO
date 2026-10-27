@@ -3,6 +3,8 @@
 import type { ReactNode } from "react";
 import { useEffect, useState } from "react";
 import { scrollBehavior } from "@/lib/scroll";
+import { cx } from "@/lib/cx";
+import styles from "./BackToTop.module.css";
 
 export default function BackToTop(): ReactNode {
   const [visible, setVisible] = useState<boolean>(false);
@@ -29,7 +31,7 @@ export default function BackToTop(): ReactNode {
 
   return (
     <button
-      className={`back-to-top${visible ? " visible" : ""}`}
+      className={cx(styles.backToTop, visible && styles.visible)}
       onClick={scrollToTop}
       aria-label="Volver arriba"
       aria-hidden={!visible}

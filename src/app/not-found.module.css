@@ -1,0 +1,12 @@
+/* Variante de h1 solo para el código de error de la página 404. */
+.errorCode {
+  font-size: clamp(4rem, 12vw, 8rem);
+}
+
+.errorSubtitle {
+  font-size: clamp(1.2rem, 3vw, 1.5rem);
+}
+
+.backLink {
+  font-size: 1.1rem;
+}

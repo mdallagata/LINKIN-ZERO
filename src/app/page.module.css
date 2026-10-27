@@ -1,0 +1,90 @@
+.homeSidePhoto {
+  display: none;
+}
+
+@media (min-width: 1400px) {
+  .homeSidePhoto {
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: -1rem;
+    width: 540px;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to left, black 35%, transparent 100%);
+    mask-image: linear-gradient(to left, black 35%, transparent 100%);
+    pointer-events: none;
+  }
+
+  .homeSidePhotoImg {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, black 0%, transparent 22%, transparent 78%, black 100%), url("/images/baterista-en-vivo.webp");
+    background-size: cover;
+    background-position:
+      center,
+      80% center;
+    background-repeat: no-repeat;
+    opacity: 0.35;
+    filter: grayscale(1) contrast(1.15);
+  }
+
+  .homeSidePhotoImg::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--brand);
+    mix-blend-mode: color;
+    opacity: 0.2;
+  }
+
+  .homeSidePhotoLeft {
+    right: auto;
+    left: -1rem;
+    -webkit-mask-image: linear-gradient(to right, black 35%, transparent 100%);
+    mask-image: linear-gradient(to right, black 35%, transparent 100%);
+  }
+
+  .homeSidePhotoLeft .homeSidePhotoImg {
+    background-image: linear-gradient(to bottom, black 0%, transparent 22%, transparent 78%, black 100%), url("/images/publico-en-vivo.webp");
+    background-position:
+      center,
+      55% center;
+    filter: none;
+  }
+}
+
+.heroDescription {
+  color: var(--ink-2);
+  font-size: clamp(0.95rem, 1.6vw, 1.1rem);
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.sectionGap {
+  margin-bottom: 7rem;
+  padding-top: 3rem;
+}
+
+.contactSection {
+  position: relative;
+  padding: 2rem 1.5rem;
+  background: color-mix(in srgb, var(--brand) 4%, transparent);
+  border: 1px solid color-mix(in srgb, var(--brand) 25%, transparent);
+  border-radius: 12px;
+}
+
+/* Igual que .container de Bootstrap, pero más angosto. */
+.about {
+  width: 100%;
+  max-width: 700px;
+  margin-inline: auto;
+  padding-inline: 0.75rem;
+}
+
+.reel {
+  margin-top: 1rem;
+}

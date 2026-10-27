@@ -1,0 +1,50 @@
+/* Show card — mini thumbnails */
+.showCardThumb {
+  width: 60px;
+  height: 45px;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid var(--hairline);
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+  transition:
+    border-color 0.2s,
+    transform 0.2s;
+  flex-shrink: 0;
+}
+
+.showCardThumb:hover {
+  border-color: var(--brand);
+  transform: scale(1.05);
+}
+
+.showCardThumbImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.showCardThumbMore {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface-2);
+  color: var(--brand);
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-color: var(--hairline);
+}
+
+.showCardThumbMore:hover {
+  background: var(--brand);
+  color: #000;
+  border-color: var(--brand);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .showCardThumb {
+    transition: none;
+  }
+}

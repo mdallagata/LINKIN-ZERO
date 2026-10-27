@@ -4,6 +4,8 @@ import type { ReactNode } from "react";
 import { useEffect, useEffectEvent } from "react";
 import PhotoDialog from "@/components/PhotoDialog";
 import ZoomableImage from "@/components/ZoomableImage";
+import { cx } from "@/lib/cx";
+import styles from "./ShowPhotoGallery.module.css";
 
 type ShowPhotoGalleryProps = {
   eventName: string;
@@ -42,7 +44,7 @@ export default function ShowPhotoGallery({ eventName, photos, index, onIndexChan
 
   return (
     <PhotoDialog open={open} onClose={onClose} label={`Fotos de ${eventName}`} bodyClassName="p-3 d-flex flex-column">
-      <div className="show-photo-full">
+      <div className={styles.showPhotoFull}>
         {photo && (
           <ZoomableImage
             key={photo}
@@ -50,7 +52,7 @@ export default function ShowPhotoGallery({ eventName, photos, index, onIndexChan
             alt={`${eventName} — Foto ${index + 1}`}
             fill
             sizes="(min-width: 1200px) 1110px, (min-width: 992px) 770px, (min-width: 576px) 470px, 100vw"
-            style={{ objectFit: "contain" }}
+            className={styles.photo}
             loading="eager"
             onSwipe={(direction: "prev" | "next"): void => (direction === "prev" ? goPrev() : goNext())}
           />
@@ -69,9 +71,7 @@ export default function ShowPhotoGallery({ eventName, photos, index, onIndexChan
             </svg>
           </button>
         </div>
-        <small className="text-white text-opacity-50 text-nowrap" style={{ fontSize: "0.75rem" }}>
-          {eventName}
-        </small>
+        <small className={cx("text-white text-opacity-50 text-nowrap", styles.caption)}>{eventName}</small>
       </div>
     </PhotoDialog>
   );

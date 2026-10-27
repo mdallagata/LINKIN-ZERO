@@ -1,0 +1,28 @@
+.memberRole {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: clamp(0.85rem, 1.8vw, 1.1rem);
+}
+
+.memberPhoto {
+  width: 100%;
+  height: 480px;
+  object-fit: cover;
+  display: block;
+}
+
+/* Pisa los márgenes negativos de .row: la fila queda centrada y sin desborde. */
+.member {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.memberPhotoFull {
+  width: 100%;
+  max-height: 85vh;
+  object-fit: contain;
+}

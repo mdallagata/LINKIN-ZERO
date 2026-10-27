@@ -3,6 +3,8 @@ import { SiInstagram } from "react-icons/si";
 import FadeInImage from "@/components/FadeInImage";
 import PhotoModalTrigger from "@/components/PhotoModalTrigger";
 import type { Member } from "@/data/members";
+import { cx } from "@/lib/cx";
+import styles from "./MemberSection.module.css";
 
 type MemberSectionProps = Member & {
   /** Foto a la izquierda en md+ (las filas alternan). */
@@ -25,7 +27,7 @@ export default function MemberSection({
   const textCol: ReactNode = (
     <div className={`col-md-7 text-center ${reverse ? "text-md-end order-md-last" : "text-md-start"}`}>
       <h2 className="mb-1">{name}</h2>
-      <p className="member-role text-brand mb-0">
+      <p className={cx(styles.memberRole, "text-brand mb-0")}>
         {role}
         <a href={instagramUrl} className="icon-link icon-link--member" target="_blank" rel="noopener noreferrer" aria-label={`Instagram de ${name}`}>
           <SiInstagram aria-hidden />
@@ -37,12 +39,12 @@ export default function MemberSection({
   const imageCol: ReactNode = (
     <div className={`col-md-5 text-center mb-4 mb-md-0 ${reverse ? "order-md-first" : ""}`}>
       <PhotoModalTrigger
-        triggerClassName="photo-trigger photo-trigger--member"
+        variant="member"
         triggerLabel={`Ver foto completa de ${name}`}
         bodyClassName="p-0 d-flex justify-content-center"
         thumbnail={
           <FadeInImage
-            className="member-photo"
+            className={styles.memberPhoto}
             src={imageSrc}
             alt={imageAlt}
             width={imageWidth}
@@ -59,8 +61,7 @@ export default function MemberSection({
           width={imageWidth}
           height={imageHeight}
           sizes="(min-width: 768px) 57vh, 100vw"
-          className="h-auto"
-          style={{ maxHeight: "85vh", width: "100%", objectFit: "contain" }}
+          className={cx("h-auto", styles.memberPhotoFull)}
           loading={loading}
         />
       </PhotoModalTrigger>
@@ -68,7 +69,7 @@ export default function MemberSection({
   );
 
   return (
-    <article className="row align-items-center gy-4 mb-5 pb-4" style={{ maxWidth: 1100, margin: "0 auto" }}>
+    <article className={cx("row align-items-center gy-4 mb-5 pb-4", styles.member)}>
       {textCol}
       {imageCol}
     </article>

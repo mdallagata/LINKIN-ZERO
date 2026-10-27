@@ -1,0 +1,15 @@
+.zoomableWrap {
+  overflow: hidden;
+  /* Los gestos sobre la foto los maneja ZoomableImage; sin esto el navegador
+     también scrollearía o haría zoom de toda la página. */
+  touch-action: none;
+  cursor: zoom-in;
+}
+
+.zoomableWrap.zoomed {
+  cursor: grab;
+}
+
+.zoomableWrap.dragging {
+  cursor: grabbing;
+}

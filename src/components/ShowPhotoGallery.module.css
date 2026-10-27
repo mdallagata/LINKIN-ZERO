@@ -1,0 +1,30 @@
+/* Photo gallery modal — full-size */
+.showPhotoFull {
+  display: flex;
+  justify-content: center;
+  background: #000;
+  border-radius: 8px;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  max-height: 80vh;
+}
+
+@media (max-width: 576px) {
+  .showPhotoFull {
+    aspect-ratio: 4 / 5;
+  }
+}
+
+/* En la galería la foto usa fill: el envoltorio ocupa todo el recuadro. */
+.showPhotoFull > * {
+  position: relative;
+  flex: 1 1 auto;
+}
+
+.photo {
+  object-fit: contain;
+}
+
+.caption {
+  font-size: 0.75rem;
+}

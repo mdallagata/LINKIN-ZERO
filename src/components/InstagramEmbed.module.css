@@ -1,0 +1,115 @@
+/* Embed de Instagram (InstagramEmbed): recuadro con la proporción del post;
+   portada, aviso de carga, iframe y link de respaldo van superpuestos. */
+.instagramEmbed {
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.instagramFrame,
+.instagramPlaceholder,
+.instagramPoster,
+.instagramFallback {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+}
+
+.instagramFrame {
+  border: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.instagramFrame.isLoaded {
+  opacity: 1;
+}
+
+.instagramPlaceholder,
+.instagramFallback {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface-2);
+}
+
+.instagramPlaceholder {
+  gap: 0.25rem;
+  color: var(--ink-2);
+  font-size: 0.85rem;
+}
+
+.instagramFallback {
+  gap: 0.5rem;
+  text-decoration: none;
+}
+
+.instagramPoster {
+  overflow: hidden;
+  padding: 0;
+  border: 1px solid var(--hairline);
+  background: var(--surface-2);
+  cursor: pointer;
+}
+
+.instagramPoster img {
+  object-fit: cover;
+}
+
+.instagramPosterHint {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.9rem;
+  border: 1px solid color-mix(in srgb, var(--brand) 60%, transparent);
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.75);
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: box-shadow 0.2s;
+}
+
+.instagramPoster:hover .instagramPosterHint {
+  box-shadow: 0 0 12px var(--brand);
+}
+
+.instagramSkeleton {
+  animation: skeletonPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes skeletonPulse {
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .instagramSkeleton {
+    animation: none;
+  }
+}
+
+/* Mismas medidas que instagramEmbedInfo (src/lib/instagram-embed.ts), con las
+   que se saca la captura de portada. */
+.post {
+  max-width: 350px;
+  aspect-ratio: 1 / 1.2;
+}
+
+.reel {
+  max-width: 400px;
+  aspect-ratio: 9 / 16;
+}

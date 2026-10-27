@@ -11,6 +11,8 @@ import { NAV_LINKS } from "@/data/nav";
 import { REEL_URL } from "@/data/instagram";
 import { instagramPoster } from "@/lib/instagram-poster";
 import { UPCOMING_SHOWS } from "@/lib/shows";
+import { cx } from "@/lib/cx";
+import styles from "./page.module.css";
 
 // Título, descripción y openGraph de la home son los del layout.
 export const metadata: Metadata = {
@@ -23,27 +25,27 @@ export default function Home(): ReactNode {
       <SiteHeader links={NAV_LINKS} heroImage="/images/show-hero.webp" heroImagePosition="55%" brandAsHeading />
 
       <main className="w-100 px-3 position-relative">
-        <div role="img" aria-label="Batería de LINKIN ZERØ en vivo" className="home-side-photo">
-          <div className="home-side-photo__img" />
+        <div role="img" aria-label="Batería de LINKIN ZERØ en vivo" className={styles.homeSidePhoto}>
+          <div className={styles.homeSidePhotoImg} />
         </div>
-        <div role="img" aria-label="Público en un show de LINKIN ZERØ" className="home-side-photo home-side-photo--left">
-          <div className="home-side-photo__img" />
+        <div role="img" aria-label="Público en un show de LINKIN ZERØ" className={cx(styles.homeSidePhoto, styles.homeSidePhotoLeft)}>
+          <div className={styles.homeSidePhotoImg} />
         </div>
 
-        <section id="quienes-somos" className="container mb-5" style={{ maxWidth: 700 }}>
+        <section id="quienes-somos" className={cx(styles.about, "mb-5")}>
           <h2 className="h1 mb-1">¿Quiénes somos?</h2>
           <div className="section-divider" />
           <PhotoShowcase src="/images/todos.webp" alt="Los integrantes de LINKIN ZERØ en Obscene Fest" width={1400} height={932} />
-          <p className="hero-description mb-0">{BAND_DESCRIPTION}</p>
+          <p className={cx(styles.heroDescription, "mb-0")}>{BAND_DESCRIPTION}</p>
 
-          <div className="contact-section mt-5" id="contacto">
+          <div className={cx(styles.contactSection, "mt-5")} id="contacto">
             <h2 className="mb-1">Contacto</h2>
             <div className="section-divider" />
             <ContactButtons />
           </div>
         </section>
 
-        <div className="section-gap" id="proximos-shows" style={{ paddingTop: "3rem" }}>
+        <div className={styles.sectionGap} id="proximos-shows">
           {UPCOMING_SHOWS.length > 0 && (
             <FadeInSection>
               <UpcomingShowsSection />
@@ -57,7 +59,7 @@ export default function Home(): ReactNode {
           <FadeInSection>
             <LatestShowSection />
           </FadeInSection>
-          <div style={{ marginTop: "1rem" }}>
+          <div className={styles.reel}>
             <FadeInSection>
               <InstagramEmbed url={REEL_URL} poster={instagramPoster(REEL_URL)} />
             </FadeInSection>

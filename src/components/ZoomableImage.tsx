@@ -4,6 +4,8 @@ import type { CSSProperties, MouseEvent, PointerEvent, ReactNode } from "react";
 import { useEffect, useEffectEvent, useRef, useState } from "react";
 import type { ImageProps } from "next/image";
 import FadeInImage from "@/components/FadeInImage";
+import { cx } from "@/lib/cx";
+import styles from "./ZoomableImage.module.css";
 
 const MIN_SCALE: number = 1;
 const MAX_SCALE: number = 10;
@@ -178,7 +180,7 @@ export default function ZoomableImage({ onSwipe, ...props }: ImageProps & { onSw
   return (
     <div
       ref={containerRef}
-      className={`zoomable-wrap${zoomed ? " zoomed" : ""}${dragging ? " dragging" : ""}`}
+      className={cx(styles.zoomableWrap, zoomed && styles.zoomed, dragging && styles.dragging)}
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerEnd}

@@ -1,11 +1,13 @@
 "use client";
 
-import type { CSSProperties, ReactNode } from "react";
+import type { ReactNode } from "react";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { SiInstagram } from "react-icons/si";
 import type { InstagramEmbedInfo } from "@/lib/instagram-embed";
 import { instagramEmbedInfo } from "@/lib/instagram-embed";
+import { cx } from "@/lib/cx";
+import styles from "./InstagramEmbed.module.css";
 
 type Props = {
   url: string;
@@ -54,27 +56,25 @@ export default function InstagramEmbed({ url, poster }: Props): ReactNode {
     return <div className="text-center text-muted py-4">URL de Instagram inválida</div>;
   }
 
-  const frameStyle: CSSProperties = { maxWidth: info.width, aspectRatio: info.aspectRatio };
-
   return (
-    <div ref={containerRef} className="instagram-embed" style={frameStyle}>
+    <div ref={containerRef} className={cx(styles.instagramEmbed, info.label === "Reel" ? styles.reel : styles.post)}>
       {status !== "loaded" &&
         (poster ? (
           <button
             type="button"
-            className="instagram-poster"
+            className={styles.instagramPoster}
             onClick={() => setStatus("loading")}
             disabled={status === "loading"}
             aria-label="Cargar la publicación de Instagram"
           >
             <Image src={poster} alt="" fill sizes={`${info.width}px`} />
-            <span className={`instagram-poster__hint${status === "loading" ? " instagram-skeleton" : ""}`}>
+            <span className={cx(styles.instagramPosterHint, status === "loading" && styles.instagramSkeleton)}>
               <SiInstagram aria-hidden />
               {status === "loading" ? "Cargando…" : "Tocá para cargar"}
             </span>
           </button>
         ) : (
-          <div className="instagram-placeholder instagram-skeleton">
+          <div className={cx(styles.instagramPlaceholder, styles.instagramSkeleton)}>
             <SiInstagram size={32} aria-hidden />
             Cargando...
           </div>
@@ -84,7 +84,7 @@ export default function InstagramEmbed({ url, poster }: Props): ReactNode {
         <iframe
           src={info.src}
           title="Publicación de Instagram"
-          className={`instagram-frame${status === "loaded" ? " is-loaded" : ""}`}
+          className={cx(styles.instagramFrame, status === "loaded" && styles.isLoaded)}
           allowFullScreen
           scrolling="no"
           onLoad={() => setStatus("loaded")}
@@ -92,7 +92,7 @@ export default function InstagramEmbed({ url, poster }: Props): ReactNode {
       )}
 
       {slow && status === "loading" && (
-        <a href={url} target="_blank" rel="noopener noreferrer" className="instagram-fallback glow-hover text-brand">
+        <a href={url} target="_blank" rel="noopener noreferrer" className={cx(styles.instagramFallback, "glow-hover text-brand")}>
           <SiInstagram size={32} aria-hidden />
           <span>Ver en Instagram ↗</span>
         </a>

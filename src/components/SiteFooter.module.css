@@ -1,0 +1,9 @@
+.siteFooter {
+  margin-top: 3rem;
+}
+
+@media (min-width: 768px) {
+  .siteFooter {
+    margin-top: 4rem;
+  }
+}

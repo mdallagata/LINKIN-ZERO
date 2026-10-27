@@ -8,6 +8,8 @@ import { usePathname, useRouter } from "next/navigation";
 import { BAND_NAME, BAND_TAGLINE } from "@/data/band";
 import type { NavLink } from "@/data/nav";
 import { scrollBehavior } from "@/lib/scroll";
+import { cx } from "@/lib/cx";
+import styles from "./SiteHeader.module.css";
 
 type SiteHeaderProps = {
   links: NavLink[];
@@ -69,48 +71,46 @@ export default function SiteHeader({ links, heroImage, heroImagePosition, brandA
     }
   };
 
-  const heroClass: string = ["site-hero", "w-100", isPhotoHero && "site-hero--photo"].filter(Boolean).join(" ");
   const Wordmark: "h1" | "div" = brandAsHeading ? "h1" : "div";
-  const wordmarkClass: string = `site-wordmark${isPhotoHero ? " site-wordmark--glow" : ""}`;
 
   return (
-    <header className={heroClass}>
+    <header className={cx(styles.siteHero, "w-100", isPhotoHero && styles.siteHeroPhoto)}>
       {heroImage && <HeroImage src={heroImage} position={heroImagePosition ?? "45%"} />}
       <div className="pt-3 pb-2">
         <Link href="/" className="text-decoration-none">
-          <Wordmark className={wordmarkClass} data-text={`[ ${BAND_NAME} ]`}>
+          <Wordmark className={cx(styles.siteWordmark, isPhotoHero && styles.siteWordmarkGlow)} data-text={`[ ${BAND_NAME} ]`}>
             [ {BAND_NAME} ]
           </Wordmark>
         </Link>
         {isPhotoHero ? (
           // Una <span> por letra para la animación; el lector de pantalla lee la
           // frase entera de la copia oculta en vez de deletrearla.
-          <p className="hero-tagline hero-tagline--reveal mb-0">
+          <p className={cx(styles.heroTagline, styles.heroTaglineReveal, "mb-0")}>
             <span className="visually-hidden">{BAND_TAGLINE}</span>
             <span aria-hidden="true">
               {BAND_TAGLINE.split("").map((char: string, i: number): ReactNode => (
-                <span key={i} className="tagline-char" style={{ animationDelay: `${i * 0.04}s` }}>
+                <span key={i} className={styles.taglineChar} style={{ animationDelay: `${i * 0.04}s` }}>
                   {char === " " ? "\u00a0" : char}
                 </span>
               ))}
             </span>
           </p>
         ) : (
-          <p className="hero-tagline mb-0">{BAND_TAGLINE}</p>
+          <p className={cx(styles.heroTagline, "mb-0")}>{BAND_TAGLINE}</p>
         )}
       </div>
 
       <div ref={sentinelRef} aria-hidden="true" />
 
-      <nav ref={navBarRef} aria-label="Principal" className={`site-nav-bar w-100 px-3 pb-4 pb-md-5${stuck ? " site-nav-bar--stuck" : ""}`}>
+      <nav ref={navBarRef} aria-label="Principal" className={cx("w-100 px-3 pb-4 pb-md-5", stuck && styles.siteNavBarStuck)}>
         <hr className="brand-hr my-2" />
-        <ul className="site-nav-list justify-content-center flex-wrap gap-4 gap-md-5 py-2">
+        <ul className={cx(styles.siteNavList, "justify-content-center flex-wrap gap-4 gap-md-5 py-2")}>
           {links.map((link: NavLink) => {
             const isActive: boolean = link.href === pathname || (link.href !== "/" && pathname.startsWith(link.href));
             return (
               <li key={link.href}>
                 <Link
-                  className="site-nav-link"
+                  className={styles.siteNavLink}
                   href={link.href}
                   onClick={(e: MouseEvent): void => handleNavClick(e, link.href)}
                   aria-current={isActive ? "page" : undefined}
@@ -125,7 +125,7 @@ export default function SiteHeader({ links, heroImage, heroImagePosition, brandA
       </nav>
       {stuck && <div aria-hidden="true" style={{ height: placeholderHeight }} />}
       {isPhotoHero && (
-        <div className="scroll-indicator" aria-hidden="true">
+        <div className={styles.scrollIndicator} aria-hidden="true">
           <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M6 9l6 6 6-6" />
           </svg>
@@ -141,7 +141,7 @@ const MOBILE_HERO_IMAGE: string = "/images/show-hero.webp";
 // encuadran bien en vertical). La elige el navegador con <picture> antes de
 // descargar nada: con JS (matchMedia) el HTML del servidor traía la de
 // escritorio, React no corregía el src al hidratar y se bajaban las dos.
-// El encuadre de cada breakpoint está en .hero-bg-image (globals.css).
+// El encuadre de cada breakpoint está en .heroBgImage (SiteHeader.module.css).
 function HeroImage({ src, position }: { src: string; position: string }): ReactNode {
   const common = { alt: "", fill: true, sizes: "100vw", fetchPriority: "high", loading: "eager" } as const;
   const { props: mobile } = getImageProps({ ...common, src: MOBILE_HERO_IMAGE });
@@ -151,7 +151,7 @@ function HeroImage({ src, position }: { src: string; position: string }): ReactN
   return (
     <picture>
       <source media="(max-width: 576px)" srcSet={mobile.srcSet ?? mobile.src} />
-      <img {...props} alt="" className="hero-bg-image" style={style} />
+      <img {...props} alt="" className={styles.heroBgImage} style={style} />
     </picture>
   );
 }

@@ -1,24 +1,21 @@
-"use client";
-
-import type { MouseEvent, ReactNode } from "react";
-import { useState } from "react";
+import type { ReactNode } from "react";
 import Link from "next/link";
 import { FiCalendar } from "react-icons/fi";
 import { SiInstagram } from "react-icons/si";
-import FadeInImage from "@/components/FadeInImage";
 import InstagramEmbed from "@/components/InstagramEmbed";
 import JsonLd from "@/components/JsonLd";
-import ShowPhotoGallery from "@/components/ShowPhotoGallery";
+import ShowPhotos from "@/components/ShowPhotos";
 import { BAND_NAME, SITE_URL } from "@/data/band";
-import type { PastShow, PressLink, UpcomingShow } from "@/data/shows";
-import { SORTED_PAST_SHOWS, UPCOMING_SHOWS } from "@/data/shows";
+import type { PressLink, Show } from "@/data/shows";
+import { formatShowDate } from "@/lib/show-schedule";
+import { PAST_SHOWS, UPCOMING_SHOWS } from "@/lib/shows";
 
-function upcomingShowJsonLd(show: UpcomingShow): object {
+function upcomingShowJsonLd(show: Show): object {
   return {
     "@context": "https://schema.org",
     "@type": "MusicEvent",
     name: `${BAND_NAME} en ${show.venue}`,
-    startDate: show.startDate,
+    startDate: show.date,
     location: {
       "@type": "Place",
       name: show.venue,
@@ -34,76 +31,30 @@ function upcomingShowJsonLd(show: UpcomingShow): object {
   };
 }
 
-const EMBED_SUFFIX_RE = /\/embed\/?$/;
-const EXTENSION_RE = /\.(\w+)$/;
-
-function instagramPostUrl(embedUrl: string): string {
-  return embedUrl.replace(EMBED_SUFFIX_RE, "");
+// Fecha + "Fecha propia": la primera línea de todas las tarjetas de shows.
+function ShowCardHeader({ show }: { show: Show }): ReactNode {
+  return (
+    <div className="d-flex justify-content-between align-items-baseline flex-wrap gap-2">
+      <p className="text-brand mb-0 fw-bold d-inline-flex align-items-center gap-2">
+        <FiCalendar aria-hidden="true" />
+        {formatShowDate(show.date)}
+      </p>
+      {!show.invitedBy && <span className="show-badge">Fecha propia</span>}
+    </div>
+  );
 }
 
-// Las miniaturas de show-card usan una versión chica pre-generada
-// (ver public/images/shows/*/*-thumb.webp) en vez de la foto completa —
-// mostrar un archivo de foto completa en un recuadro de 120x90 desperdicia
-// la mayor parte de la descarga.
-function thumbUrl(photo: string): string {
-  return photo.replace(EXTENSION_RE, "-thumb.$1");
-}
-
-// `opening` cambia en cada apertura: como key, hace que la galería arranque de
-// cero (en la foto elegida) y no en la última que se miró la vez anterior.
-type GalleryTarget = { show: PastShow; index: number; opening: number };
-
-// Al cerrar solo se oculta: los datos quedan para que la animación de cierre
-// no vacíe el modal a mitad del fade.
-function useShowGallery(): {
-  target: GalleryTarget | null;
-  visible: boolean;
-  open: (show: PastShow, index: number) => void;
-  hide: () => void;
-} {
-  const [target, setTarget] = useState<GalleryTarget | null>(null);
-  const [visible, setVisible] = useState<boolean>(false);
-
-  return {
-    target,
-    visible,
-    open: (show: PastShow, index: number): void => {
-      setTarget((prev: GalleryTarget | null): GalleryTarget => ({ show, index, opening: (prev?.opening ?? 0) + 1 }));
-      setVisible(true);
-    },
-    hide: (): void => setVisible(false),
-  };
-}
-
-function PastShowCard({
-  show,
-  featured = false,
-  onShowPhotos,
-}: {
-  show: PastShow;
-  featured?: boolean;
-  onShowPhotos?: (show: PastShow, index: number) => void;
-}): ReactNode {
-  const hasPhotos: boolean = Boolean(show.photos && show.photos.length > 0);
-  const photoCount: number = show.photos?.length ?? 0;
-
+function PastShowCard({ show, featured = false }: { show: Show; featured?: boolean }): ReactNode {
+  const title: string = show.event ?? show.venue;
   return (
     <div className={`show-card${featured ? " show-card--featured" : ""}`}>
-      <div className="d-flex justify-content-between align-items-baseline flex-wrap gap-2">
-        <p className="text-brand mb-0 fw-bold d-inline-flex align-items-center gap-2">
-          <FiCalendar aria-hidden="true" />
-          {show.date}
-        </p>
-        {!show.invitedBy && <p className="show-badge mb-0">Fecha propia</p>}
-      </div>
-      <h3 className="mb-2 mt-1">{show.event}</h3>
-      <p className="text-muted mb-0">
-        {show.venue} — {show.city}
-      </p>
+      <ShowCardHeader show={show} />
+      <h3 className="mb-2 mt-1">{title}</h3>
+      <p className="text-muted mb-0">{show.event ? `${show.venue} — ${show.city}` : show.city}</p>
       {show.description && <p className="text-muted mt-3">{show.description}</p>}
       <div className="d-flex flex-wrap gap-3 mt-3">
-        {show.embedUrl && (
-          <a href={instagramPostUrl(show.embedUrl)} className="icon-link icon-link--text" target="_blank" rel="noopener noreferrer">
+        {show.postUrl && (
+          <a href={show.postUrl} className="icon-link icon-link--text" target="_blank" rel="noopener noreferrer">
             <SiInstagram aria-hidden />
             Ver publicación
           </a>
@@ -114,85 +65,51 @@ function PastShowCard({
           </a>
         ))}
       </div>
+      {show.photos && show.photos.length > 0 && <ShowPhotos eventName={title} photos={show.photos} />}
+    </div>
+  );
+}
 
-      {hasPhotos && (
-        <div className="d-flex gap-2 mt-3 flex-wrap justify-content-center">
-          {show.photos!.slice(0, 3).map((photo: string, i: number) => (
-            <button
-              key={photo}
-              type="button"
-              className="show-card-thumb"
-              onClick={(e: MouseEvent) => {
-                e.stopPropagation();
-                onShowPhotos?.(show, i);
-              }}
-              aria-label={`Ver foto ${i + 1}`}
-            >
-              <FadeInImage src={thumbUrl(photo)} alt={`${show.event} — Foto ${i + 1}`} width={120} height={90} className="show-card-thumb-img" />
-            </button>
-          ))}
-          {photoCount > 3 && (
-            <button
-              type="button"
-              className="show-card-thumb show-card-thumb--more"
-              onClick={(e: MouseEvent) => {
-                e.stopPropagation();
-                onShowPhotos?.(show, 0);
-              }}
-              aria-label="Ver todas las fotos"
-            >
-              <span>+{photoCount - 3}</span>
-            </button>
-          )}
+function UpcomingShowCard({ show }: { show: Show }): ReactNode {
+  return (
+    <div>
+      <div className="show-card">
+        <ShowCardHeader show={show} />
+        <h3 className="mb-2 mt-1">
+          {show.venue} — {show.city}
+        </h3>
+        {show.description && <p className="text-muted mt-3 mb-0">{show.description}</p>}
+        <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mt-3">
+          <div className="d-flex flex-wrap gap-3">
+            {show.postUrl && (
+              <a href={show.postUrl} className="icon-link icon-link--text" target="_blank" rel="noopener noreferrer">
+                <SiInstagram aria-hidden />
+                Ver publicación ↗
+              </a>
+            )}
+            {show.ticketUrl && (
+              <a href={show.ticketUrl} className="glow-hover text-brand d-inline-block">
+                Entradas →
+              </a>
+            )}
+          </div>
+          {show.entry && <span className="entry-badge">{show.entry}</span>}
+        </div>
+      </div>
+      {show.postUrl && (
+        <div className="mt-4">
+          <InstagramEmbed url={show.postUrl} />
         </div>
       )}
     </div>
   );
 }
 
-function PastShowsContent(): ReactNode {
-  const gallery = useShowGallery();
-
-  // Group shows by year extracted from sortKey
-  const byYear: Map<string, PastShow[]> = new Map();
-  for (const show of SORTED_PAST_SHOWS) {
-    const year: string = show.sortKey.slice(0, 4);
-    const group: PastShow[] = byYear.get(year) ?? [];
-    group.push(show);
-    byYear.set(year, group);
-  }
-
-  return (
-    <>
-      <div className="text-start timeline">
-        {Array.from(byYear.entries()).map(([year, shows]: [string, PastShow[]]) => (
-          <div key={year}>
-            <h3 className="timeline-year">{year}</h3>
-            {shows.map((show: PastShow) => (
-              <PastShowCard key={`${show.date}-${show.venue}`} show={show} onShowPhotos={gallery.open} />
-            ))}
-          </div>
-        ))}
-      </div>
-      {gallery.target && gallery.target.show.photos && (
-        <ShowPhotoGallery
-          key={gallery.target.opening}
-          eventName={gallery.target.show.event}
-          photos={gallery.target.show.photos}
-          photoIndex={gallery.target.index}
-          show={gallery.visible}
-          onHide={gallery.hide}
-        />
-      )}
-    </>
-  );
-}
-
 export function UpcomingShowsSection(): ReactNode {
   return (
     <section id="fechas" className="container mb-5 pb-4 container-narrow">
-      {UPCOMING_SHOWS.map((show: UpcomingShow) => (
-        <JsonLd key={show.startDate} data={upcomingShowJsonLd(show)} />
+      {UPCOMING_SHOWS.map((show: Show) => (
+        <JsonLd key={show.date} data={upcomingShowJsonLd(show)} />
       ))}
       <h2 className="mb-1 mt-5">Próximo Show</h2>
       <div className="section-divider" />
@@ -207,43 +124,8 @@ export function UpcomingShowsSection(): ReactNode {
         </div>
       ) : (
         <div className="text-start">
-          {UPCOMING_SHOWS.map((show: UpcomingShow) => (
-            <div key={`${show.date}-${show.venue}`}>
-              <div className="show-card">
-                <div className="d-flex justify-content-between align-items-baseline flex-wrap gap-2">
-                  <p className="text-brand mb-0 fw-bold d-inline-flex align-items-center gap-2">
-                    <FiCalendar aria-hidden="true" />
-                    {show.date}
-                  </p>
-                  {!show.invitedBy && <span className="show-badge">Fecha propia</span>}
-                </div>
-                <h3 className="mb-2 mt-1">
-                  {show.venue} — {show.city}
-                </h3>
-                {show.description && <p className="text-muted mt-3 mb-0">{show.description}</p>}
-                <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mt-3">
-                  <div className="d-flex flex-wrap gap-3">
-                    {show.promoUrl && (
-                      <a href={show.promoUrl} className="icon-link icon-link--text" target="_blank" rel="noopener noreferrer">
-                        <SiInstagram aria-hidden />
-                        {show.promoLabel ?? "Promo"} ↗
-                      </a>
-                    )}
-                    {show.ticketUrl && (
-                      <a href={show.ticketUrl} className="glow-hover text-brand d-inline-block">
-                        Entradas →
-                      </a>
-                    )}
-                  </div>
-                  {show.entry && <span className="entry-badge">{show.entry}</span>}
-                </div>
-              </div>
-              {show.promoUrl && (
-                <div className="mt-4">
-                  <InstagramEmbed url={show.promoUrl} />
-                </div>
-              )}
-            </div>
+          {UPCOMING_SHOWS.map((show: Show) => (
+            <UpcomingShowCard key={`${show.date}-${show.venue}`} show={show} />
           ))}
         </div>
       )}
@@ -252,34 +134,33 @@ export function UpcomingShowsSection(): ReactNode {
 }
 
 export function LatestShowSection(): ReactNode {
-  const gallery = useShowGallery();
-  const latest: PastShow | undefined = SORTED_PAST_SHOWS[0];
+  const latest: Show | undefined = PAST_SHOWS[0];
   if (!latest) return null;
   return (
     <section id="ultimo-show" className="container pb-4 container-narrow" style={{ marginTop: "4.5rem" }}>
       <h2 className="mb-1">Último Show</h2>
       <div className="section-divider" />
-      <PastShowCard show={latest} featured onShowPhotos={gallery.open} />
-      {gallery.target && gallery.target.show.photos && (
-        <ShowPhotoGallery
-          key={gallery.target.opening}
-          eventName={gallery.target.show.event}
-          photos={gallery.target.show.photos}
-          photoIndex={gallery.target.index}
-          show={gallery.visible}
-          onHide={gallery.hide}
-        />
-      )}
+      <PastShowCard show={latest} featured />
     </section>
   );
 }
 
 export function PastShowsSection(): ReactNode {
+  const byYear: Map<string, Show[]> = Map.groupBy(PAST_SHOWS, (show: Show): string => show.date.slice(0, 4));
   return (
     <section id="shows-anteriores" className="container mb-5 pb-4 container-narrow">
       <h2 className="mb-1">Shows Anteriores</h2>
       <div className="section-divider" />
-      <PastShowsContent />
+      <div className="text-start timeline">
+        {Array.from(byYear.entries()).map(([year, shows]: [string, Show[]]) => (
+          <div key={year}>
+            <h3 className="timeline-year">{year}</h3>
+            {shows.map((show: Show) => (
+              <PastShowCard key={`${show.date}-${show.venue}`} show={show} />
+            ))}
+          </div>
+        ))}
+      </div>
     </section>
   );
 }

@@ -9,7 +9,7 @@ import { LatestShowSection, UpcomingShowsSection } from "@/components/ShowsSecti
 import { BAND_DESCRIPTION } from "@/data/band";
 import { NAV_LINKS } from "@/data/nav";
 import { REEL_URL } from "@/data/instagram";
-import { UPCOMING_SHOWS } from "@/data/shows";
+import { UPCOMING_SHOWS } from "@/lib/shows";
 
 // Título, descripción y openGraph de la home son los del layout.
 export const metadata: Metadata = {

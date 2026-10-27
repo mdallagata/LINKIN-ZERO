@@ -1,21 +1,13 @@
-"use client";
-
 import type { ReactNode } from "react";
 import { SiInstagram } from "react-icons/si";
 import FadeInImage from "@/components/FadeInImage";
 import PhotoModalTrigger from "@/components/PhotoModalTrigger";
+import type { Member } from "@/data/members";
 
-type MemberSectionProps = {
-  name: string;
-  role: string;
-  imageSrc: string;
-  imageAlt: string;
-  imageWidth: number;
-  imageHeight: number;
+type MemberSectionProps = Member & {
+  /** Foto a la izquierda en md+ (las filas alternan). */
   reverse?: boolean;
-  instagramUrl: string;
   loading?: "lazy" | "eager";
-  imagePosition?: string;
 };
 
 export default function MemberSection({

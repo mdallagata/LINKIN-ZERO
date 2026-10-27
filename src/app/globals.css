@@ -989,10 +989,24 @@ html:has(.photo-dialog[open]) {
 
 .zoomable-wrap {
   overflow: hidden;
+  /* Los gestos sobre la foto los maneja ZoomableImage; sin esto el navegador
+     también scrollearía o haría zoom de toda la página. */
+  touch-action: none;
+  cursor: zoom-in;
+}
+
+/* En la galería la foto usa fill: el envoltorio ocupa todo el recuadro. */
+.show-photo-full > .zoomable-wrap {
+  position: relative;
+  flex: 1 1 auto;
 }
 
 .zoomable-wrap.zoomed {
-  overflow: auto;
+  cursor: grab;
+}
+
+.zoomable-wrap.dragging {
+  cursor: grabbing;
 }
 
 .fade-in-section {

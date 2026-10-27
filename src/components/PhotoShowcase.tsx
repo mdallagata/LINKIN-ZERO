@@ -1,5 +1,3 @@
-"use client";
-
 import type { ReactNode } from "react";
 import FadeInImage from "@/components/FadeInImage";
 import PhotoModalTrigger from "@/components/PhotoModalTrigger";

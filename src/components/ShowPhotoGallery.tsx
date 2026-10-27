@@ -1,84 +1,70 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useEffectEvent } from "react";
 import PhotoDialog from "@/components/PhotoDialog";
 import ZoomableImage from "@/components/ZoomableImage";
 
-export default function ShowPhotoGallery({
-  eventName,
-  photos,
-  photoIndex,
-  show,
-  onHide,
-}: {
+type ShowPhotoGalleryProps = {
   eventName: string;
   photos: string[];
-  photoIndex: number;
-  show: boolean;
-  onHide: () => void;
-}): ReactNode {
-  const [offset, setOffset] = useState<number>(0);
-  const [prevPhotoIndex, setPrevPhotoIndex] = useState<number>(photoIndex);
+  /** Foto que se muestra; la controla el padre (ShowPhotos) para abrir en la miniatura elegida. */
+  index: number;
+  onIndexChange: (index: number) => void;
+  open: boolean;
+  onClose: () => void;
+};
 
-  if (photoIndex !== prevPhotoIndex) {
-    setPrevPhotoIndex(photoIndex);
-    setOffset(0);
-  }
+export default function ShowPhotoGallery({ eventName, photos, index, onIndexChange, open, onClose }: ShowPhotoGalleryProps): ReactNode {
+  const photo: string | undefined = photos[index];
+  const canGoPrev: boolean = index > 0;
+  const canGoNext: boolean = index < photos.length - 1;
 
-  const displayIndex: number = photoIndex + offset;
-  const canGoPrev: boolean = displayIndex > 0;
-  const canGoNext: boolean = displayIndex < photos.length - 1;
+  // Botones, flechas del teclado y swipe pasan todos por acá.
+  const goPrev = (): void => {
+    if (canGoPrev) onIndexChange(index - 1);
+  };
+  const goNext = (): void => {
+    if (canGoNext) onIndexChange(index + 1);
+  };
+
+  const handleKeyDown = useEffectEvent((e: KeyboardEvent): void => {
+    if (e.key === "ArrowLeft") goPrev();
+    if (e.key === "ArrowRight") goNext();
+  });
 
   useEffect((): void | (() => void) => {
-    if (!show) return;
-    function onKeyDown(e: KeyboardEvent): void {
-      if (e.key === "ArrowLeft" && canGoPrev) setOffset((o: number): number => o - 1);
-      if (e.key === "ArrowRight" && canGoNext) setOffset((o: number): number => o + 1);
-    }
+    if (!open) return;
+    const onKeyDown = (e: KeyboardEvent): void => handleKeyDown(e);
     window.addEventListener("keydown", onKeyDown);
     return (): void => window.removeEventListener("keydown", onKeyDown);
-  }, [show, canGoPrev, canGoNext]);
+  }, [open]);
 
   return (
-    <PhotoDialog open={show} onClose={onHide} label={`Fotos de ${eventName}`} bodyClassName="p-3 d-flex flex-column">
+    <PhotoDialog open={open} onClose={onClose} label={`Fotos de ${eventName}`} bodyClassName="p-3 d-flex flex-column">
       <div className="show-photo-full">
-        <ZoomableImage
-          key={photos[displayIndex]}
-          src={photos[displayIndex]}
-          alt={`${eventName} — Foto ${displayIndex + 1}`}
-          width={1200}
-          height={800}
-          className="w-100 h-100"
-          style={{ objectFit: "contain" }}
-          loading="eager"
-          onSwipe={(direction: "prev" | "next"): void => {
-            if (direction === "prev" && canGoPrev) setOffset((o: number): number => o - 1);
-            if (direction === "next" && canGoNext) setOffset((o: number): number => o + 1);
-          }}
-        />
+        {photo && (
+          <ZoomableImage
+            key={photo}
+            src={photo}
+            alt={`${eventName} — Foto ${index + 1}`}
+            fill
+            sizes="(min-width: 1200px) 1110px, (min-width: 992px) 770px, (min-width: 576px) 470px, 100vw"
+            style={{ objectFit: "contain" }}
+            loading="eager"
+            onSwipe={(direction: "prev" | "next"): void => (direction === "prev" ? goPrev() : goNext())}
+          />
+        )}
       </div>
       <div className="d-flex flex-column flex-sm-row align-items-center justify-content-center mt-3 gap-2">
         <div className="d-flex gap-4">
-          <button
-            type="button"
-            className="outline-button outline-button--round"
-            onClick={() => setOffset((o: number): number => o - 1)}
-            disabled={!canGoPrev}
-            aria-label="Foto anterior"
-          >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <button type="button" className="outline-button outline-button--round" onClick={goPrev} disabled={!canGoPrev} aria-label="Foto anterior">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
               <path d="M15 18l-6-6 6-6" />
             </svg>
           </button>
-          <button
-            type="button"
-            className="outline-button outline-button--round"
-            onClick={() => setOffset((o: number): number => o + 1)}
-            disabled={!canGoNext}
-            aria-label="Foto siguiente"
-          >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <button type="button" className="outline-button outline-button--round" onClick={goNext} disabled={!canGoNext} aria-label="Foto siguiente">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
               <path d="M9 18l6-6-6-6" />
             </svg>
           </button>

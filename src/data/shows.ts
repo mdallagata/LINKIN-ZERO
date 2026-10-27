@@ -1,37 +1,24 @@
-export type UpcomingShow = {
-  date: string;
-  /** Fecha en formato ISO (AAAA-MM-DD), para datos estructurados (JSON-LD) — `date` es el texto que se muestra. */
-  startDate: string;
-  venue: string;
-  city: string;
-  ticketUrl?: string;
-  /** Link a la publicación de Instagram con la promo del show. */
-  promoUrl?: string;
-  /** Texto del link de promo (por defecto "Promo"). */
-  promoLabel?: string;
-  /** Info de acceso al show, se muestra como badge (ej. entrada gratuita). */
-  entry?: string;
-  /** Banda o entidad que invitó/anfitriona del show. */
-  invitedBy?: string;
-  description?: string;
-};
-
 export type PressLink = {
   label: string;
   url: string;
 };
 
-export type PastShow = {
+export type Show = {
+  /** Fecha en formato ISO (AAAA-MM-DD). Define si el show es próximo o anterior y el orden; el texto "28 de Noviembre, 2026" sale de acá. */
   date: string;
-  /** Fecha en formato ISO (AAAA-MM-DD), solo para ordenar cronológicamente — `date` es el texto que se muestra. */
-  sortKey: string;
   venue: string;
   city: string;
-  event: string;
+  /** Nombre del evento. Sin él, la tarjeta de un show anterior usa el lugar como título. */
+  event?: string;
+  /** Banda o entidad que nos invitó; sin esto el show se marca como "Fecha propia". */
   invitedBy?: string;
-  pressLinks?: PressLink[];
   description?: string;
-  embedUrl?: string;
+  /** Publicación de Instagram del show: la promo mientras es próximo, el recuerdo después. */
+  postUrl?: string;
+  ticketUrl?: string;
+  /** Info de acceso, se muestra como badge mientras el show es próximo (ej. entrada gratuita). */
+  entry?: string;
+  pressLinks?: PressLink[];
   photos?: string[];
 };
 
@@ -44,57 +31,49 @@ function showPhotos(folder: number, count: number): string[] {
   return Array.from({ length: count }, (_: unknown, i: number): string => `/images/shows/${folder}/${i + 1}.webp`);
 }
 
-// Fechas confirmadas, ordenadas por cronología.
-export const UPCOMING_SHOWS: UpcomingShow[] = [
+// Todos los shows, próximos y anteriores, en cualquier orden: src/lib/shows.ts
+// los separa según la fecha del día en que se genera el sitio.
+export const SHOWS: Show[] = [
   {
-    date: "28 de Noviembre, 2026",
-    startDate: "2026-11-28",
+    date: "2026-11-28",
     venue: "Tuc-Man Expo Tattoo",
     city: "Tucumán, Argentina",
     entry: "Entrada: alimento no perecedero",
     invitedBy: "Tuc-Man Expo Tattoo",
-    promoUrl: "https://www.instagram.com/p/Dcr8pDARsA_/",
-    promoLabel: "Ver publicación",
+    postUrl: "https://www.instagram.com/p/Dcr8pDARsA_/",
     description: "Formamos parte de la Tuc-Man Expo Tattoo, el evento de tatuajes más grande del NOA, con más de 200 artistas en la Sociedad Rural de Tucumán.",
   },
-];
-
-const PAST_SHOWS: PastShow[] = [
   {
-    date: "19 de Junio, 2026",
-    sortKey: "2026-06-19",
+    date: "2026-06-19",
     venue: "Magic Music Box",
     city: "Tucumán, Argentina",
     event: "Noche Nu Metal",
     invitedBy: BREAKPOINT_BAND_NAME,
     description: `Formamos parte de la fecha debut de ${BREAKPOINT_BAND_NAME}, compartiendo escenario en una noche a puro nu metal.`,
-    embedUrl: "https://www.instagram.com/p/DaRebBYDFNT/embed",
+    postUrl: "https://www.instagram.com/p/DaRebBYDFNT/",
     photos: showPhotos(4, 6),
   },
   {
-    date: "8 de Noviembre, 2025",
-    sortKey: "2025-11-08",
+    date: "2025-11-08",
     venue: "Mendoza 1084",
     city: "Tucumán, Argentina",
     event: "OBSCENE FEST — Nü Sessions · VOL. I",
     invitedBy: PORN_BAND_NAME,
     description: `Tres tributos en una noche de Nü Metal: ${PORN_BAND_NAME} (Korn), LINKIN ZERØ (Linkin Park) y Def Party (Deftones), más DJ set de 2000s.`,
-    embedUrl: "https://www.instagram.com/p/DSYwsETDNQ8/embed",
+    postUrl: "https://www.instagram.com/p/DSYwsETDNQ8/",
     photos: showPhotos(3, 10),
   },
   {
-    date: "12 de Septiembre, 2025",
-    sortKey: "2025-09-12",
+    date: "2025-09-12",
     venue: "Magic Music Box",
     city: "Tucumán, Argentina",
     event: "PROJEKT REVOLUTION",
     description: `Nuestra primera fecha propia, tocando junto a ${PORN_BAND_NAME} (Korn) en una noche dedicada por completo al nu metal.`,
-    embedUrl: "https://www.instagram.com/p/DO4zdAtjF5A/embed",
+    postUrl: "https://www.instagram.com/p/DO4zdAtjF5A/",
     photos: showPhotos(2, 8),
   },
   {
-    date: "5 de Septiembre, 2025",
-    sortKey: "2025-09-05",
+    date: "2025-09-05",
     venue: "Espacio Lola Mora",
     city: "Tucumán, Argentina",
     event: "65° Septiembre Musical — NuMetal & Prog Night",
@@ -110,12 +89,7 @@ const PAST_SHOWS: PastShow[] = [
       },
     ],
     description: `Una noche de rock alternativo y metal junto a ${PORN_BAND_NAME} (Korn) y Aeon (Tool), en un evento cultural y familiar con música en vivo, feria de artesanos y gastronomía.`,
-    embedUrl: "https://www.instagram.com/p/DOXS0a2DDJ7/embed",
+    postUrl: "https://www.instagram.com/p/DOXS0a2DDJ7/",
     photos: showPhotos(1, 6),
   },
 ];
-
-// PAST_SHOWS ordenado del más reciente al más antiguo por sortKey, no por
-// posición en el array — evita que un show cargado fuera de orden rompa
-// silenciosamente "Último Show" en la home.
-export const SORTED_PAST_SHOWS: PastShow[] = [...PAST_SHOWS].sort((a: PastShow, b: PastShow) => b.sortKey.localeCompare(a.sortKey));

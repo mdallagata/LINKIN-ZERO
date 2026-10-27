@@ -4,6 +4,12 @@ on:
   pull_request:
   push:
     branches: [prod]
+  # Todos los días a las 06:00 de Tucumán (09:00 UTC) se regenera y deploya el
+  # sitio: la separación entre próximos shows y anteriores se calcula al
+  # generarlo, así que un show pasa solo a "anteriores" al día siguiente.
+  schedule:
+    - cron: "0 9 * * *"
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -26,7 +32,7 @@ jobs:
 
   deploy:
     name: Deploy to Cloudflare Workers
-    if: github.ref == 'refs/heads/prod' && github.event_name == 'push'
+    if: github.ref == 'refs/heads/prod' && github.event_name != 'pull_request'
     needs: lint
     runs-on: ubuntu-latest
     steps:

@@ -6,24 +6,17 @@ import ScrollToContent from "@/components/ScrollToContent";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
 import { PastShowsSection, UpcomingShowsSection } from "@/components/ShowsSections";
-import { BAND_NAME, BAND_TAGLINE, OG_IMAGE, SITE_URL } from "@/data/band";
+import { BAND_NAME } from "@/data/band";
 import { NAV_LINKS } from "@/data/nav";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Shows",
   description:
-    `Shows pasados y próximos de ${BAND_NAME}. Vimos en Magic Music Box, Espacio Lola Mora ` +
+    `Shows pasados y próximos de ${BAND_NAME}. Tocamos en Magic Music Box, Espacio Lola Mora ` +
     `(Septiembre Musical), Obscene Fest y más. Seguinos para conocer nuevas fechas.`,
-  openGraph: {
-    title: `Shows — ${BAND_NAME}`,
-    description: BAND_TAGLINE,
-    url: `${SITE_URL}/shows`,
-    siteName: BAND_NAME,
-    locale: "es_AR",
-    type: "website",
-    images: [OG_IMAGE],
-  },
-};
+  path: "/shows",
+});
 
 export default function ShowsPage(): ReactNode {
   return (

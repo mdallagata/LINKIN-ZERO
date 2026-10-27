@@ -47,7 +47,8 @@ main {
 /* Type scale — one h1 per page (page title), h2 for recurring section headings,
    h3 for card-level headings. Anton is display-only (single weight, gets cramped
    below ~28px); Space Grotesk carries small headings and all UI/body text. */
-h1 {
+h1,
+.h1 {
   font-family: var(--font-heading), sans-serif;
   font-size: clamp(2.25rem, 6vw, 4rem);
   text-transform: uppercase;
@@ -333,6 +334,10 @@ h3 {
   letter-spacing: 0.02em;
   color: #fff;
   margin-top: -1.5rem;
+  /* En la home es un h1: sin esto tomaría el interlineado, margen y peso de los títulos. */
+  line-height: 1.5;
+  margin-bottom: 0;
+  font-weight: 400;
 }
 
 .site-wordmark--glow {

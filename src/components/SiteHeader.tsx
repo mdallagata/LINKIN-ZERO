@@ -10,7 +10,15 @@ import { BAND_NAME, BAND_TAGLINE } from "@/data/band";
 import type { NavLink } from "@/data/nav";
 import { scrollBehavior } from "@/lib/scroll";
 
-export default function SiteHeader({ links, heroImage, heroImagePosition }: { links: NavLink[]; heroImage?: string; heroImagePosition?: string }): ReactNode {
+type SiteHeaderProps = {
+  links: NavLink[];
+  heroImage?: string;
+  heroImagePosition?: string;
+  /** En la home el nombre de la banda es el h1; en las demás, el título de la página. */
+  brandAsHeading?: boolean;
+};
+
+export default function SiteHeader({ links, heroImage, heroImagePosition, brandAsHeading = false }: SiteHeaderProps): ReactNode {
   const pathname: string = usePathname();
   const router = useRouter();
   const isPhotoHero: boolean = Boolean(heroImage);
@@ -59,6 +67,7 @@ export default function SiteHeader({ links, heroImage, heroImagePosition }: { li
   };
 
   const heroClass: string = ["site-hero", "w-100", isPhotoHero && "site-hero--photo"].filter(Boolean).join(" ");
+  const Wordmark: "h1" | "div" = brandAsHeading ? "h1" : "div";
   const wordmarkClass: string = `site-wordmark${isPhotoHero ? " site-wordmark--glow" : ""}`;
 
   return (
@@ -66,7 +75,7 @@ export default function SiteHeader({ links, heroImage, heroImagePosition }: { li
       {heroImage && <HeroImage src={heroImage} position={heroImagePosition ?? "45%"} />}
       <nav className="pt-3 pb-2">
         <Link href="/" className="text-decoration-none">
-          <div className={wordmarkClass}>[ {BAND_NAME} ]</div>
+          <Wordmark className={wordmarkClass}>[ {BAND_NAME} ]</Wordmark>
         </Link>
         <p className={`hero-tagline mb-0${isPhotoHero ? " hero-tagline--reveal" : ""}`}>
           {isPhotoHero

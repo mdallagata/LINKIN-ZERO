@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import Container from "react-bootstrap/Container";
 import ContactButtons from "@/components/ContactButtons";
@@ -12,10 +13,15 @@ import { NAV_LINKS } from "@/data/nav";
 import { REEL_URL } from "@/data/instagram";
 import { UPCOMING_SHOWS } from "@/data/shows";
 
+// Título, descripción y openGraph de la home son los del layout.
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
+
 export default function Home(): ReactNode {
   return (
     <>
-      <SiteHeader links={NAV_LINKS} heroImage="/images/show-hero.webp" heroImagePosition="55%" />
+      <SiteHeader links={NAV_LINKS} heroImage="/images/show-hero.webp" heroImagePosition="55%" brandAsHeading />
 
       <main className="w-100 px-3 position-relative">
         <div role="img" aria-label="Batería de LINKIN ZERØ en vivo" className="home-side-photo">
@@ -26,7 +32,7 @@ export default function Home(): ReactNode {
         </div>
 
         <Container as="section" id="quienes-somos" className="mb-5" style={{ maxWidth: 700 }}>
-          <h1 className="mb-1">¿Quiénes somos?</h1>
+          <h2 className="h1 mb-1">¿Quiénes somos?</h2>
           <div className="section-divider" />
           <PhotoShowcase src="/images/todos.webp" alt="Los integrantes de LINKIN ZERØ en Obscene Fest" width={1400} height={932} />
           <p className="hero-description mb-0">{BAND_DESCRIPTION}</p>

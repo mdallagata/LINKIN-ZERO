@@ -6,25 +6,16 @@ import MemberSection from "@/components/MemberSection";
 import ScrollToContent from "@/components/ScrollToContent";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
-import { BAND_NAME, BAND_TAGLINE, OG_IMAGE, SITE_URL } from "@/data/band";
+import { BAND_NAME } from "@/data/band";
 import { type Member, MEMBERS } from "@/data/members";
 import { NAV_LINKS } from "@/data/nav";
+import { listInSpanish, pageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Miembros",
-  description:
-    `Conocé a los integrantes de ${BAND_NAME}: Lucas Sorroza (batería), Gustavo Monjes (bajo), ` +
-    `Mariano Cruz (voz), Mauricio Dall'Agata (guitarra) y Exequiel Mleziva (voz/guitarra).`,
-  openGraph: {
-    title: `Miembros — ${BAND_NAME}`,
-    description: BAND_TAGLINE,
-    url: `${SITE_URL}/members`,
-    siteName: BAND_NAME,
-    locale: "es_AR",
-    type: "website",
-    images: [OG_IMAGE],
-  },
-};
+  description: `Conocé a los integrantes de ${BAND_NAME}: ${listInSpanish(MEMBERS.map((m: Member): string => `${m.name} (${m.role.toLowerCase()})`))}.`,
+  path: "/members",
+});
 
 export default function MembersPage(): ReactNode {
   return (

@@ -340,64 +340,45 @@ h3 {
   font-weight: 400;
 }
 
+/* Brillo que "respira": el texto tiene el brillo más tenue y una copia
+   transparente encima (::after, con el texto de data-text) suma el resto. Solo
+   se anima la opacidad de esa copia, que el navegador compone sin volver a
+   pintar cinco capas de text-shadow en cada cuadro. */
 .site-wordmark--glow {
+  position: relative;
+  text-shadow:
+    0 0 1px #fff,
+    0 0 4px #fff,
+    0 0 8px var(--brand),
+    0 0 18px color-mix(in srgb, var(--brand) 35%, transparent),
+    0 0 35px color-mix(in srgb, var(--brand) 12%, transparent);
+}
+
+.site-wordmark--glow::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  color: transparent;
   text-shadow:
     0 0 2px #fff,
     0 0 8px #fff,
     0 0 15px var(--brand),
     0 0 35px color-mix(in srgb, var(--brand) 60%, transparent),
     0 0 70px color-mix(in srgb, var(--brand) 30%, transparent);
+  pointer-events: none;
   animation: wordmark-breath 8s ease-in-out infinite;
 }
 
+/* 0.55 y no 1: la copia se suma al brillo base; así el pico iguala al de la
+   versión anterior, que animaba el text-shadow (medido con capturas). */
 @keyframes wordmark-breath {
   0%,
   100% {
-    text-shadow:
-      0 0 2px #fff,
-      0 0 8px #fff,
-      0 0 15px var(--brand),
-      0 0 35px color-mix(in srgb, var(--brand) 60%, transparent),
-      0 0 70px color-mix(in srgb, var(--brand) 30%, transparent);
-  }
-
-  12.5%,
-  87.5% {
-    text-shadow:
-      0 0 1.75px #fff,
-      0 0 7px #fff,
-      0 0 13.25px var(--brand),
-      0 0 30.75px color-mix(in srgb, var(--brand) 52.5%, transparent),
-      0 0 61.25px color-mix(in srgb, var(--brand) 25.5%, transparent);
-  }
-
-  25%,
-  75% {
-    text-shadow:
-      0 0 1.5px #fff,
-      0 0 6px #fff,
-      0 0 11.5px var(--brand),
-      0 0 26.5px color-mix(in srgb, var(--brand) 45%, transparent),
-      0 0 52.5px color-mix(in srgb, var(--brand) 21%, transparent);
-  }
-
-  37.5%,
-  62.5% {
-    text-shadow:
-      0 0 1.25px #fff,
-      0 0 5px #fff,
-      0 0 9.75px var(--brand),
-      0 0 22.25px color-mix(in srgb, var(--brand) 37.5%, transparent),
-      0 0 43.75px color-mix(in srgb, var(--brand) 16.5%, transparent);
+    opacity: 0.55;
   }
 
   50% {
-    text-shadow:
-      0 0 1px #fff,
-      0 0 4px #fff,
-      0 0 8px var(--brand),
-      0 0 18px color-mix(in srgb, var(--brand) 35%, transparent),
-      0 0 35px color-mix(in srgb, var(--brand) 12%, transparent);
+    opacity: 0;
   }
 }
 
@@ -1009,17 +990,26 @@ html:has(.photo-dialog[open]) {
   cursor: grabbing;
 }
 
-.fade-in-section {
-  opacity: 0;
-  transform: translateY(20px);
-  transition:
-    opacity 0.4s ease-out,
-    transform 0.4s ease-out;
+/* Secciones que aparecen al scrollear (FadeInSection) y fotos que aparecen al
+   terminar de cargar (FadeInImage). Solo se ocultan si hay JS: sin JS nadie las
+   mostraría y el contenido quedaría invisible. */
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  .fade-in-section {
+    transition:
+      opacity 0.4s ease-out,
+      transform 0.4s ease-out;
+  }
+
+  .fade-in-section:not(.is-visible) {
+    opacity: 0;
+    transform: translateY(20px);
+  }
 }
 
-.fade-in-section.is-visible {
-  opacity: 1;
-  transform: translateY(0);
+@media (scripting: enabled) {
+  .fade-in-image:not(.is-loaded) {
+    opacity: 0;
+  }
 }
 
 .back-to-top {
@@ -1091,6 +1081,90 @@ html:has(.photo-dialog[open]) {
   }
 }
 
+/* Embed de Instagram (InstagramEmbed): recuadro con la proporción del post;
+   portada, aviso de carga, iframe y link de respaldo van superpuestos. */
+.instagram-embed {
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.instagram-frame,
+.instagram-placeholder,
+.instagram-poster,
+.instagram-fallback {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+}
+
+.instagram-frame {
+  border: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.instagram-frame.is-loaded {
+  opacity: 1;
+}
+
+.instagram-placeholder,
+.instagram-fallback {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface-2);
+}
+
+.instagram-placeholder {
+  gap: 0.25rem;
+  color: var(--ink-2);
+  font-size: 0.85rem;
+}
+
+.instagram-fallback {
+  gap: 0.5rem;
+  text-decoration: none;
+}
+
+.instagram-poster {
+  overflow: hidden;
+  padding: 0;
+  border: 1px solid var(--hairline);
+  background: var(--surface-2);
+  cursor: pointer;
+}
+
+.instagram-poster img {
+  object-fit: cover;
+}
+
+.instagram-poster__hint {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.9rem;
+  border: 1px solid color-mix(in srgb, var(--brand) 60%, transparent);
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.75);
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: box-shadow 0.2s;
+}
+
+.instagram-poster:hover .instagram-poster__hint {
+  box-shadow: 0 0 12px var(--brand);
+}
+
 .instagram-skeleton {
   animation: skeleton-pulse 1.5s ease-in-out infinite;
 }
@@ -1106,12 +1180,6 @@ html:has(.photo-dialog[open]) {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .fade-in-section {
-    transition: none;
-    opacity: 1;
-    transform: none;
-  }
-
   .hero-bg-image {
     animation: none;
   }
@@ -1123,8 +1191,11 @@ html:has(.photo-dialog[open]) {
     transition: none;
   }
 
+  .site-wordmark--glow::after {
+    content: none;
+  }
+
   .site-wordmark--glow {
-    animation: none;
     text-shadow:
       0 0 2px #fff,
       0 0 8px #fff,

@@ -74,7 +74,9 @@ export default function SiteHeader({ links, heroImage, heroImagePosition, brandA
       {heroImage && <HeroImage src={heroImage} position={heroImagePosition ?? "45%"} />}
       <div className="pt-3 pb-2">
         <Link href="/" className="text-decoration-none">
-          <Wordmark className={wordmarkClass}>[ {BAND_NAME} ]</Wordmark>
+          <Wordmark className={wordmarkClass} data-text={`[ ${BAND_NAME} ]`}>
+            [ {BAND_NAME} ]
+          </Wordmark>
         </Link>
         {isPhotoHero ? (
           // Una <span> por letra para la animación; el lector de pantalla lee la

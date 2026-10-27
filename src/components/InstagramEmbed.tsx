@@ -2,158 +2,101 @@
 
 import type { CSSProperties, ReactNode } from "react";
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { SiInstagram } from "react-icons/si";
+import type { InstagramEmbedInfo } from "@/lib/instagram-embed";
+import { instagramEmbedInfo } from "@/lib/instagram-embed";
 
 type Props = {
   url: string;
+  /** Captura del embed (`pnpm instagram-poster <url>`). Con portada, el iframe se crea recién al tocarla. */
+  poster?: string;
 };
 
-type EmbedInfo = {
-  src: string;
-  label: "Post" | "Reel";
-};
+type Status = "waiting" | "loading" | "loaded";
 
-// El iframe se crea recién cuando el contenedor entra en pantalla, ya en el
-// cliente: si viniera en el HTML del servidor podría terminar de cargar antes
-// de que React hidrate, onLoad se perdería y el timeout mostraría el fallback
-// aunque el embed estuviera bien.
-//
-// Si el embed queda colgado (post borrado/privado, red lenta) el iframe igual
-// dispara onLoad al renderizar la página de error de Instagram — este timeout
-// es la única red de seguridad para no dejar el skeleton girando para siempre.
-const LOAD_TIMEOUT_MS: number = 8000;
+// Si el embed tarda más que esto (red lenta, post borrado o privado) aparece
+// el link a Instagram, pero el iframe sigue cargando y lo reemplaza si llega.
+const SLOW_AFTER_MS: number = 8000;
 
-function embedInfo(url: string): EmbedInfo | null {
-  const postMatch = url.match(/instagram\.com\/p\/([^/?]+)/);
-  if (postMatch) return { src: `https://www.instagram.com/p/${postMatch[1]}/embed`, label: "Post" };
-  const reelMatch = url.match(/instagram\.com\/reel\/([^/?]+)/);
-  if (reelMatch) return { src: `https://www.instagram.com/reel/${reelMatch[1]}/embed`, label: "Reel" };
-  return null;
-}
-
-export default function InstagramEmbed({ url }: Props): ReactNode {
-  const info: EmbedInfo | null = embedInfo(url);
-  const [loaded, setLoaded] = useState<boolean>(false);
-  const [error, setError] = useState<boolean>(false);
-  const [visible, setVisible] = useState<boolean>(false);
-  const loadedRef = useRef<boolean>(false);
+// El iframe nunca viene en el HTML del servidor: si terminara de cargar antes
+// de que React hidrate, onLoad se perdería. Sin portada se crea al entrar en
+// pantalla; con portada, cuando la tocan (el embed son ~50 pedidos a Instagram
+// que no tiene sentido hacer si nadie va a mirar el video).
+export default function InstagramEmbed({ url, poster }: Props): ReactNode {
+  const info: InstagramEmbedInfo | null = instagramEmbedInfo(url);
+  const [status, setStatus] = useState<Status>("waiting");
+  const [slow, setSlow] = useState<boolean>(false);
   const containerRef = useRef<HTMLDivElement>(null);
-
-  useEffect((): void => {
-    loadedRef.current = loaded;
-  }, [loaded]);
 
   useEffect((): void | (() => void) => {
     const el: HTMLDivElement | null = containerRef.current;
-    if (!el || !info) return;
-    let timeoutId: number | null = null;
+    if (poster || !el) return;
     const observer = new IntersectionObserver(
       ([entry]: IntersectionObserverEntry[]) => {
-        if (!entry.isIntersecting) return;
+        if (!entry?.isIntersecting) return;
         observer.disconnect();
-        setVisible(true);
-        timeoutId = window.setTimeout(() => {
-          if (!loadedRef.current) setError(true);
-        }, LOAD_TIMEOUT_MS);
+        setStatus("loading");
       },
       { threshold: 0.1 },
     );
     observer.observe(el);
-    return (): void => {
-      observer.disconnect();
-      if (timeoutId !== null) window.clearTimeout(timeoutId);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [info?.src]);
+    return (): void => observer.disconnect();
+  }, [poster]);
+
+  useEffect((): void | (() => void) => {
+    if (status !== "loading") return;
+    const timeoutId: number = window.setTimeout((): void => setSlow(true), SLOW_AFTER_MS);
+    return (): void => window.clearTimeout(timeoutId);
+  }, [status]);
 
   if (!info) {
     return <div className="text-center text-muted py-4">URL de Instagram inválida</div>;
   }
 
-  const aspectRatio: string = info.label === "Reel" ? "9 / 16" : "1 / 1.2";
-
-  const containerStyle: CSSProperties = {
-    position: "relative",
-    width: "100%",
-    maxWidth: info.label === "Reel" ? 400 : 350,
-    margin: "0 auto",
-    aspectRatio,
-  };
-
-  const iframeStyle: CSSProperties = {
-    position: "absolute",
-    inset: 0,
-    width: "100%",
-    height: "100%",
-    border: "none",
-    borderRadius: 8,
-    opacity: loaded ? 1 : 0,
-    transition: "opacity 0.3s ease",
-  };
-
-  const handleLoad = (): void => setLoaded(true);
-  const handleError = (): void => setError(true);
+  const frameStyle: CSSProperties = { maxWidth: info.width, aspectRatio: info.aspectRatio };
 
   return (
-    <div className="text-center">
-      <div ref={containerRef} style={containerStyle}>
-        {!loaded && !error && (
-          <div
-            className="instagram-skeleton"
-            style={{
-              position: "absolute",
-              inset: 0,
-              borderRadius: 8,
-              background: "var(--surface-2)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
+    <div ref={containerRef} className="instagram-embed" style={frameStyle}>
+      {status !== "loaded" &&
+        (poster ? (
+          <button
+            type="button"
+            className="instagram-poster"
+            onClick={() => setStatus("loading")}
+            disabled={status === "loading"}
+            aria-label="Cargar la publicación de Instagram"
           >
-            <div className="text-muted" style={{ fontSize: "0.85rem" }}>
-              <SiInstagram size={32} aria-hidden className="mb-1" />
-              <br />
-              Cargando...
-            </div>
-          </div>
-        )}
-
-        {error ? (
-          <a
-            href={url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="glow-hover text-brand d-inline-flex align-items-center gap-2"
-            style={{
-              position: "absolute",
-              inset: 0,
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-              borderRadius: 8,
-              background: "var(--surface-2)",
-              textDecoration: "none",
-            }}
-          >
-            <SiInstagram size={32} aria-hidden />
-            <span>Ver en Instagram ↗</span>
-          </a>
+            <Image src={poster} alt="" fill sizes={`${info.width}px`} />
+            <span className={`instagram-poster__hint${status === "loading" ? " instagram-skeleton" : ""}`}>
+              <SiInstagram aria-hidden />
+              {status === "loading" ? "Cargando…" : "Tocá para cargar"}
+            </span>
+          </button>
         ) : (
-          visible && (
-            <iframe
-              src={info.src}
-              title="Instagram"
-              style={iframeStyle}
-              allowFullScreen
-              loading="lazy"
-              scrolling="no"
-              onLoad={handleLoad}
-              onError={handleError}
-            />
-          )
-        )}
-      </div>
+          <div className="instagram-placeholder instagram-skeleton">
+            <SiInstagram size={32} aria-hidden />
+            Cargando...
+          </div>
+        ))}
+
+      {status !== "waiting" && (
+        <iframe
+          src={info.src}
+          title="Publicación de Instagram"
+          className={`instagram-frame${status === "loaded" ? " is-loaded" : ""}`}
+          allowFullScreen
+          scrolling="no"
+          onLoad={() => setStatus("loaded")}
+        />
+      )}
+
+      {slow && status === "loading" && (
+        <a href={url} target="_blank" rel="noopener noreferrer" className="instagram-fallback glow-hover text-brand">
+          <SiInstagram size={32} aria-hidden />
+          <span>Ver en Instagram ↗</span>
+        </a>
+      )}
     </div>
   );
 }

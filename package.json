@@ -8,6 +8,7 @@
     "build": "pnpm images && next build",
     "start": "next start -p 3010",
     "images": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/generate-images.mts",
+    "instagram-poster": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/instagram-poster.mts",
     "lint": "eslint",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
@@ -23,6 +24,7 @@
     "server-only": "0.0.1"
   },
   "devDependencies": {
+    "@playwright/test": "1.64.1",
     "@types/node": "^24.19.2",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",

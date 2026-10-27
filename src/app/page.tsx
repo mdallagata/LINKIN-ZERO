@@ -9,6 +9,7 @@ import { LatestShowSection, UpcomingShowsSection } from "@/components/ShowsSecti
 import { BAND_DESCRIPTION } from "@/data/band";
 import { NAV_LINKS } from "@/data/nav";
 import { REEL_URL } from "@/data/instagram";
+import { instagramPoster } from "@/lib/instagram-poster";
 import { UPCOMING_SHOWS } from "@/lib/shows";
 
 // Título, descripción y openGraph de la home son los del layout.
@@ -58,7 +59,7 @@ export default function Home(): ReactNode {
           </FadeInSection>
           <div style={{ marginTop: "1rem" }}>
             <FadeInSection>
-              <InstagramEmbed url={REEL_URL} />
+              <InstagramEmbed url={REEL_URL} poster={instagramPoster(REEL_URL)} />
             </FadeInSection>
           </div>
         </div>

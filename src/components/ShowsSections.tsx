@@ -7,6 +7,7 @@ import JsonLd from "@/components/JsonLd";
 import ShowPhotos from "@/components/ShowPhotos";
 import { BAND_NAME, SITE_URL } from "@/data/band";
 import type { PressLink, Show } from "@/data/shows";
+import { instagramPoster } from "@/lib/instagram-poster";
 import { formatShowDate } from "@/lib/show-schedule";
 import { PAST_SHOWS, UPCOMING_SHOWS } from "@/lib/shows";
 
@@ -98,7 +99,7 @@ function UpcomingShowCard({ show }: { show: Show }): ReactNode {
       </div>
       {show.postUrl && (
         <div className="mt-4">
-          <InstagramEmbed url={show.postUrl} />
+          <InstagramEmbed url={show.postUrl} poster={instagramPoster(show.postUrl)} />
         </div>
       )}
     </div>

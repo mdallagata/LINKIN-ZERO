@@ -56,6 +56,10 @@ export default function ShowPhotoGallery({
             className="w-100 h-100"
             style={{ objectFit: "contain" }}
             loading="eager"
+            onSwipe={(direction: "prev" | "next"): void => {
+              if (direction === "prev" && canGoPrev) setOffset((o: number): number => o - 1);
+              if (direction === "next" && canGoNext) setOffset((o: number): number => o + 1);
+            }}
           />
         </div>
         <div className="d-flex flex-column flex-sm-row align-items-center justify-content-center mt-3 gap-2">

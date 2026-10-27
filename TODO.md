@@ -1,5 +1,5 @@
-- [ ] Hero image rotativa — que cambie automáticamente entre varias fotos
-- [ ] Hook pre-push que corra `yarn lint`
-- [ ] LCP: el CSS completo de Bootstrap bloquea el render del hero — reducir la dependencia de Bootstrap (cambio grande, riesgo de romper estilos)
-- [ ] Activar Cloudflare Web Analytics desde el dashboard (requiere acceso al panel)
-- [ ] Probar zoom táctil y swipe de la galería en un celular real
+- [ ] Probar en un celular real: zoom con dos dedos, swipe entre fotos de la galería y la foto del hero en /members y /shows
+- [ ] Después del próximo deploy, volver a medir con PageSpeed Insights (móvil) para confirmar la mejora de FCP/LCP
+- [ ] Cloudflare (requiere acceso al panel de hyan.dev, pedírselo al dueño del dominio):
+  - Web Analytics ya está activo en producción (el beacon de cloudflareinsights carga); falta acceso para ver los datos
+  - El script de detección de bots (`/cdn-cgi/challenge-platform/…`, Bot Fight Mode / JS Detections) es la tarea más larga del hilo principal en móvil (~1–2 s en Lighthouse): evaluar desactivarlo para este subdominio

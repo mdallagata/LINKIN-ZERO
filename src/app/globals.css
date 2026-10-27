@@ -261,8 +261,32 @@ h3 {
   z-index: 1;
 }
 
+/* El <picture> no debe generar caja: si no, toma el position: relative de
+   `.site-hero > *` y la imagen (absolute, 100%) queda medida contra él (0×0). */
+.site-hero>picture {
+  display: contents;
+}
+
 .hero-bg-image {
   z-index: 0 !important;
+  object-position: center var(--hero-position, 45%);
+  animation: hero-fade-in 0.4s ease-in;
+}
+
+@media (max-width: 576px) {
+  .hero-bg-image {
+    object-position: center 55%;
+  }
+}
+
+@keyframes hero-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 .site-hero>* {
@@ -877,8 +901,7 @@ h3 {
   }
 
   .hero-bg-image {
-    transition: none !important;
-    opacity: 1 !important;
+    animation: none;
   }
 
   .site-nav-link::after,

@@ -4,7 +4,7 @@
 
 ## Stack
 
-Next.js 16 (App Router, Turbopack) · React 19 · TypeScript · react-bootstrap 2 + Bootstrap 5 (CSS only, no Bootstrap JS bundle). Package manager is **Yarn** — commit `yarn.lock`, never `package-lock.json`.
+Next.js 16 (App Router, Turbopack) · React 19 · TypeScript · react-bootstrap 2 + Bootstrap 5 (CSS only, no Bootstrap JS bundle). Package manager is **pnpm** (version pinned in `packageManager`) — commit `pnpm-lock.yaml`, never `package-lock.json` or `yarn.lock`. Packages allowed to run install scripts are listed under `allowBuilds` in `pnpm-workspace.yaml`.
 
 Node version is pinned in [.nvmrc](.nvmrc). Run `nvm use` before installing/running.
 
@@ -36,7 +36,7 @@ El sitio es **100% estático** (`output: "export"` en `next.config.ts`). Esto im
 
 - `next/image` necesita `images: { unoptimized: true }` — no hay servidor de optimización.
 - **No existe ISR**: `export const revalidate` no hace nada en un export estático; no agregarlo.
-- El deploy se hace a **Cloudflare Pages** con `wrangler deploy` (script `deploy` en `package.json`).
+- El deploy se hace a **Cloudflare Workers** (static assets, ver `wrangler.jsonc`) con `wrangler deploy`: lo corre el CI en cada push a `prod`.
 
 ## Images
 

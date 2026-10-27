@@ -1,7 +1,7 @@
 "use client";
 
-import type { CSSProperties, MouseEvent, ReactNode, TouchEvent, WheelEvent } from "react";
-import { useCallback, useRef, useState } from "react";
+import type { CSSProperties, MouseEvent, ReactNode, TouchEvent } from "react";
+import { useCallback, useEffect, useEffectEvent, useRef, useState } from "react";
 import type { ImageProps } from "next/image";
 import FadeInImage from "@/components/FadeInImage";
 
@@ -10,11 +10,15 @@ const MAX_SCALE = 10;
 const DOUBLE_TAP_MS = 300;
 const DOUBLE_TAP_MOVE_TOLERANCE = 10;
 const DOUBLE_TAP_ZOOM = 2.5;
+const SWIPE_MIN_DISTANCE = 50;
 
 type Point = { x: number; y: number };
 type DragStart = Point & { posX: number; posY: number };
 
-export default function ZoomableImage(props: ImageProps): ReactNode {
+export default function ZoomableImage({
+  onSwipe,
+  ...props
+}: ImageProps & { onSwipe?: (direction: "prev" | "next") => void }): ReactNode {
   const containerRef = useRef<HTMLDivElement>(null);
   const dragStart = useRef<DragStart>({ x: 0, y: 0, posX: 0, posY: 0 });
   const pinchStart = useRef<{ dist: number; scale: number } | null>(null);
@@ -56,15 +60,22 @@ export default function ZoomableImage(props: ImageProps): ReactNode {
     [clampPos]
   );
 
-  const handleWheel = useCallback(
-    (e: WheelEvent<HTMLDivElement>): void => {
-      e.preventDefault();
-      const factor: number = e.deltaY < 0 ? 1.15 : 1 / 1.15;
-      const newScale: number = Math.max(MIN_SCALE, Math.min(MAX_SCALE, scale * factor));
-      zoomAt(e.clientX, e.clientY, newScale, scale, pos);
-    },
-    [scale, pos, zoomAt]
-  );
+  const handleWheel = useEffectEvent((e: WheelEvent): void => {
+    e.preventDefault();
+    const factor: number = e.deltaY < 0 ? 1.15 : 1 / 1.15;
+    const newScale: number = Math.max(MIN_SCALE, Math.min(MAX_SCALE, scale * factor));
+    zoomAt(e.clientX, e.clientY, newScale, scale, pos);
+  });
+
+  // React registra `wheel` como listener pasivo y ahí preventDefault() no hace
+  // nada: la rueda haría zoom en la foto y además scrollearía lo de atrás.
+  useEffect((): (() => void) | void => {
+    const el: HTMLDivElement | null = containerRef.current;
+    if (!el) return;
+    const onWheel = (e: WheelEvent): void => handleWheel(e);
+    el.addEventListener("wheel", onWheel, { passive: false });
+    return (): void => el.removeEventListener("wheel", onWheel);
+  }, []);
 
   const handleMouseDown = useCallback(
     (e: MouseEvent): void => {
@@ -111,6 +122,8 @@ export default function ZoomableImage(props: ImageProps): ReactNode {
           dist: Math.hypot(t1.clientX - t2.clientX, t1.clientY - t2.clientY),
           scale,
         };
+        // El primer dedo había arrancado como posible tap/swipe: es un pellizco.
+        tapStart.current = null;
         setTouching(true);
         return;
       }
@@ -128,7 +141,6 @@ export default function ZoomableImage(props: ImageProps): ReactNode {
   const handleTouchMove = useCallback(
     (e: TouchEvent<HTMLDivElement>): void => {
       if (e.touches.length === 2 && pinchStart.current) {
-        e.preventDefault();
         const rect: DOMRect | undefined = containerRef.current?.getBoundingClientRect();
         if (!rect) return;
         const t1 = e.touches[0];
@@ -146,7 +158,6 @@ export default function ZoomableImage(props: ImageProps): ReactNode {
         return;
       }
       if (e.touches.length === 1 && touching) {
-        e.preventDefault();
         const touch = e.touches[0];
         setPos(
           clampPos(
@@ -176,7 +187,13 @@ export default function ZoomableImage(props: ImageProps): ReactNode {
       tapStart.current = null;
       if (!start) return;
       const changed = e.changedTouches[0];
-      const moved: number = Math.hypot(changed.clientX - start.x, changed.clientY - start.y);
+      const dx: number = changed.clientX - start.x;
+      const dy: number = changed.clientY - start.y;
+      if (onSwipe && Math.abs(dx) >= SWIPE_MIN_DISTANCE && Math.abs(dx) > Math.abs(dy)) {
+        onSwipe(dx < 0 ? "next" : "prev");
+        return;
+      }
+      const moved: number = Math.hypot(dx, dy);
       if (moved > DOUBLE_TAP_MOVE_TOLERANCE) return;
       const now: number = Date.now();
       const prev: { time: number } | null = lastTap.current;
@@ -188,7 +205,7 @@ export default function ZoomableImage(props: ImageProps): ReactNode {
         lastTap.current = { time: now };
       }
     },
-    [touching, scale, pos, zoomAt]
+    [touching, scale, pos, zoomAt, onSwipe]
   );
 
   const handleTouchCancel = useCallback((): void => {
@@ -204,15 +221,17 @@ export default function ZoomableImage(props: ImageProps): ReactNode {
     transform: `translate(${pos.x}px, ${pos.y}px) scale(${scale})`,
     transformOrigin: "0 0",
     cursor,
-    touchAction: isZoomed ? "none" : "manipulation",
     transition: dragging || touching ? "none" : "transform 0.15s ease-out",
   };
 
+  // touch-action: none siempre, no solo con zoom: los gestos sobre la foto los
+  // maneja este componente. Con "manipulation" el navegador también hacía zoom
+  // de toda la página al pellizcar la foto sin zoom.
   return (
     <div
       ref={containerRef}
       className={wrapClass}
-      onWheel={handleWheel}
+      style={{ touchAction: "none" }}
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}

@@ -6,13 +6,13 @@ Empezó en 2021 como una página de fan sobre la banda real, mi primera página 
 
 ## Requisitos
 
-- Node.js 24.18.0 (LTS) — fijado en [.nvmrc](.nvmrc). Si usás [nvm](https://github.com/nvm-sh/nvm), corré `nvm use`.
+- Node.js 24.22.1 (LTS) — fijado en [.nvmrc](.nvmrc). Si usás [nvm](https://github.com/nvm-sh/nvm), corré `nvm use`.
 
 ## Desarrollo
 
 ```bash
-yarn install
-yarn dev
+pnpm install
+pnpm dev
 ```
 
 Abrí [http://localhost:3010](http://localhost:3010).
@@ -23,7 +23,7 @@ Abrí [http://localhost:3010](http://localhost:3010).
 - [React](https://react.dev) 19
 - [react-bootstrap](https://react-bootstrap.github.io) 2 + [Bootstrap](https://getbootstrap.com) 5 (solo CSS)
 - TypeScript + ESLint
-- Deploy: [Cloudflare Pages](https://pages.cloudflare.com/) — sitio 100% estático (`output: "export"` + `wrangler deploy`)
+- Deploy: [Cloudflare Workers](https://developers.cloudflare.com/workers/static-assets/) (static assets) — sitio 100% estático (`output: "export"` + `wrangler deploy`)
 - Fuentes: [Anton](https://fonts.google.com/specimen/Anton) (títulos) + [Space Grotesk](https://fonts.google.com/specimen/Space+Grotesk) (cuerpo), vía `next/font/google`
 
 ## Estructura

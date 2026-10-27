@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import type { NextFontWithVariable } from "next/dist/compiled/@next/font/dist/types";
 import { Anton, Space_Grotesk } from "next/font/google";
-import "bootstrap/dist/css/bootstrap.min.css";
+import "./bootstrap.scss";
 import "./globals.css";
 import BackToTop from "@/components/BackToTop";
 import JsonLd from "@/components/JsonLd";

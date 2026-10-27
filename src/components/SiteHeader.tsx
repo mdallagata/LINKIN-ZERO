@@ -2,10 +2,10 @@
 
 import type { CSSProperties, MouseEvent, ReactNode } from "react";
 import { useEffect, useRef, useState } from "react";
+import { getImageProps } from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import Nav from "react-bootstrap/Nav";
-import FadeInImage from "@/components/FadeInImage";
 import { BAND_NAME, BAND_TAGLINE } from "@/data/band";
 import type { NavLink } from "@/data/nav";
 
@@ -21,22 +21,6 @@ export default function SiteHeader({
   const pathname: string = usePathname();
   const router = useRouter();
   const isPhotoHero: boolean = Boolean(heroImage);
-
-  const [isMobile, setIsMobile] = useState<boolean>(
-    typeof window !== "undefined" && window.matchMedia("(max-width: 576px)").matches
-  );
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const mq: MediaQueryList = window.matchMedia("(max-width: 576px)");
-    const handler = (e: MediaQueryListEvent): void => { setIsMobile(e.matches); };
-    mq.addEventListener("change", handler);
-    return (): void => { mq.removeEventListener("change", handler); };
-  }, []);
-
-  const mobileHeroImage: string = "/images/show-hero.webp";
-  const effectiveHeroImage: string | undefined = isMobile && heroImage ? mobileHeroImage : heroImage;
-  const effectiveHeroPosition: string = isMobile ? "55%" : (heroImagePosition ?? "45%");
 
   const sentinelRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLElement>(null);
@@ -86,21 +70,10 @@ export default function SiteHeader({
 
   const heroClass: string = ["site-hero", "w-100", isPhotoHero && "site-hero--photo"].filter(Boolean).join(" ");
   const wordmarkClass: string = `site-wordmark${isPhotoHero ? " site-wordmark--glow" : ""}`;
-  const objectPosition: string = `center ${effectiveHeroPosition}`;
 
   return (
     <div className={heroClass}>
-      {effectiveHeroImage && (
-        <FadeInImage
-          src={effectiveHeroImage}
-          alt=""
-          fill
-          preload
-          sizes="100vw"
-          className="hero-bg-image"
-          style={{ objectFit: "cover", objectPosition }}
-        />
-      )}
+      {heroImage && <HeroImage src={heroImage} position={heroImagePosition ?? "45%"} />}
       <nav className="pt-3 pb-2">
         <Link href="/" className="text-decoration-none">
           <div className={wordmarkClass}>[ {BAND_NAME} ]</div>
@@ -154,5 +127,26 @@ export default function SiteHeader({
         </div>
       )}
     </div>
+  );
+}
+
+const MOBILE_HERO_IMAGE: string = "/images/show-hero.webp";
+
+// En celular todas las páginas usan la misma foto (las de escritorio no
+// encuadran bien en vertical). La elige el navegador con <picture> antes de
+// descargar nada: con JS (matchMedia) el HTML del servidor traía la de
+// escritorio, React no corregía el src al hidratar y se bajaban las dos.
+// El encuadre de cada breakpoint está en .hero-bg-image (globals.css).
+function HeroImage({ src, position }: { src: string; position: string }): ReactNode {
+  const common = { alt: "", fill: true, sizes: "100vw", fetchPriority: "high", loading: "eager" } as const;
+  const { props: mobile } = getImageProps({ ...common, src: MOBILE_HERO_IMAGE });
+  const { props } = getImageProps({ ...common, src });
+  const style = { ...props.style, objectFit: "cover", "--hero-position": position } as CSSProperties;
+
+  return (
+    <picture>
+      <source media="(max-width: 576px)" srcSet={mobile.srcSet ?? mobile.src} />
+      <img {...props} alt="" className="hero-bg-image" style={style} />
+    </picture>
   );
 }

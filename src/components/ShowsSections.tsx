@@ -141,7 +141,6 @@ function PastShowCard({
                 width={120}
                 height={90}
                 className="show-card-thumb-img"
-                loading="eager"
               />
             </button>
           ))}

@@ -13,6 +13,11 @@ type EmbedInfo = {
   label: "Post" | "Reel";
 };
 
+// El iframe se crea recién cuando el contenedor entra en pantalla, ya en el
+// cliente: si viniera en el HTML del servidor podría terminar de cargar antes
+// de que React hidrate, onLoad se perdería y el timeout mostraría el fallback
+// aunque el embed estuviera bien.
+//
 // Si el embed queda colgado (post borrado/privado, red lenta) el iframe igual
 // dispara onLoad al renderizar la página de error de Instagram — este timeout
 // es la única red de seguridad para no dejar el skeleton girando para siempre.
@@ -30,6 +35,7 @@ export default function InstagramEmbed({ url }: Props): ReactNode {
   const info: EmbedInfo | null = embedInfo(url);
   const [loaded, setLoaded] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
+  const [visible, setVisible] = useState<boolean>(false);
   const loadedRef = useRef<boolean>(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -45,6 +51,7 @@ export default function InstagramEmbed({ url }: Props): ReactNode {
       ([entry]: IntersectionObserverEntry[]) => {
         if (!entry.isIntersecting) return;
         observer.disconnect();
+        setVisible(true);
         timeoutId = window.setTimeout(() => {
           if (!loadedRef.current) setError(true);
         }, LOAD_TIMEOUT_MS);
@@ -136,7 +143,7 @@ export default function InstagramEmbed({ url }: Props): ReactNode {
             <SiInstagram size={32} aria-hidden />
             <span>Ver en Instagram ↗</span>
           </a>
-        ) : (
+        ) : visible && (
           <iframe
             src={info.src}
             title="Instagram"

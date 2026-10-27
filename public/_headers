@@ -1,4 +1,4 @@
-# Cloudflare Pages headers — ver https://developers.cloudflare.com/pages/configuration/headers/
+# Headers de Cloudflare Workers (static assets) — ver https://developers.cloudflare.com/workers/static-assets/headers/
 
 # Los archivos de _next/static/* tienen el hash de su contenido en el nombre,
 # así que un cambio de contenido siempre implica una URL distinta: se pueden

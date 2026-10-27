@@ -7,6 +7,7 @@ import "./globals.css";
 import BackToTop from "@/components/BackToTop";
 import JsonLd from "@/components/JsonLd";
 import { BAND_DESCRIPTION, BAND_NAME, BAND_TAGLINE, INSTAGRAM_URL, OG_IMAGE, SITE_URL } from "@/data/band";
+import { BRAND_COLOR } from "@/lib/theme";
 
 const anton: NextFontWithVariable = Anton({
   subsets: ["latin"],
@@ -21,7 +22,7 @@ const spaceGrotesk: NextFontWithVariable = Space_Grotesk({
 });
 
 export const viewport: Viewport = {
-  themeColor: "#5f9ea0",
+  themeColor: BRAND_COLOR,
 };
 
 export const metadata: Metadata = {

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { scrollBehavior } from "@/lib/scroll";
 
 type Props = {
   selector: string;
@@ -12,7 +13,7 @@ export default function ScrollToContent({ selector }: Props): null {
     if (!el) return;
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
-        el.scrollIntoView({ behavior: "smooth", block: "start" });
+        el.scrollIntoView({ behavior: scrollBehavior(), block: "start" });
       });
     });
   }, [selector]);

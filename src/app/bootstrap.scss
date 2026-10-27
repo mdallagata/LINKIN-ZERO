@@ -3,6 +3,17 @@
 // nuevo usa algo de Bootstrap que no está acá (cards, forms, tablas, navbar,
 // dropdowns…), agregá su import abajo.
 
+// Tema del sitio: fondo negro, texto blanco, acento cadetblue. $brand es la
+// única definición del color en el CSS (globals.css usa var(--brand)); el mismo
+// valor está en src/lib/theme.ts para el manifest y el theme-color.
+$brand: #5f9ea0;
+$body-bg-dark: #000;
+$body-color-dark: #fff;
+$link-color-dark: $brand;
+$link-hover-color-dark: #fff;
+$border-color-dark: $brand;
+$font-family-base: var(--font-body), system-ui, sans-serif;
+
 // Configuración (no genera CSS)
 @import "bootstrap/scss/functions";
 @import "bootstrap/scss/variables";
@@ -13,6 +24,10 @@
 
 // Base
 @import "bootstrap/scss/root";
+
+:root {
+  --brand: #{$brand};
+}
 @import "bootstrap/scss/reboot";
 @import "bootstrap/scss/type";
 

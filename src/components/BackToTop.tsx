@@ -2,6 +2,7 @@
 
 import type { ReactNode } from "react";
 import { useEffect, useState } from "react";
+import { scrollBehavior } from "@/lib/scroll";
 
 export default function BackToTop(): ReactNode {
   const [visible, setVisible] = useState<boolean>(false);
@@ -23,7 +24,7 @@ export default function BackToTop(): ReactNode {
   }, []);
 
   function scrollToTop(): void {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({ top: 0, behavior: scrollBehavior() });
   }
 
   return (

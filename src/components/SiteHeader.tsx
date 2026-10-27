@@ -8,6 +8,7 @@ import { usePathname, useRouter } from "next/navigation";
 import Nav from "react-bootstrap/Nav";
 import { BAND_NAME, BAND_TAGLINE } from "@/data/band";
 import type { NavLink } from "@/data/nav";
+import { scrollBehavior } from "@/lib/scroll";
 
 export default function SiteHeader({ links, heroImage, heroImagePosition }: { links: NavLink[]; heroImage?: string; heroImagePosition?: string }): ReactNode {
   const pathname: string = usePathname();
@@ -51,7 +52,7 @@ export default function SiteHeader({ links, heroImage, heroImagePosition }: { li
       const parent: Element | null = document.querySelector(hash);
       if (!parent) return;
       const el: Element = parent.querySelector("h1, h2") ?? parent;
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
+      el.scrollIntoView({ behavior: scrollBehavior(), block: "start" });
     } else {
       router.push(href);
     }

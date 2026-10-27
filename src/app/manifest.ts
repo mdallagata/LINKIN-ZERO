@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { BAND_NAME, BAND_TAGLINE } from "@/data/band";
+import { BACKGROUND_COLOR, BRAND_COLOR } from "@/lib/theme";
 
 export const dynamic = "force-static";
 
@@ -10,8 +11,8 @@ export default function manifest(): MetadataRoute.Manifest {
     description: BAND_TAGLINE,
     start_url: "/",
     display: "standalone",
-    background_color: "#000000",
-    theme_color: "#5f9ea0",
+    background_color: BACKGROUND_COLOR,
+    theme_color: BRAND_COLOR,
     icons: [
       {
         src: "/icons/icon-192.png",

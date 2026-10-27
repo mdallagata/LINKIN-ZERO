@@ -12,6 +12,11 @@
 
 # fotos redimensionadas por scripts/generate-images.mts
 /public/generated/
+/.cache/
+
+# tests
+/test-results/
+/playwright-report/
 
 # production
 /build
@@ -37,3 +42,6 @@ npm-debug.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# estado local de `wrangler dev`
+/.wrangler/

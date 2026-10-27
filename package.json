@@ -12,6 +12,7 @@
     "lint": "eslint",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
+    "test": "playwright test",
     "deploy": "next build && wrangler deploy",
     "prepare": "git config core.hooksPath .githooks || true"
   },

@@ -14,7 +14,7 @@ export default function FadeInSection({ children, delay }: { children: ReactNode
     if (!el) return;
     const observer = new IntersectionObserver(
       ([entry]: IntersectionObserverEntry[]) => {
-        if (entry.isIntersecting) {
+        if (entry?.isIntersecting) {
           setVisible(true);
           observer.unobserve(el);
         }

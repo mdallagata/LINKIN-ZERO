@@ -1,5 +1,18 @@
 # Headers de Cloudflare Workers (static assets) — ver https://developers.cloudflare.com/workers/static-assets/headers/
 
+# Para todo el sitio:
+# - nosniff: el navegador no adivina tipos de archivo (un .txt no se ejecuta como JS).
+# - Referrer-Policy: a otros sitios solo les llega el dominio, no la ruta completa.
+# - Permissions-Policy: el sitio no usa cámara, micrófono, ubicación ni pagos.
+# - frame-ancestors / X-Frame-Options: nadie puede meter el sitio en un iframe
+#   (clickjacking). Para el iframe de Instagram que mostramos no aplica.
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+  Content-Security-Policy: frame-ancestors 'none'
+  X-Frame-Options: DENY
+
 # Los archivos de _next/static/* tienen el hash de su contenido en el nombre,
 # así que un cambio de contenido siempre implica una URL distinta: se pueden
 # cachear "para siempre" sin riesgo de servir una versión vieja.

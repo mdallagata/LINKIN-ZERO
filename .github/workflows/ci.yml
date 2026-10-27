@@ -15,8 +15,8 @@ permissions:
   contents: read
 
 jobs:
-  lint:
-    name: Lint, format & typecheck
+  check:
+    name: Lint, formato, tipos, build y tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -30,20 +30,50 @@ jobs:
       - run: pnpm format:check
       - run: pnpm exec tsc --noEmit
 
+      # Las versiones redimensionadas de las fotos se reusan entre corridas: el
+      # script compara el hash de cada foto y solo regenera las que cambiaron.
+      - uses: actions/cache@v6
+        with:
+          path: |
+            public/generated
+            .cache/generated-images.json
+          key: images-${{ hashFiles('public/images/**', 'scripts/generate-images.mts', 'src/lib/image-sizes.json', 'src/lib/generated-image-path.ts') }}
+          restore-keys: images-
+      - run: pnpm build
+
+      - run: pnpm exec playwright install --with-deps chromium
+      - run: pnpm test
+      - uses: actions/upload-artifact@v7
+        if: failure()
+        with:
+          name: test-results
+          path: test-results/
+          retention-days: 7
+
+      # El deploy publica exactamente este build, el que pasó los tests.
+      - uses: actions/upload-artifact@v7
+        with:
+          name: site
+          path: out/
+          retention-days: 1
+
   deploy:
-    name: Deploy to Cloudflare Workers
+    name: Deploy a Cloudflare Workers
     if: github.ref == 'refs/heads/prod' && github.event_name != 'pull_request'
-    needs: lint
+    needs: check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+      - uses: actions/download-artifact@v8
+        with:
+          name: site
+          path: out
       - uses: pnpm/action-setup@v6
       - uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-      - run: pnpm build
       - name: Deploy
         uses: cloudflare/wrangler-action@v4
         with:

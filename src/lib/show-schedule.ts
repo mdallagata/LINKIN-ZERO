@@ -20,5 +20,8 @@ const MONTHS: string[] = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
 /** "2026-11-28" → "28 de Noviembre, 2026". */
 export function formatShowDate(iso: string): string {
   const [year, month, day] = iso.split("-").map(Number);
-  return `${day} de ${MONTHS[month - 1]}, ${year}`;
+  const monthName: string | undefined = month ? MONTHS[month - 1] : undefined;
+  // Mejor que el build falle con un mensaje claro a que el sitio muestre "undefined".
+  if (!year || !monthName || !day) throw new Error(`Fecha de show inválida: "${iso}" (formato AAAA-MM-DD)`);
+  return `${day} de ${monthName}, ${year}`;
 }

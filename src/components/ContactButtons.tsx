@@ -20,12 +20,7 @@ export default function ContactButtons(): ReactNode {
       {CONTACT_LINKS.map(({ href, label, Icon }: ContactLink) => {
         const isExternal: boolean = href.startsWith("http");
         return (
-          <a
-            key={label}
-            href={href}
-            className="contact-button"
-            {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-          >
+          <a key={label} href={href} className="contact-button" {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
             <Icon aria-hidden />
             {label}
           </a>

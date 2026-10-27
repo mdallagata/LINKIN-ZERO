@@ -8,6 +8,8 @@
     "build": "next build",
     "start": "next start -p 3010",
     "lint": "eslint",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "deploy": "next build && wrangler deploy",
     "prepare": "git config core.hooksPath .githooks || true"
   },
@@ -25,6 +27,7 @@
     "@types/react-dom": "^19.3.0",
     "eslint": "^9.39.5",
     "eslint-config-next": "16.4.3",
+    "prettier": "3.9.10",
     "sass": "1.106.1",
     "typescript": "^6.0.3",
     "wrangler": "^4.154.0"

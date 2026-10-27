@@ -25,20 +25,10 @@ export default function Home(): ReactNode {
           <div className="home-side-photo__img" />
         </div>
 
-        <Container
-          as="section"
-          id="quienes-somos"
-          className="mb-5"
-          style={{ maxWidth: 700 }}
-        >
+        <Container as="section" id="quienes-somos" className="mb-5" style={{ maxWidth: 700 }}>
           <h1 className="mb-1">¿Quiénes somos?</h1>
           <div className="section-divider" />
-          <PhotoShowcase
-            src="/images/todos.webp"
-            alt="Los integrantes de LINKIN ZERØ en Obscene Fest"
-            width={1400}
-            height={932}
-          />
+          <PhotoShowcase src="/images/todos.webp" alt="Los integrantes de LINKIN ZERØ en Obscene Fest" width={1400} height={932} />
           <p className="hero-description mb-0">{BAND_DESCRIPTION}</p>
 
           <div className="contact-section mt-5" id="contacto">

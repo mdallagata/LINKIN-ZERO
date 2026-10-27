@@ -30,9 +30,7 @@ export const metadata: Metadata = {
     default: `${BAND_NAME}`,
     template: `%s — ${BAND_NAME}`,
   },
-  description:
-    `${BAND_NAME} — banda tributo a LINKIN PARK de Tucumán, Argentina.` +
-    ` Contrataciones para eventos y shows en vivo.`,
+  description: `${BAND_NAME} — banda tributo a LINKIN PARK de Tucumán, Argentina.` + ` Contrataciones para eventos y shows en vivo.`,
   keywords: [
     "LINKIN ZERØ",
     "tributo LINKIN PARK",
@@ -80,12 +78,8 @@ export default function RootLayout({
   children: ReactNode;
 }>): ReactNode {
   return (
-      <html
-        lang="es"
-        data-bs-theme="dark"
-        className={`${anton.variable} ${spaceGrotesk.variable}`}
-      >
-        <body className="d-flex flex-column min-vh-100 align-items-center">
+    <html lang="es" data-bs-theme="dark" className={`${anton.variable} ${spaceGrotesk.variable}`}>
+      <body className="d-flex flex-column min-vh-100 align-items-center">
         <JsonLd data={MUSIC_GROUP_JSON_LD} />
         {children}
         <BackToTop />

@@ -9,15 +9,7 @@ import Nav from "react-bootstrap/Nav";
 import { BAND_NAME, BAND_TAGLINE } from "@/data/band";
 import type { NavLink } from "@/data/nav";
 
-export default function SiteHeader({
-  links,
-  heroImage,
-  heroImagePosition,
-}: {
-  links: NavLink[];
-  heroImage?: string;
-  heroImagePosition?: string;
-}): ReactNode {
+export default function SiteHeader({ links, heroImage, heroImagePosition }: { links: NavLink[]; heroImage?: string; heroImagePosition?: string }): ReactNode {
   const pathname: string = usePathname();
   const router = useRouter();
   const isPhotoHero: boolean = Boolean(heroImage);
@@ -30,10 +22,7 @@ export default function SiteHeader({
   useEffect(() => {
     const sentinel = sentinelRef.current;
     if (!sentinel) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => setStuck(!entry.isIntersecting && entry.boundingClientRect.top < 0),
-      { threshold: 0 },
-    );
+    const observer = new IntersectionObserver(([entry]) => setStuck(!entry.isIntersecting && entry.boundingClientRect.top < 0), { threshold: 0 });
     observer.observe(sentinel);
     return (): void => observer.disconnect();
   }, []);
@@ -81,15 +70,15 @@ export default function SiteHeader({
         <p className={`hero-tagline mb-0${isPhotoHero ? " hero-tagline--reveal" : ""}`}>
           {isPhotoHero
             ? BAND_TAGLINE.split("").map((char: string, i: number): ReactNode => {
-              const style: CSSProperties = {
-                animationDelay: `${i * 0.04}s`,
-              };
-              return (
-                <span key={i} className="tagline-char" style={style}>
-                  {char === " " ? " " : char}
-                </span>
-              );
-            })
+                const style: CSSProperties = {
+                  animationDelay: `${i * 0.04}s`,
+                };
+                return (
+                  <span key={i} className="tagline-char" style={style}>
+                    {char === " " ? " " : char}
+                  </span>
+                );
+              })
             : BAND_TAGLINE}
         </p>
       </nav>

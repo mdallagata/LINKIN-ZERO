@@ -19,12 +19,7 @@ export default function PhotoModalTrigger({
 
   return (
     <>
-      <button
-        type="button"
-        className={`${triggerClassName} photo-modal-trigger`}
-        onClick={() => setShow(true)}
-        aria-label={triggerLabel}
-      >
+      <button type="button" className={`${triggerClassName} photo-modal-trigger`} onClick={() => setShow(true)} aria-label={triggerLabel}>
         {thumbnail}
       </button>
 

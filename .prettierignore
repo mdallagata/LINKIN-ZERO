@@ -1,0 +1,7 @@
+# Generados
+.next/
+out/
+pnpm-lock.yaml
+next-env.d.ts
+# Lo reescribe `next dev` en cada arranque
+AGENTS.md

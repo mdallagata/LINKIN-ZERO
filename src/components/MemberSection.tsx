@@ -34,20 +34,11 @@ export default function MemberSection({
   imagePosition,
 }: MemberSectionProps): ReactNode {
   const textCol: ReactNode = (
-    <Col
-      md={7}
-      className={`text-center ${reverse ? "text-md-end order-md-last" : "text-md-start"}`}
-    >
+    <Col md={7} className={`text-center ${reverse ? "text-md-end order-md-last" : "text-md-start"}`}>
       <h2 className="mb-1">{name}</h2>
       <p className="member-role text-brand mb-0">
         {role}
-        <a
-          href={instagramUrl}
-          className="icon-link icon-link--member"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label={`Instagram de ${name}`}
-        >
+        <a href={instagramUrl} className="icon-link icon-link--member" target="_blank" rel="noopener noreferrer" aria-label={`Instagram de ${name}`}>
           <SiInstagram aria-hidden />
         </a>
       </p>
@@ -88,11 +79,7 @@ export default function MemberSection({
   );
 
   return (
-    <Row
-      as="article"
-      className="align-items-center gy-4 mb-5 pb-4"
-      style={{ maxWidth: 1100, margin: "0 auto" }}
-    >
+    <Row as="article" className="align-items-center gy-4 mb-5 pb-4" style={{ maxWidth: 1100, margin: "0 auto" }}>
       {textCol}
       {imageCol}
     </Row>

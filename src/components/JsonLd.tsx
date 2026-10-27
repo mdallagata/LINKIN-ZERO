@@ -4,10 +4,5 @@ import type { ReactNode } from "react";
 // que está pensado para JS ejecutable) con los "<" escapados para evitar
 // inyección si algún dato viniera de una fuente no confiable.
 export default function JsonLd({ data }: { data: object }): ReactNode {
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data).replace(/</g, "\\u003c") }}
-    />
-  );
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(data).replace(/</g, "\\u003c") }} />;
 }

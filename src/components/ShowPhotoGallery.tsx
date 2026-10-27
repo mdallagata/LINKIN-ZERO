@@ -64,30 +64,32 @@ export default function ShowPhotoGallery({
         </div>
         <div className="d-flex flex-column flex-sm-row align-items-center justify-content-center mt-3 gap-2">
           <div className="d-flex gap-4">
-          <button
-            type="button"
-            className="btn btn-sm btn-outline-light rounded-circle p-2 d-flex align-items-center"
-            onClick={() => setOffset((o: number): number => o - 1)}
-            disabled={!canGoPrev}
-            aria-label="Foto anterior"
-          >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M15 18l-6-6 6-6" />
-            </svg>
-          </button>
-          <button
-            type="button"
-            className="btn btn-sm btn-outline-light rounded-circle p-2 d-flex align-items-center"
-            onClick={() => setOffset((o: number): number => o + 1)}
-            disabled={!canGoNext}
-            aria-label="Foto siguiente"
-          >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M9 18l6-6-6-6" />
-            </svg>
-          </button>
+            <button
+              type="button"
+              className="btn btn-sm btn-outline-light rounded-circle p-2 d-flex align-items-center"
+              onClick={() => setOffset((o: number): number => o - 1)}
+              disabled={!canGoPrev}
+              aria-label="Foto anterior"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M15 18l-6-6 6-6" />
+              </svg>
+            </button>
+            <button
+              type="button"
+              className="btn btn-sm btn-outline-light rounded-circle p-2 d-flex align-items-center"
+              onClick={() => setOffset((o: number): number => o + 1)}
+              disabled={!canGoNext}
+              aria-label="Foto siguiente"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M9 18l6-6-6-6" />
+              </svg>
+            </button>
           </div>
-          <small className="text-white text-opacity-50 text-nowrap" style={{ fontSize: "0.75rem" }}>{eventName}</small>
+          <small className="text-white text-opacity-50 text-nowrap" style={{ fontSize: "0.75rem" }}>
+            {eventName}
+          </small>
         </div>
       </Modal.Body>
     </Modal>

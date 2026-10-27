@@ -56,7 +56,7 @@ export default function InstagramEmbed({ url }: Props): ReactNode {
           if (!loadedRef.current) setError(true);
         }, LOAD_TIMEOUT_MS);
       },
-      { threshold: 0.1 }
+      { threshold: 0.1 },
     );
     observer.observe(el);
     return (): void => {
@@ -67,11 +67,7 @@ export default function InstagramEmbed({ url }: Props): ReactNode {
   }, [info?.src]);
 
   if (!info) {
-    return (
-      <div className="text-center text-muted py-4">
-        URL de Instagram inválida
-      </div>
-    );
+    return <div className="text-center text-muted py-4">URL de Instagram inválida</div>;
   }
 
   const aspectRatio: string = info.label === "Reel" ? "9 / 16" : "1 / 1.2";
@@ -143,17 +139,19 @@ export default function InstagramEmbed({ url }: Props): ReactNode {
             <SiInstagram size={32} aria-hidden />
             <span>Ver en Instagram ↗</span>
           </a>
-        ) : visible && (
-          <iframe
-            src={info.src}
-            title="Instagram"
-            style={iframeStyle}
-            allowFullScreen
-            loading="lazy"
-            scrolling="no"
-            onLoad={handleLoad}
-            onError={handleError}
-          />
+        ) : (
+          visible && (
+            <iframe
+              src={info.src}
+              title="Instagram"
+              style={iframeStyle}
+              allowFullScreen
+              loading="lazy"
+              scrolling="no"
+              onLoad={handleLoad}
+              onError={handleError}
+            />
+          )
         )}
       </div>
     </div>

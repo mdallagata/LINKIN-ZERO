@@ -3,4 +3,5 @@
 # recién en GitHub de que el deploy no salió. Saltear con `git push --no-verify`.
 set -e
 pnpm lint
+pnpm format:check
 pnpm exec tsc --noEmit

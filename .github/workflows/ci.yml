@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   lint:
-    name: Lint & typecheck
+    name: Lint, format & typecheck
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -21,6 +21,7 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm lint
+      - run: pnpm format:check
       - run: pnpm exec tsc --noEmit
 
   deploy:

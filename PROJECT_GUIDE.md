@@ -56,6 +56,7 @@ There's no Sass build step. The site's look (black background, cadetblue glow) i
 ## Propósito del sitio
 
 Este sitio es una **herramienta de publicidad y captación de contrataciones**. El foco principal es que productores, bares, organizadores de eventos y público de otras provincias puedan:
+
 - Ver quiénes somos (miembros)
 - Ver shows pasados y próximos
 - Contactarnos para contratarnos

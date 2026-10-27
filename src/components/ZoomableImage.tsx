@@ -15,10 +15,7 @@ const SWIPE_MIN_DISTANCE = 50;
 type Point = { x: number; y: number };
 type DragStart = Point & { posX: number; posY: number };
 
-export default function ZoomableImage({
-  onSwipe,
-  ...props
-}: ImageProps & { onSwipe?: (direction: "prev" | "next") => void }): ReactNode {
+export default function ZoomableImage({ onSwipe, ...props }: ImageProps & { onSwipe?: (direction: "prev" | "next") => void }): ReactNode {
   const containerRef = useRef<HTMLDivElement>(null);
   const dragStart = useRef<DragStart>({ x: 0, y: 0, posX: 0, posY: 0 });
   const pinchStart = useRef<{ dist: number; scale: number } | null>(null);
@@ -49,15 +46,11 @@ export default function ZoomableImage({
       const cursorX: number = clientX - rect.left;
       const cursorY: number = clientY - rect.top;
       const ratio: number = newScale / currentScale;
-      const next: Point = clampPos(
-        cursorX - (cursorX - currentPos.x) * ratio,
-        cursorY - (cursorY - currentPos.y) * ratio,
-        newScale
-      );
+      const next: Point = clampPos(cursorX - (cursorX - currentPos.x) * ratio, cursorY - (cursorY - currentPos.y) * ratio, newScale);
       setPos(next);
       setScale(newScale);
     },
-    [clampPos]
+    [clampPos],
   );
 
   const handleWheel = useEffectEvent((e: WheelEvent): void => {
@@ -84,21 +77,15 @@ export default function ZoomableImage({
       setDragging(true);
       dragStart.current = { x: e.clientX, y: e.clientY, posX: pos.x, posY: pos.y };
     },
-    [isZoomed, pos.x, pos.y]
+    [isZoomed, pos.x, pos.y],
   );
 
   const handleMouseMove = useCallback(
     (e: MouseEvent): void => {
       if (!dragging) return;
-      setPos(
-        clampPos(
-          dragStart.current.posX + (e.clientX - dragStart.current.x),
-          dragStart.current.posY + (e.clientY - dragStart.current.y),
-          scale
-        )
-      );
+      setPos(clampPos(dragStart.current.posX + (e.clientX - dragStart.current.x), dragStart.current.posY + (e.clientY - dragStart.current.y), scale));
     },
-    [dragging, scale, clampPos]
+    [dragging, scale, clampPos],
   );
 
   const handleMouseUp = useCallback((): void => {
@@ -110,7 +97,7 @@ export default function ZoomableImage({
       const target: number = scale > MIN_SCALE ? MIN_SCALE : DOUBLE_TAP_ZOOM;
       zoomAt(e.clientX, e.clientY, target, scale, pos);
     },
-    [scale, pos, zoomAt]
+    [scale, pos, zoomAt],
   );
 
   const handleTouchStart = useCallback(
@@ -135,7 +122,7 @@ export default function ZoomableImage({
         tapStart.current = { x: touch.clientX, y: touch.clientY, time: Date.now() };
       }
     },
-    [isZoomed, scale, pos.x, pos.y]
+    [isZoomed, scale, pos.x, pos.y],
   );
 
   const handleTouchMove = useCallback(
@@ -148,10 +135,7 @@ export default function ZoomableImage({
         const dist: number = Math.hypot(t1.clientX - t2.clientX, t1.clientY - t2.clientY);
         const midX: number = (t1.clientX + t2.clientX) / 2 - rect.left;
         const midY: number = (t1.clientY + t2.clientY) / 2 - rect.top;
-        const newScale: number = Math.max(
-          MIN_SCALE,
-          Math.min(MAX_SCALE, pinchStart.current.scale * (dist / pinchStart.current.dist))
-        );
+        const newScale: number = Math.max(MIN_SCALE, Math.min(MAX_SCALE, pinchStart.current.scale * (dist / pinchStart.current.dist)));
         const ratio: number = newScale / scale;
         setPos(clampPos(midX - (midX - pos.x) * ratio, midY - (midY - pos.y) * ratio, newScale));
         setScale(newScale);
@@ -159,16 +143,10 @@ export default function ZoomableImage({
       }
       if (e.touches.length === 1 && touching) {
         const touch = e.touches[0];
-        setPos(
-          clampPos(
-            dragStart.current.posX + (touch.clientX - dragStart.current.x),
-            dragStart.current.posY + (touch.clientY - dragStart.current.y),
-            scale
-          )
-        );
+        setPos(clampPos(dragStart.current.posX + (touch.clientX - dragStart.current.x), dragStart.current.posY + (touch.clientY - dragStart.current.y), scale));
       }
     },
-    [touching, scale, pos, clampPos]
+    [touching, scale, pos, clampPos],
   );
 
   const handleTouchEnd = useCallback(
@@ -205,7 +183,7 @@ export default function ZoomableImage({
         lastTap.current = { time: now };
       }
     },
-    [touching, scale, pos, zoomAt, onSwipe]
+    [touching, scale, pos, zoomAt, onSwipe],
   );
 
   const handleTouchCancel = useCallback((): void => {

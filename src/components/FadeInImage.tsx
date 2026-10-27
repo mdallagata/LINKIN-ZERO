@@ -4,12 +4,7 @@ import type { ReactNode, SyntheticEvent } from "react";
 import { useState } from "react";
 import Image from "next/image";
 import type { ImageProps } from "next/image";
-export default function FadeInImage({
-  alt,
-  style,
-  onLoad,
-  ...rest
-}: ImageProps): ReactNode {
+export default function FadeInImage({ alt, style, onLoad, ...rest }: ImageProps): ReactNode {
   const [loaded, setLoaded] = useState<boolean>(false);
   const fadeTransition: string = "opacity 0.4s ease-in";
 

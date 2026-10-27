@@ -105,12 +105,7 @@ function PastShowCard({
       {show.description && <p className="text-muted mt-3">{show.description}</p>}
       <div className="d-flex flex-wrap gap-3 mt-3">
         {show.embedUrl && (
-          <a
-            href={instagramPostUrl(show.embedUrl)}
-            className="icon-link icon-link--text"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <a href={instagramPostUrl(show.embedUrl)} className="icon-link icon-link--text" target="_blank" rel="noopener noreferrer">
             <SiInstagram aria-hidden />
             Ver publicación
           </a>
@@ -135,13 +130,7 @@ function PastShowCard({
               }}
               aria-label={`Ver foto ${i + 1}`}
             >
-              <FadeInImage
-                src={thumbUrl(photo)}
-                alt={`${show.event} — Foto ${i + 1}`}
-                width={120}
-                height={90}
-                className="show-card-thumb-img"
-              />
+              <FadeInImage src={thumbUrl(photo)} alt={`${show.event} — Foto ${i + 1}`} width={120} height={90} className="show-card-thumb-img" />
             </button>
           ))}
           {photoCount > 3 && (
@@ -182,11 +171,7 @@ function PastShowsContent(): ReactNode {
           <div key={year}>
             <h3 className="timeline-year">{year}</h3>
             {shows.map((show: PastShow) => (
-              <PastShowCard
-                key={`${show.date}-${show.venue}`}
-                show={show}
-                onShowPhotos={gallery.open}
-              />
+              <PastShowCard key={`${show.date}-${show.venue}`} show={show} onShowPhotos={gallery.open} />
             ))}
           </div>
         ))}
@@ -241,12 +226,7 @@ export function UpcomingShowsSection(): ReactNode {
                 <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mt-3">
                   <div className="d-flex flex-wrap gap-3">
                     {show.promoUrl && (
-                      <a
-                        href={show.promoUrl}
-                        className="icon-link icon-link--text"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
+                      <a href={show.promoUrl} className="icon-link icon-link--text" target="_blank" rel="noopener noreferrer">
                         <SiInstagram aria-hidden />
                         {show.promoLabel ?? "Promo"} ↗
                       </a>
@@ -278,12 +258,7 @@ export function LatestShowSection(): ReactNode {
   const latest: PastShow | undefined = SORTED_PAST_SHOWS[0];
   if (!latest) return null;
   return (
-    <Container
-      as="section"
-      id="ultimo-show"
-      className="pb-4 container-narrow"
-      style={{ marginTop: "4.5rem" }}
-    >
+    <Container as="section" id="ultimo-show" className="pb-4 container-narrow" style={{ marginTop: "4.5rem" }}>
       <h2 className="mb-1">Último Show</h2>
       <div className="section-divider" />
       <PastShowCard show={latest} featured onShowPhotos={gallery.open} />

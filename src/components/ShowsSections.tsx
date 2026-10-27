@@ -3,7 +3,6 @@
 import type { MouseEvent, ReactNode } from "react";
 import { useState } from "react";
 import Link from "next/link";
-import Container from "react-bootstrap/Container";
 import { FiCalendar } from "react-icons/fi";
 import { SiInstagram } from "react-icons/si";
 import FadeInImage from "@/components/FadeInImage";
@@ -50,17 +49,17 @@ function thumbUrl(photo: string): string {
   return photo.replace(EXTENSION_RE, "-thumb.$1");
 }
 
-type GalleryTarget = { show: PastShow; index: number };
+// `opening` cambia en cada apertura: como key, hace que la galería arranque de
+// cero (en la foto elegida) y no en la última que se miró la vez anterior.
+type GalleryTarget = { show: PastShow; index: number; opening: number };
 
-// Mantiene los datos de la galería vivos hasta que termina la animación de
-// cierre del modal (onExited) — si se limpiaran en onHide, el modal se
-// vaciaría de golpe a mitad del fade en vez de cerrarse suave.
+// Al cerrar solo se oculta: los datos quedan para que la animación de cierre
+// no vacíe el modal a mitad del fade.
 function useShowGallery(): {
   target: GalleryTarget | null;
   visible: boolean;
   open: (show: PastShow, index: number) => void;
   hide: () => void;
-  clear: () => void;
 } {
   const [target, setTarget] = useState<GalleryTarget | null>(null);
   const [visible, setVisible] = useState<boolean>(false);
@@ -69,11 +68,10 @@ function useShowGallery(): {
     target,
     visible,
     open: (show: PastShow, index: number): void => {
-      setTarget({ show, index });
+      setTarget((prev: GalleryTarget | null): GalleryTarget => ({ show, index, opening: (prev?.opening ?? 0) + 1 }));
       setVisible(true);
     },
     hide: (): void => setVisible(false),
-    clear: (): void => setTarget(null),
   };
 }
 
@@ -178,12 +176,12 @@ function PastShowsContent(): ReactNode {
       </div>
       {gallery.target && gallery.target.show.photos && (
         <ShowPhotoGallery
+          key={gallery.target.opening}
           eventName={gallery.target.show.event}
           photos={gallery.target.show.photos}
           photoIndex={gallery.target.index}
           show={gallery.visible}
           onHide={gallery.hide}
-          onExited={gallery.clear}
         />
       )}
     </>
@@ -192,7 +190,7 @@ function PastShowsContent(): ReactNode {
 
 export function UpcomingShowsSection(): ReactNode {
   return (
-    <Container as="section" id="fechas" className="mb-5 pb-4 container-narrow">
+    <section id="fechas" className="container mb-5 pb-4 container-narrow">
       {UPCOMING_SHOWS.map((show: UpcomingShow) => (
         <JsonLd key={show.startDate} data={upcomingShowJsonLd(show)} />
       ))}
@@ -249,7 +247,7 @@ export function UpcomingShowsSection(): ReactNode {
           ))}
         </div>
       )}
-    </Container>
+    </section>
   );
 }
 
@@ -258,30 +256,30 @@ export function LatestShowSection(): ReactNode {
   const latest: PastShow | undefined = SORTED_PAST_SHOWS[0];
   if (!latest) return null;
   return (
-    <Container as="section" id="ultimo-show" className="pb-4 container-narrow" style={{ marginTop: "4.5rem" }}>
+    <section id="ultimo-show" className="container pb-4 container-narrow" style={{ marginTop: "4.5rem" }}>
       <h2 className="mb-1">Último Show</h2>
       <div className="section-divider" />
       <PastShowCard show={latest} featured onShowPhotos={gallery.open} />
       {gallery.target && gallery.target.show.photos && (
         <ShowPhotoGallery
+          key={gallery.target.opening}
           eventName={gallery.target.show.event}
           photos={gallery.target.show.photos}
           photoIndex={gallery.target.index}
           show={gallery.visible}
           onHide={gallery.hide}
-          onExited={gallery.clear}
         />
       )}
-    </Container>
+    </section>
   );
 }
 
 export function PastShowsSection(): ReactNode {
   return (
-    <Container as="section" id="shows-anteriores" className="mb-5 pb-4 container-narrow">
+    <section id="shows-anteriores" className="container mb-5 pb-4 container-narrow">
       <h2 className="mb-1">Shows Anteriores</h2>
       <div className="section-divider" />
       <PastShowsContent />
-    </Container>
+    </section>
   );
 }

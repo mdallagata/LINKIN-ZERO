@@ -1,7 +1,7 @@
-// Solo las partes de Bootstrap que usa el sitio, en vez de bootstrap.min.css
-// entero: la mitad del CSS que bloquea el primer render. Si un componente
-// nuevo usa algo de Bootstrap que no está acá (cards, forms, tablas, navbar,
-// dropdowns…), agregá su import abajo.
+// Solo las partes de Bootstrap que usa el sitio: base (reboot), tipografía,
+// grilla y las clases utilitarias de la lista de abajo. Los componentes (modal,
+// botones, nav) son propios, en globals.css. Si usás una clase de Bootstrap que
+// no existe en el CSS final, revisá que su grupo esté en $utilities.
 
 // Tema del sitio: fondo negro, texto blanco, acento cadetblue. $brand es la
 // única definición del color en el CSS (globals.css usa var(--brand)); el mismo
@@ -22,26 +22,53 @@ $font-family-base: var(--font-body), system-ui, sans-serif;
 @import "bootstrap/scss/mixins";
 @import "bootstrap/scss/utilities";
 
+// Grupos de clases utilitarias que se generan (cada uno trae todos sus valores
+// y breakpoints): el resto de los ~80 grupos de Bootstrap no se usa.
+$utilities: map-get-multiple(
+  $utilities,
+  (
+    "align-items",
+    "color",
+    "display",
+    "flex-direction",
+    "flex-wrap",
+    "font-weight",
+    "gap",
+    "height",
+    "justify-content",
+    "margin-bottom",
+    "margin-top",
+    "margin-y",
+    "min-viewport-height",
+    "order",
+    "padding",
+    "padding-bottom",
+    "padding-top",
+    "padding-x",
+    "padding-y",
+    "position",
+    "text-align",
+    "text-decoration",
+    "text-opacity",
+    "white-space",
+    "width"
+  )
+);
+
 // Base
 @import "bootstrap/scss/root";
 
 :root {
   --brand: #{$brand};
 }
+
 @import "bootstrap/scss/reboot";
 @import "bootstrap/scss/type";
 
-// Layout: Container, Row, Col
+// Layout: .container, .row, .col-*
 @import "bootstrap/scss/containers";
 @import "bootstrap/scss/grid";
 
-// Componentes: Nav, Modal (+ su botón de cierre y el fade), botones
-@import "bootstrap/scss/buttons";
-@import "bootstrap/scss/transitions";
-@import "bootstrap/scss/nav";
-@import "bootstrap/scss/modal";
-@import "bootstrap/scss/close";
-
-// Helpers (visually-hidden, icon-link…) y clases utilitarias (mb-*, d-flex…)
+// Helpers (visually-hidden, icon-link…) y las clases utilitarias de arriba
 @import "bootstrap/scss/helpers";
 @import "bootstrap/scss/utilities/api";

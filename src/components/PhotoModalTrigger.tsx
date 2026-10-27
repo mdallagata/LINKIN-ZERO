@@ -2,31 +2,32 @@
 
 import type { ReactNode } from "react";
 import { useState } from "react";
-import Modal from "react-bootstrap/Modal";
+import PhotoDialog from "@/components/PhotoDialog";
 
 export default function PhotoModalTrigger({
   triggerClassName,
   triggerLabel,
   thumbnail,
+  bodyClassName,
   children,
 }: {
   triggerClassName: string;
   triggerLabel: string;
   thumbnail: ReactNode;
+  bodyClassName?: string;
   children: ReactNode;
 }): ReactNode {
-  const [show, setShow] = useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(false);
 
   return (
     <>
-      <button type="button" className={`${triggerClassName} photo-modal-trigger`} onClick={() => setShow(true)} aria-label={triggerLabel}>
+      <button type="button" className={`${triggerClassName} photo-modal-trigger`} onClick={() => setOpen(true)} aria-label={triggerLabel}>
         {thumbnail}
       </button>
 
-      <Modal show={show} onHide={() => setShow(false)} centered size="xl" className="photo-modal">
-        <Modal.Header closeButton className="border-0 pb-0" />
+      <PhotoDialog open={open} onClose={() => setOpen(false)} label={triggerLabel} bodyClassName={bodyClassName}>
         {children}
-      </Modal>
+      </PhotoDialog>
     </>
   );
 }

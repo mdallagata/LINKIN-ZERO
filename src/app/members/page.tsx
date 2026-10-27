@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import Container from "react-bootstrap/Container";
 import FadeInSection from "@/components/FadeInSection";
 import MemberSection from "@/components/MemberSection";
 import ScrollToContent from "@/components/ScrollToContent";
-import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
 import { BAND_NAME } from "@/data/band";
 import { type Member, MEMBERS } from "@/data/members";
@@ -25,21 +23,19 @@ export default function MembersPage(): ReactNode {
       <ScrollToContent selector="#members-heading" />
 
       <main className="w-100 px-3">
-        <Container className="text-center mb-4 container-narrow" id="members-heading">
+        <div className="container text-center mb-4 container-narrow" id="members-heading">
           <h1 className="mb-1">Miembros</h1>
           <div className="section-divider" />
-        </Container>
+        </div>
 
-        <Container fluid>
+        <div className="container-fluid">
           {MEMBERS.map((member: Member, i: number) => (
             <FadeInSection key={member.name} delay={i * 150}>
               <MemberSection {...member} reverse={i % 2 !== 0} loading="lazy" />
             </FadeInSection>
           ))}
-        </Container>
+        </div>
       </main>
-
-      <SiteFooter />
     </>
   );
 }

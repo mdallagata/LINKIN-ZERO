@@ -1,9 +1,6 @@
 "use client";
 
 import type { ReactNode } from "react";
-import Col from "react-bootstrap/Col";
-import Modal from "react-bootstrap/Modal";
-import Row from "react-bootstrap/Row";
 import { SiInstagram } from "react-icons/si";
 import FadeInImage from "@/components/FadeInImage";
 import PhotoModalTrigger from "@/components/PhotoModalTrigger";
@@ -34,7 +31,7 @@ export default function MemberSection({
   imagePosition,
 }: MemberSectionProps): ReactNode {
   const textCol: ReactNode = (
-    <Col md={7} className={`text-center ${reverse ? "text-md-end order-md-last" : "text-md-start"}`}>
+    <div className={`col-md-7 text-center ${reverse ? "text-md-end order-md-last" : "text-md-start"}`}>
       <h2 className="mb-1">{name}</h2>
       <p className="member-role text-brand mb-0">
         {role}
@@ -42,14 +39,15 @@ export default function MemberSection({
           <SiInstagram aria-hidden />
         </a>
       </p>
-    </Col>
+    </div>
   );
 
   const imageCol: ReactNode = (
-    <Col md={5} className={`text-center mb-4 mb-md-0 ${reverse ? "order-md-first" : ""}`}>
+    <div className={`col-md-5 text-center mb-4 mb-md-0 ${reverse ? "order-md-first" : ""}`}>
       <PhotoModalTrigger
         triggerClassName="photo-trigger photo-trigger--member"
         triggerLabel={`Ver foto completa de ${name}`}
+        bodyClassName="p-0 d-flex justify-content-center"
         thumbnail={
           <FadeInImage
             className="member-photo"
@@ -63,25 +61,23 @@ export default function MemberSection({
           />
         }
       >
-        <Modal.Body className="p-0 d-flex justify-content-center">
-          <FadeInImage
-            src={imageSrc}
-            alt={imageAlt}
-            width={imageWidth}
-            height={imageHeight}
-            className="h-auto"
-            style={{ maxHeight: "85vh", width: "100%", objectFit: "contain" }}
-            loading={loading}
-          />
-        </Modal.Body>
+        <FadeInImage
+          src={imageSrc}
+          alt={imageAlt}
+          width={imageWidth}
+          height={imageHeight}
+          className="h-auto"
+          style={{ maxHeight: "85vh", width: "100%", objectFit: "contain" }}
+          loading={loading}
+        />
       </PhotoModalTrigger>
-    </Col>
+    </div>
   );
 
   return (
-    <Row as="article" className="align-items-center gy-4 mb-5 pb-4" style={{ maxWidth: 1100, margin: "0 auto" }}>
+    <article className="row align-items-center gy-4 mb-5 pb-4" style={{ maxWidth: 1100, margin: "0 auto" }}>
       {textCol}
       {imageCol}
-    </Row>
+    </article>
   );
 }

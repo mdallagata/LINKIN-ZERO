@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import Container from "react-bootstrap/Container";
 import FadeInSection from "@/components/FadeInSection";
 import ScrollToContent from "@/components/ScrollToContent";
-import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
 import { PastShowsSection, UpcomingShowsSection } from "@/components/ShowsSections";
 import { BAND_NAME } from "@/data/band";
@@ -26,10 +24,10 @@ export default function ShowsPage(): ReactNode {
       <ScrollToContent selector="#shows-heading" />
 
       <main className="w-100 px-3">
-        <Container className="text-center mb-4 container-narrow" id="shows-heading">
+        <div className="container text-center mb-4 container-narrow" id="shows-heading">
           <h1 className="mb-1">Shows</h1>
           <div className="section-divider" />
-        </Container>
+        </div>
 
         <FadeInSection>
           <div className="pt-4">
@@ -41,8 +39,6 @@ export default function ShowsPage(): ReactNode {
           <PastShowsSection />
         </FadeInSection>
       </main>
-
-      <SiteFooter />
     </>
   );
 }

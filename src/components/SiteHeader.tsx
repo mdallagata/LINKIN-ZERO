@@ -5,7 +5,6 @@ import { useEffect, useRef, useState } from "react";
 import { getImageProps } from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import Nav from "react-bootstrap/Nav";
 import { BAND_NAME, BAND_TAGLINE } from "@/data/band";
 import type { NavLink } from "@/data/nav";
 import { scrollBehavior } from "@/lib/scroll";
@@ -24,7 +23,7 @@ export default function SiteHeader({ links, heroImage, heroImagePosition, brandA
   const isPhotoHero: boolean = Boolean(heroImage);
 
   const sentinelRef = useRef<HTMLDivElement>(null);
-  const headerRef = useRef<HTMLElement>(null);
+  const navBarRef = useRef<HTMLElement>(null);
   const [stuck, setStuck] = useState<boolean>(false);
   const [placeholderHeight, setPlaceholderHeight] = useState<number>(0);
 
@@ -40,12 +39,12 @@ export default function SiteHeader({ links, heroImage, heroImagePosition, brandA
   // height keeps the centered hero flex column from re-centering (and moving
   // the sentinel), which would otherwise oscillate the stuck state.
   useEffect(() => {
-    const header = headerRef.current;
-    if (!header) return;
+    const navBar = navBarRef.current;
+    if (!navBar) return;
     const measure = new ResizeObserver(() => {
-      if (!stuck) setPlaceholderHeight(header.offsetHeight);
+      if (!stuck) setPlaceholderHeight(navBar.offsetHeight);
     });
-    measure.observe(header);
+    measure.observe(navBar);
     return (): void => measure.disconnect();
   }, [stuck]);
 
@@ -71,52 +70,53 @@ export default function SiteHeader({ links, heroImage, heroImagePosition, brandA
   const wordmarkClass: string = `site-wordmark${isPhotoHero ? " site-wordmark--glow" : ""}`;
 
   return (
-    <div className={heroClass}>
+    <header className={heroClass}>
       {heroImage && <HeroImage src={heroImage} position={heroImagePosition ?? "45%"} />}
-      <nav className="pt-3 pb-2">
+      <div className="pt-3 pb-2">
         <Link href="/" className="text-decoration-none">
           <Wordmark className={wordmarkClass}>[ {BAND_NAME} ]</Wordmark>
         </Link>
-        <p className={`hero-tagline mb-0${isPhotoHero ? " hero-tagline--reveal" : ""}`}>
-          {isPhotoHero
-            ? BAND_TAGLINE.split("").map((char: string, i: number): ReactNode => {
-                const style: CSSProperties = {
-                  animationDelay: `${i * 0.04}s`,
-                };
-                return (
-                  <span key={i} className="tagline-char" style={style}>
-                    {char === " " ? " " : char}
-                  </span>
-                );
-              })
-            : BAND_TAGLINE}
-        </p>
-      </nav>
+        {isPhotoHero ? (
+          // Una <span> por letra para la animación; el lector de pantalla lee la
+          // frase entera de la copia oculta en vez de deletrearla.
+          <p className="hero-tagline hero-tagline--reveal mb-0">
+            <span className="visually-hidden">{BAND_TAGLINE}</span>
+            <span aria-hidden="true">
+              {BAND_TAGLINE.split("").map((char: string, i: number): ReactNode => (
+                <span key={i} className="tagline-char" style={{ animationDelay: `${i * 0.04}s` }}>
+                  {char === " " ? "\u00a0" : char}
+                </span>
+              ))}
+            </span>
+          </p>
+        ) : (
+          <p className="hero-tagline mb-0">{BAND_TAGLINE}</p>
+        )}
+      </div>
 
       <div ref={sentinelRef} aria-hidden="true" />
 
-      <header ref={headerRef} className={`site-nav-bar w-100 px-3 pb-4 pb-md-5${stuck ? " site-nav-bar--stuck" : ""}`}>
+      <nav ref={navBarRef} aria-label="Principal" className={`site-nav-bar w-100 px-3 pb-4 pb-md-5${stuck ? " site-nav-bar--stuck" : ""}`}>
         <hr className="brand-hr my-2" />
-        <Nav className="justify-content-center flex-wrap gap-4 gap-md-5 py-2">
+        <ul className="site-nav-list justify-content-center flex-wrap gap-4 gap-md-5 py-2">
           {links.map((link: NavLink) => {
             const isActive: boolean = link.href === pathname || (link.href !== "/" && pathname.startsWith(link.href));
             return (
-              <Nav.Link
-                key={link.href}
-                as={Link}
-                className="site-nav-link text-white p-0"
-                href={link.href}
-                onClick={(e: MouseEvent): void => handleNavClick(e, link.href)}
-                aria-current={isActive ? "page" : undefined}
-                aria-label={link.label}
-              >
-                {link.label}
-              </Nav.Link>
+              <li key={link.href}>
+                <Link
+                  className="site-nav-link"
+                  href={link.href}
+                  onClick={(e: MouseEvent): void => handleNavClick(e, link.href)}
+                  aria-current={isActive ? "page" : undefined}
+                >
+                  {link.label}
+                </Link>
+              </li>
             );
           })}
-        </Nav>
+        </ul>
         <hr className="brand-hr my-2" />
-      </header>
+      </nav>
       {stuck && <div aria-hidden="true" style={{ height: placeholderHeight }} />}
       {isPhotoHero && (
         <div className="scroll-indicator" aria-hidden="true">
@@ -125,7 +125,7 @@ export default function SiteHeader({ links, heroImage, heroImagePosition, brandA
           </svg>
         </div>
       )}
-    </div>
+    </header>
   );
 }
 

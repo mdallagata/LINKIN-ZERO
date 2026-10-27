@@ -1,21 +1,23 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
-import type { NextFontWithVariable } from "next/dist/compiled/@next/font/dist/types";
 import { Anton, Space_Grotesk } from "next/font/google";
 import "./bootstrap.scss";
 import "./globals.css";
 import BackToTop from "@/components/BackToTop";
 import JsonLd from "@/components/JsonLd";
+import SiteFooter from "@/components/SiteFooter";
 import { BAND_DESCRIPTION, BAND_NAME, BAND_TAGLINE, INSTAGRAM_URL, OG_IMAGE, SITE_URL } from "@/data/band";
 import { BRAND_COLOR } from "@/lib/theme";
 
-const anton: NextFontWithVariable = Anton({
+// Solo se usa .variable (la clase que define --font-heading / --font-body);
+// next/font no exporta un tipo público para el objeto completo.
+const anton: { variable: string } = Anton({
   subsets: ["latin"],
   weight: "400",
   variable: "--font-heading",
 });
 
-const spaceGrotesk: NextFontWithVariable = Space_Grotesk({
+const spaceGrotesk: { variable: string } = Space_Grotesk({
   subsets: ["latin"],
   weight: ["400", "500", "700"],
   variable: "--font-body",
@@ -83,6 +85,7 @@ export default function RootLayout({
       <body className="d-flex flex-column min-vh-100 align-items-center">
         <JsonLd data={MUSIC_GROUP_JSON_LD} />
         {children}
+        <SiteFooter />
         <BackToTop />
       </body>
     </html>

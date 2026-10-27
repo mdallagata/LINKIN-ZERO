@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import Container from "react-bootstrap/Container";
 import ContactButtons from "@/components/ContactButtons";
 import FadeInSection from "@/components/FadeInSection";
 import InstagramEmbed from "@/components/InstagramEmbed";
 import PhotoShowcase from "@/components/PhotoShowcase";
-import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
 import { LatestShowSection, UpcomingShowsSection } from "@/components/ShowsSections";
 import { BAND_DESCRIPTION } from "@/data/band";
@@ -31,7 +29,7 @@ export default function Home(): ReactNode {
           <div className="home-side-photo__img" />
         </div>
 
-        <Container as="section" id="quienes-somos" className="mb-5" style={{ maxWidth: 700 }}>
+        <section id="quienes-somos" className="container mb-5" style={{ maxWidth: 700 }}>
           <h2 className="h1 mb-1">¿Quiénes somos?</h2>
           <div className="section-divider" />
           <PhotoShowcase src="/images/todos.webp" alt="Los integrantes de LINKIN ZERØ en Obscene Fest" width={1400} height={932} />
@@ -42,7 +40,7 @@ export default function Home(): ReactNode {
             <div className="section-divider" />
             <ContactButtons />
           </div>
-        </Container>
+        </section>
 
         <div className="section-gap" id="proximos-shows" style={{ paddingTop: "3rem" }}>
           {UPCOMING_SHOWS.length > 0 && (
@@ -51,9 +49,9 @@ export default function Home(): ReactNode {
             </FadeInSection>
           )}
           {UPCOMING_SHOWS.length > 0 && (
-            <Container className="container-narrow">
+            <div className="container container-narrow">
               <hr className="brand-hr my-4" />
-            </Container>
+            </div>
           )}
           <FadeInSection>
             <LatestShowSection />
@@ -65,8 +63,6 @@ export default function Home(): ReactNode {
           </div>
         </div>
       </main>
-
-      <SiteFooter />
     </>
   );
 }

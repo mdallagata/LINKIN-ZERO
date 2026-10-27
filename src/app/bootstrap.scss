@@ -1,10 +1,11 @@
 // Solo las partes de Bootstrap que usa el sitio: base (reboot), tipografía,
 // grilla y las clases utilitarias de la lista de abajo. Los componentes (modal,
-// botones, nav) son propios, en globals.css. Si usás una clase de Bootstrap que
-// no existe en el CSS final, revisá que su grupo esté en $utilities.
+// botones, nav) son propios, en los .module.css y en globals.css. Si usás una
+// clase de Bootstrap que no existe en el CSS final, revisá que su grupo esté en
+// $utilities.
 
 // Tema del sitio: fondo negro, texto blanco, acento cadetblue. $brand es la
-// única definición del color en el CSS (globals.css usa var(--brand)); el mismo
+// única definición del color en el CSS (el resto usa var(--brand)); el mismo
 // valor está en src/lib/theme.ts para el manifest y el theme-color.
 $brand: #5f9ea0;
 $body-bg-dark: #000;

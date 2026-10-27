@@ -82,7 +82,10 @@ export default function RootLayout({
 }>): ReactNode {
   return (
     <html lang="es" data-bs-theme="dark" className={`${anton.variable} ${spaceGrotesk.variable}`}>
-      <body className="d-flex flex-column min-vh-100 align-items-center">
+      {/* Extensiones del navegador (ColorZilla, Grammarly…) le agregan atributos al
+          <body> antes de que React hidrate. suppressHydrationWarning ignora solo
+          los atributos de este elemento, no su contenido. */}
+      <body className="d-flex flex-column min-vh-100 align-items-center" suppressHydrationWarning>
         <JsonLd data={MUSIC_GROUP_JSON_LD} />
         {children}
         <SiteFooter />

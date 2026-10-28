@@ -62,10 +62,8 @@ export default function SiteHeader({ links, heroImage, heroImagePosition, brandA
     if (!hash) return;
     e.preventDefault();
     if (pathname === path) {
-      const parent: Element | null = document.querySelector(hash);
-      if (!parent) return;
-      const el: Element = parent.querySelector("h1, h2") ?? parent;
-      el.scrollIntoView({ behavior: scrollBehavior(), block: "start" });
+      const el: Element | null = document.querySelector(hash);
+      el?.scrollIntoView({ behavior: scrollBehavior(), block: "start" });
     } else {
       router.push(href);
     }

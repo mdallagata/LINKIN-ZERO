@@ -1,8 +1,12 @@
 .zoomableWrap {
+  position: relative;
   overflow: hidden;
   /* Los gestos sobre la foto los maneja ZoomableImage; sin esto el navegador
      también scrollearía o haría zoom de toda la página. */
   touch-action: none;
+  /* Sin la selección azul del doble click. */
+  -webkit-user-select: none;
+  user-select: none;
   cursor: zoom-in;
 }
 
@@ -12,4 +16,18 @@
 
 .zoomableWrap.dragging {
   cursor: grabbing;
+}
+
+/* Botón de zoom en la esquina (un .button--icon de globals.css): para quien no
+   sabe que puede hacer click (o doble toque) en la foto, y para el teclado. */
+.zoomButton {
+  position: absolute;
+  right: 0.75rem;
+  bottom: 0.75rem;
+}
+
+/* Sobre la foto necesita fondo propio: el de .button--outline es transparente.
+   Con :not(:hover) no le gana al hover de .button--outline. */
+.zoomButton:not(:hover) {
+  background: rgba(11, 11, 11, 0.65);
 }

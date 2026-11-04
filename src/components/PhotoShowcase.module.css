@@ -1,7 +1,17 @@
+/* Encuadre cargado hacia abajo: la banda ocupa los dos tercios de abajo de la
+   foto y el público de arriba se puede cortar; la cara del de adelante no. */
 .photoFrame {
-  width: 100%;
-  height: auto;
   display: block;
+  width: 100%;
+  height: clamp(18.75rem, 50vw, 54rem);
+  object-fit: cover;
+  object-position: 50% 80%;
+}
+
+.caption {
+  padding-top: 1rem;
+  font-size: 0.875rem;
+  color: var(--ink-2);
 }
 
 .photoFull {

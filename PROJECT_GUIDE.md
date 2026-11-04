@@ -27,7 +27,9 @@ Strict mode (`"strict": true`) y `noUncheckedIndexedAccess` están activos: `arr
 
 ## Server vs Client Components
 
-Todo es Server Component salvo lo interactivo, que va en componentes chicos con `"use client"` (islas): `SiteHeader` (barra fija, link activo), `ShowPhotos` + `ShowPhotoGallery` + `ZoomableImage` (miniaturas, galería y zoom), `PhotoModalTrigger` + `PhotoDialog` (modales de fotos), `InstagramEmbed`, `FadeInSection`/`FadeInImage`, `BackToTop`, `ScrollToContent`. Secciones enteras como `ShowsSections` o `MemberSection` se renderizan en el servidor y solo pasan datos a esas islas.
+Todo es Server Component salvo lo interactivo, que va en componentes chicos con `"use client"` (islas): `SiteHeader` (barra fija, link activo), `HeroImage` (usa el loader de imágenes, que es de cliente), `ShowPhotos` + `ShowGalleryButton` + `ShowPhotoGallery` + `ZoomableImage` (miniaturas, galería y zoom), `PhotoModalTrigger` + `PhotoDialog` (modales de fotos), `InstagramEmbed`, `FadeInImage`, `BackToTop`. Secciones enteras como `HomeHero`, `ShowsSections`, `MemberGrid` o `BookingSection` se renderizan en el servidor y solo pasan datos a esas islas.
+
+La barra de navegación (`SiteHeader`), el pie y la barra de contratación del celular (`MobileBookingBar`) están en `layout.tsx`: las páginas solo arman su `<main>`, con un hero (`HomeHero` o `PageHero`) que lleva el `h1`. Una página sin hero (404, error) deja arriba el alto de la barra fija (`--nav-height`).
 
 Una página que exporta `metadata` no puede ser Client Component (requisito de Next.js).
 
@@ -50,19 +52,21 @@ El sitio es **100% estático** (`output: "export"` en `next.config.ts`). Esto im
 - El loader de `next/image` ([src/lib/image-loader.ts](src/lib/image-loader.ts)) arma el `srcset` con esos archivos: pasá `sizes` a cada imagen que no ocupe el ancho de su `width`.
 - Las miniaturas de los shows son el ancho de 120/240 de la misma foto: no hay que generar thumbs a mano.
 - Retratos de integrantes: 1200×1800 de origen, declarados como 480×720 en `src/data/members.ts`, con `imagePosition` para el encuadre.
+- Las fotos se ven en blanco y negro con CSS (`.photo-bw`): los archivos quedan a color, que es como se ven en las galerías, los modales y las miniaturas de los shows (Fechas en la home y /shows).
+- El logo (la Ø pincelada) está en `public/icons/logo-mark.webp` con el fondo transparente, para usarlo como máscara (`LogoMark`). Sale de `icon-512.png`: si cambia el ícono, hay que regenerarlo.
 - **Portadas de Instagram**: cada publicación embebida necesita su captura en `public/images/instagram/<código>.webp`, que se genera con `pnpm instagram-poster <url>`. Sin portada, el embed se carga solo al entrar en pantalla.
 
 ## Fonts
 
-Two Google fonts are loaded via `next/font/google` in [src/app/layout.tsx](src/app/layout.tsx) and exposed as CSS variables: **Anton** (`--font-heading`, headings/wordmark) and **Space Grotesk** (`--font-body`, body copy, via `$font-family-base` in `bootstrap.scss`).
+Two Google fonts are loaded via `next/font/google` in [src/app/layout.tsx](src/app/layout.tsx) and exposed as CSS variables: **Anton** (`--font-heading`, headings/wordmark/dates) and **Archivo** (`--font-body`, variable, body copy and UI, via `$font-family-base` in `bootstrap.scss`).
 
 ## Theming
 
 - [src/app/bootstrap.scss](src/app/bootstrap.scss): tema de Bootstrap en Sass (`$brand` y las variables `-dark`) y qué partes se compilan. Solo se generan los grupos de clases utilitarias listados en `$utilities`: si usás una clase de Bootstrap (`mt-*`, `d-flex`…) que no aparece en el CSS final, agregá su grupo ahí.
-- [src/app/globals.css](src/app/globals.css): tokens (`--ink-2`, `--surface-2`, `--hairline`; `--brand` sale del Sass), base, tipografía y las clases compartidas (`text-brand`, `glow-hover`, `brand-hr`, `section-divider`, `icon-link`, `outline-button`).
+- [src/app/globals.css](src/app/globals.css): tokens (`--bg`, `--ink`, `--ink-2`, `--surface-2`, `--hairline`, `--photo-filter`, `--gutter`, `--nav-height`…; `--brand` sale del Sass), base, tipografía y las clases compartidas (`page-container`, `section`, `section-header`, `eyebrow`, `text-link`, `button`, `photo-bw`/`photo-reveal`, `text-muted`). Ver [STYLEGUIDE.md](./STYLEGUIDE.md).
 - Todo lo demás vive en el `.module.css` de cada componente (`styles.algo` en el TSX, `cx()` de [src/lib/cx.ts](src/lib/cx.ts) para combinar clases), incluida su parte de `prefers-reduced-motion`.
 - Transparencias del color de marca con `color-mix(in srgb, var(--brand) 30%, transparent)`.
-- Estilos inline solo para valores que salen de datos (encuadre de cada retrato, demora de cada letra).
+- Estilos inline solo para valores que salen de datos (encuadre de cada retrato o de la foto del hero).
 
 ## Propósito del sitio
 
@@ -95,5 +99,5 @@ This is a tribute-band site, not the real LINKIN PARK's — all editable content
 
 - `pnpm test` (Playwright) corre contra el sitio ya exportado: primero `pnpm build`. En la máquina usa el Chrome instalado; en el CI, el Chromium de Playwright.
   - [tests/data.spec.ts](tests/data.spec.ts): los datos de `src/data` (fechas, fotos que existan, links de Instagram) y la lógica de próximos/anteriores.
-  - [tests/site.spec.ts](tests/site.spec.ts): recorrido del sitio en escritorio y celular (errores de consola, h1, canonical, 404, navegación, galería, Instagram, sin JS, gestos).
+  - [tests/site.spec.ts](tests/site.spec.ts): recorrido del sitio en escritorio y celular (errores de consola, h1, canonical, 404, navegación, Contratar, galería, Instagram, sin JS, gestos).
 - `pnpm format` (Prettier, líneas de hasta 160). El pre-push corre lint, formato y tipos.

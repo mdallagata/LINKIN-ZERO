@@ -4,8 +4,9 @@ export type NavLink = {
 };
 
 export const NAV_LINKS: NavLink[] = [
-  { label: "Inicio", href: "/" },
-  { label: "Contacto", href: "/#contacto" },
-  { label: "Miembros", href: "/members" },
   { label: "Shows", href: "/shows" },
+  { label: "Integrantes", href: "/members" },
 ];
+
+/** Botón destacado del menú: lleva a la sección de contrataciones de la home. */
+export const BOOKING_LINK: NavLink = { label: "Contratar", href: "/#contacto" };

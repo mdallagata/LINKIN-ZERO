@@ -1,13 +1,27 @@
 :root {
-  --ink-2: rgba(255, 255, 255, 0.7);
+  /* --brand (cadetblue) sale del Sass: es el único acento y nunca brilla. */
+  --bg: #0b0b0b;
+  --ink: #ecebe6;
   /* neutral secondary text — not brand-tinted, so brand color stays meaningful */
-  --surface-2: #121212;
-  /* card elevation, replaces "dotted border on transparent" for finished content */
-  --hairline: rgba(255, 255, 255, 0.12);
+  --ink-2: #a3a29d;
+  /* párrafos largos: un poco más suaves que los títulos */
+  --ink-soft: rgba(236, 235, 230, 0.78);
+  /* fondo de las fotos mientras cargan */
+  --surface-2: #151515;
+  --hairline: rgba(236, 235, 230, 0.14);
+  /* Las fotos de la página van en blanco y negro: cada una viene con la luz de
+     color de su boliche. Las galerías, los modales y las miniaturas de los
+     shows (Fechas en la home y /shows) las muestran en color. */
+  --photo-filter: grayscale(1) contrast(1.12) brightness(0.92);
+  --gutter: clamp(1.25rem, 5.5vw, 5rem);
+  --section-space: clamp(5.5rem, 10vw, 9.5rem);
+  --nav-height: 76px;
+  /* Barra de "Contratar" fija abajo en celular (MobileBookingBar). */
+  --booking-bar-height: calc(76px + env(safe-area-inset-bottom));
 }
 
 html {
-  scroll-padding-top: 7rem;
+  scroll-padding-top: calc(var(--nav-height) + 1rem);
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -16,162 +30,258 @@ html {
   }
 }
 
-@media (max-width: 767px) {
-  html {
-    scroll-padding-top: 8.5rem;
-  }
+body {
+  background: var(--bg);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
-body {
-  text-align: center;
-  background: linear-gradient(180deg, #000 0%, #080808 100%);
-  overflow-x: hidden;
+/* En celular la barra de contratación tapa el final de la página. */
+@media (max-width: 767.98px) {
+  body {
+    padding-bottom: var(--booking-bar-height);
+  }
 }
 
 main {
+  flex: 1 0 auto;
   animation: page-fade-in 0.4s ease-out;
-}
-
-@keyframes page-fade-in {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Type scale — one h1 per page (page title), h2 for recurring section headings,
-   h3 for card-level headings. Anton is display-only (single weight, gets cramped
-   below ~28px); Space Grotesk carries small headings and all UI/body text. */
-h1,
-.h1 {
-  font-family: var(--font-heading), sans-serif;
-  font-size: clamp(2.25rem, 6vw, 4rem);
-  text-transform: uppercase;
-  letter-spacing: 0.01em;
-}
-
-h2 {
-  font-family: var(--font-heading), sans-serif;
-  font-size: clamp(1.75rem, 4vw, 2.75rem);
-  text-transform: uppercase;
-}
-
-h3 {
-  font-weight: 700;
-  font-size: clamp(1.05rem, 2vw, 1.3rem);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
-.text-brand {
-  color: var(--brand) !important;
-}
-
-.text-muted {
-  color: var(--ink-2) !important;
-}
-
-.glow-hover {
-  transition:
-    color 0.2s,
-    text-shadow 0.2s;
-}
-
-.glow-hover:hover {
-  color: #fff;
-  text-shadow: 0 0 10px var(--brand);
-}
-
-.brand-hr {
-  border-top: 0;
-  height: 2px;
-  background: linear-gradient(90deg, var(--brand), var(--ink-2), var(--brand));
-  box-shadow:
-    0 0 8px var(--brand),
-    0 0 16px color-mix(in srgb, var(--brand) 40%, transparent);
-  opacity: 1;
-}
-
-.section-divider {
-  width: 60px;
-  height: 2px;
-  background: var(--brand);
-  margin: 0.25rem auto 1.5rem;
-  border-radius: 1px;
-}
-
-.icon-link {
-  display: inline-flex;
-  color: var(--brand);
-  transition:
-    color 0.2s,
-    filter 0.2s;
-}
-
-.icon-link:hover {
-  color: #fff;
-  filter: drop-shadow(0 0 8px var(--brand));
-}
-
-.icon-link--member {
-  font-size: 1.4rem;
-}
-
-/* Botón con borde claro (el btn-outline-light de Bootstrap). */
-.outline-button {
-  display: inline-block;
-  padding: 0.375rem 0.75rem;
-  font-size: 1rem;
-  line-height: 1.5;
-  color: #f8f9fa;
-  background: transparent;
-  border: 1px solid #f8f9fa;
-  border-radius: 0.375rem;
-  cursor: pointer;
-  transition:
-    color 0.15s ease-in-out,
-    background-color 0.15s ease-in-out;
-}
-
-.outline-button:hover {
-  color: #000;
-  background: #f8f9fa;
-}
-
-.outline-button:disabled {
-  opacity: 0.65;
-  pointer-events: none;
-}
-
-/* Variante redonda con un ícono adentro (anterior/siguiente de la galería). */
-.outline-button--round {
-  display: flex;
-  align-items: center;
-  padding: 0.5rem;
-  border-radius: 50%;
-}
-
-.icon-link--text {
-  align-items: center;
-  gap: 0.4rem;
-  font-weight: 600;
-}
-
-.icon-link--text svg {
-  font-size: 1.2rem;
-}
-
-.container-narrow {
-  max-width: 960px;
 }
 
 @media (prefers-reduced-motion: reduce) {
   main {
     animation: none;
   }
+}
+
+@keyframes page-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* Type scale — one h1 per page (page title), h2 for section headings, h3 for
+   rows and cards. Anton is display-only (single weight, gets cramped below
+   ~28px); Archivo carries small headings and all UI/body text. */
+h1,
+h2 {
+  font-family: var(--font-heading), sans-serif;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0;
+}
+
+h2 {
+  font-size: clamp(3rem, 7vw, 6.5rem);
+  line-height: 0.9;
+  margin: 0;
+}
+
+h3,
+h4 {
+  font-weight: 600;
+  font-size: clamp(1.15rem, 1.6vw, 1.375rem);
+  line-height: 1.25;
+}
+
+/* Contenedor de todas las secciones: el mismo ancho y los mismos márgenes laterales en todo el sitio. */
+.page-container {
+  width: 100%;
+  max-width: 1440px;
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section {
+  padding-block: var(--section-space);
+}
+
+/* Título de sección a la izquierda y un link ("Ver todo →") a la derecha. */
+.section-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1rem 2rem;
+  margin-bottom: 2.5rem;
+}
+
+/* Etiqueta chica arriba de un título. */
+.eyebrow {
+  margin: 0 0 1.25rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--brand);
+}
+
+.text-muted {
+  color: var(--ink-2) !important;
+}
+
+/* Link de texto subrayado ("Historial completo →"). */
+.text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 6px;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.text-link:hover {
+  color: var(--brand);
+}
+
+.photo-bw {
+  filter: var(--photo-filter);
+}
+
+/* Dentro de un .photo-reveal, la foto recupera el color al pasar el mouse:
+   primero queda teñida del color de la banda y enseguida pasa a sus colores
+   reales. El tinte es un ::after sobre la caja que contiene la foto, con
+   mix-blend-mode: color (toma el tono de la marca y respeta las luces y
+   sombras de la foto). Al salir vuelve al blanco y negro con un fade corto. */
+.photo-reveal .photo-bw {
+  transition: filter 0.2s ease-out;
+}
+
+:is(.photo-reveal:has(> .photo-bw), .photo-reveal :has(> .photo-bw)) {
+  position: relative;
+  isolation: isolate;
+}
+
+:is(.photo-reveal:has(> .photo-bw), .photo-reveal :has(> .photo-bw))::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--brand);
+  mix-blend-mode: color;
+  opacity: 0;
+  pointer-events: none;
+}
+
+@media (hover: hover) {
+  .photo-reveal:is(:hover, :focus-visible, :has(:focus-visible)) .photo-bw {
+    filter: none;
+    transition: none;
+  }
+
+  .photo-reveal:is(:hover, :focus-visible, :has(:focus-visible)):has(> .photo-bw)::after,
+  .photo-reveal:is(:hover, :focus-visible, :has(:focus-visible)) :has(> .photo-bw)::after {
+    animation: photo-duotone 0.4s ease-in;
+  }
+}
+
+@keyframes photo-duotone {
+  0%,
+  30% {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+/* Botones: rectos, en mayúsculas. --solid (fondo de marca), --outline (borde
+   claro), --dark/--dark-outline (sobre el bloque de marca), --icon (cuadrado,
+   solo un ícono). */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  min-height: 44px;
+  padding: 0 1.4rem;
+  border: 1px solid transparent;
+  border-radius: 0;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color 0.2s,
+    color 0.2s,
+    border-color 0.2s;
+}
+
+.button svg {
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.button--solid {
+  background: var(--brand);
+  color: var(--bg);
+}
+
+.button--solid:hover {
+  background: var(--ink);
+  color: var(--bg);
+}
+
+.button--outline {
+  border-color: rgba(236, 235, 230, 0.45);
+  background: transparent;
+  color: var(--ink);
+}
+
+.button--outline:hover {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--bg);
+}
+
+.button--dark {
+  background: var(--bg);
+  color: var(--ink);
+}
+
+.button--dark:hover {
+  background: var(--ink);
+  color: var(--bg);
+}
+
+.button--dark-outline {
+  border: 2px solid var(--bg);
+  background: transparent;
+  color: var(--bg);
+}
+
+.button--dark-outline:hover {
+  background: var(--bg);
+  color: var(--ink);
+}
+
+.button--large {
+  min-height: 56px;
+  padding: 0 1.75rem;
+  font-size: 1rem;
+}
+
+.button--icon {
+  width: 44px;
+  padding: 0;
+}
+
+.button:disabled {
+  opacity: 0.4;
+  pointer-events: none;
 }

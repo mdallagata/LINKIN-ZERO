@@ -1,0 +1,138 @@
+.hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: min(100svh, 62rem);
+  overflow: hidden;
+}
+
+/* En celular la barra de contratación ocupa el final de la pantalla: la
+   próxima fecha tiene que quedar arriba de ella. */
+@media (max-width: 767.98px) {
+  .hero {
+    min-height: calc(100svh - var(--booking-bar-height));
+  }
+}
+
+/* Oscurece arriba (barra de navegación) y funde con el fondo en la mitad de
+   abajo, donde van el nombre y la próxima fecha. */
+.shade::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(11, 11, 11, 0.55) 0%, rgba(11, 11, 11, 0) 16%, rgba(11, 11, 11, 0) 34%, rgba(11, 11, 11, 0.72) 62%, var(--bg) 86%);
+}
+
+.content {
+  position: relative;
+  padding-top: calc(var(--nav-height) + 2rem);
+}
+
+.tagline {
+  margin: 0 0 0.75rem;
+  font-size: clamp(0.75rem, 1.2vw, 0.9375rem);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.wordmark {
+  margin: 0 0 0 -0.03em;
+  font-size: clamp(3.5rem, 16vw, 15.5rem);
+  line-height: 0.86;
+  /* Anton en mayúsculas ya viene ajustado: sin el espaciado de los títulos. */
+  white-space: nowrap;
+}
+
+.wordmarkEnd {
+  color: var(--brand);
+}
+
+/* Franja de la próxima fecha: una línea en escritorio, apilada en celular. */
+.strip {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-top: clamp(1.75rem, 3vw, 2.75rem);
+  padding: 1.25rem 0 2rem;
+  border-top: 1px solid rgba(236, 235, 230, 0.2);
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.strip:hover {
+  color: var(--ink);
+}
+
+.stripLabel {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--brand);
+}
+
+.stripDate {
+  margin-block: 0.25rem;
+  font-family: var(--font-heading), sans-serif;
+  font-size: clamp(2rem, 3vw, 2.25rem);
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.stripMain {
+  font-size: 1.0625rem;
+  line-height: 1.4;
+}
+
+.stripMain strong {
+  font-weight: 600;
+}
+
+.stripMuted {
+  color: var(--ink-2);
+  font-size: 0.9375rem;
+}
+
+.stripMain .stripMuted {
+  font-size: inherit;
+}
+
+.stripMore {
+  align-self: flex-start;
+  margin-top: 0.25rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 6px;
+}
+
+.strip:hover .stripMore {
+  color: var(--brand);
+}
+
+@media (min-width: 992px) {
+  .strip {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.75rem 2.5rem;
+    padding: 1.75rem 0 2.75rem;
+  }
+
+  .stripDate {
+    margin-block: 0;
+  }
+
+  .stripMain {
+    flex: 1 1 18rem;
+    font-size: 1.125rem;
+  }
+
+  .stripMore {
+    align-self: auto;
+    margin-top: 0;
+  }
+}

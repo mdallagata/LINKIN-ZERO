@@ -1,12 +1,23 @@
-/* Variante de h1 solo para el código de error de la página 404. */
+/* Páginas sin hero (404, error): el contenido arranca debajo de la barra fija. */
+.page {
+  padding-top: calc(var(--nav-height) + clamp(4rem, 10vw, 8rem));
+  padding-bottom: var(--section-space);
+}
+
 .errorCode {
-  font-size: clamp(4rem, 12vw, 8rem);
+  margin: 0;
+  font-size: clamp(6rem, 18vw, 14rem);
+  line-height: 0.86;
 }
 
-.errorSubtitle {
-  font-size: clamp(1.2rem, 3vw, 1.5rem);
+.errorTitle {
+  margin: 0;
+  font-size: clamp(3rem, 8vw, 6.5rem);
+  line-height: 0.9;
 }
 
-.backLink {
-  font-size: 1.1rem;
+.text {
+  margin: 1.5rem 0 0.5rem;
+  color: var(--ink-soft);
+  font-size: clamp(1.0625rem, 1.4vw, 1.1875rem);
 }

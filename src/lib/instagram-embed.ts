@@ -6,10 +6,9 @@ export type InstagramEmbedInfo = {
   code: string;
   src: string;
   label: "Post" | "Reel";
-  /** Recuadro del embed: ancho máximo en px y proporción (la captura de portada se saca con estas medidas). */
+  /** Recuadro del embed en px (la captura de portada se saca con estas medidas). */
   width: number;
   height: number;
-  aspectRatio: string;
 };
 
 export function instagramEmbedInfo(url: string): InstagramEmbedInfo | null {
@@ -18,6 +17,6 @@ export function instagramEmbedInfo(url: string): InstagramEmbedInfo | null {
   const code: string | undefined = match?.[2];
   if (!type || !code) return null;
   return type === "reel"
-    ? { code, src: `https://www.instagram.com/reel/${code}/embed`, label: "Reel", width: 400, height: 711, aspectRatio: "9 / 16" }
-    : { code, src: `https://www.instagram.com/p/${code}/embed`, label: "Post", width: 350, height: 420, aspectRatio: "1 / 1.2" };
+    ? { code, src: `https://www.instagram.com/reel/${code}/embed`, label: "Reel", width: 400, height: 711 }
+    : { code, src: `https://www.instagram.com/p/${code}/embed`, label: "Post", width: 350, height: 420 };
 }

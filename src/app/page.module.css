@@ -1,90 +1,85 @@
-.homeSidePhoto {
-  display: none;
-}
-
-@media (min-width: 1400px) {
-  .homeSidePhoto {
-    display: block;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: -1rem;
-    width: 540px;
-    overflow: hidden;
-    -webkit-mask-image: linear-gradient(to left, black 35%, transparent 100%);
-    mask-image: linear-gradient(to left, black 35%, transparent 100%);
-    pointer-events: none;
-  }
-
-  .homeSidePhotoImg {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to bottom, black 0%, transparent 22%, transparent 78%, black 100%), url("/images/baterista-en-vivo.webp");
-    background-size: cover;
-    background-position:
-      center,
-      80% center;
-    background-repeat: no-repeat;
-    opacity: 0.35;
-    filter: grayscale(1) contrast(1.15);
-  }
-
-  .homeSidePhotoImg::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: var(--brand);
-    mix-blend-mode: color;
-    opacity: 0.2;
-  }
-
-  .homeSidePhotoLeft {
-    right: auto;
-    left: -1rem;
-    -webkit-mask-image: linear-gradient(to right, black 35%, transparent 100%);
-    mask-image: linear-gradient(to right, black 35%, transparent 100%);
-  }
-
-  .homeSidePhotoLeft .homeSidePhotoImg {
-    background-image: linear-gradient(to bottom, black 0%, transparent 22%, transparent 78%, black 100%), url("/images/publico-en-vivo.webp");
-    background-position:
-      center,
-      55% center;
-    filter: none;
-  }
-}
-
-.heroDescription {
-  color: var(--ink-2);
-  font-size: clamp(0.95rem, 1.6vw, 1.1rem);
-  max-width: 640px;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 1rem;
-  padding-right: 1rem;
-}
-
-.sectionGap {
-  margin-bottom: 7rem;
-  padding-top: 3rem;
-}
-
-.contactSection {
-  position: relative;
-  padding: 2rem 1.5rem;
-  background: color-mix(in srgb, var(--brand) 4%, transparent);
-  border: 1px solid color-mix(in srgb, var(--brand) 25%, transparent);
-  border-radius: 12px;
-}
-
-/* Igual que .container de Bootstrap, pero más angosto. */
+/* Quiénes somos: la frase grande a la izquierda; descripción y datos rápidos a la derecha. */
 .about {
-  width: 100%;
-  max-width: 700px;
-  margin-inline: auto;
-  padding-inline: 0.75rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 3rem clamp(3rem, 7vw, 6rem);
 }
 
-.reel {
-  margin-top: 1rem;
+.aboutLead {
+  flex: 1 1 30rem;
+  min-width: 0;
+}
+
+.statement {
+  max-width: 9ch;
+  font-size: clamp(3rem, 6.6vw, 6.25rem);
+  line-height: 0.92;
+}
+
+.aboutBody {
+  flex: 1 1 24rem;
+  min-width: 0;
+}
+
+@media (min-width: 992px) {
+  .aboutBody {
+    padding-top: 2.75rem;
+  }
+}
+
+.description {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: clamp(1.0625rem, 1.4vw, 1.1875rem);
+  line-height: 1.62;
+}
+
+.facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 2rem;
+  margin: 2.75rem 0 0;
+}
+
+.fact {
+  padding-block: 1.1rem;
+  border-top: 1px solid var(--hairline);
+}
+
+.fact dt {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+
+.fact dd {
+  margin: 0.35rem 0 0;
+  font-size: 1.0625rem;
+  font-weight: 600;
+}
+
+/* En vivo: el reel de Instagram al lado de un texto corto. */
+.live {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 3rem clamp(3rem, 8vw, 8rem);
+  padding-top: 0;
+}
+
+.liveText {
+  flex: 1 1 22rem;
+  min-width: 0;
+}
+
+.liveText .description {
+  margin: 1.5rem 0 1rem;
+}
+
+.liveEmbed {
+  flex: 0 1 400px;
+  margin-inline: auto;
 }

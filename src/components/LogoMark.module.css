@@ -1,0 +1,19 @@
+/* logo-mark.webp: el ícono de la banda con el fondo transparente (los trazos
+   son lo único opaco), para usarlo de máscara. 512px alcanzan para el header y
+   el footer. */
+.logoMark {
+  display: inline-block;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  background: currentColor;
+  -webkit-mask: url("/icons/logo-mark.webp") center / contain no-repeat;
+  mask: url("/icons/logo-mark.webp") center / contain no-repeat;
+}
+
+/* logo-mark-large.webp: la misma máscara a 2048px, agrandada con IA
+   (Real-ESRGAN): pesa más, así que solo se usa donde el logo se ve gigante. */
+.large {
+  -webkit-mask-image: url("/icons/logo-mark-large.webp");
+  mask-image: url("/icons/logo-mark-large.webp");
+}

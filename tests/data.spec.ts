@@ -6,7 +6,7 @@ import type { Member } from "../src/data/members";
 import { SHOWS } from "../src/data/shows";
 import type { Show } from "../src/data/shows";
 import { instagramEmbedInfo } from "../src/lib/instagram-embed";
-import { formatShowDate, splitShows } from "../src/lib/show-schedule";
+import { showDateParts, splitShows } from "../src/lib/show-schedule";
 
 // Chequeos de src/data: lo que antes había que acordarse de revisar a mano
 // antes de deployar (fotos que existan, fechas bien escritas, links válidos).
@@ -21,6 +21,7 @@ test.describe("shows", () => {
       expect(show.date, "formato AAAA-MM-DD").toMatch(/^\d{4}-\d{2}-\d{2}$/);
       expect(new Date(`${show.date}T12:00:00Z`).toISOString().slice(0, 10), "una fecha que existe").toBe(show.date);
       for (const photo of show.photos ?? []) expect(publicFileExists(photo), `existe ${photo}`).toBe(true);
+      if (show.coverPhoto !== undefined) expect(show.photos?.[show.coverPhoto - 1], `existe la foto ${show.coverPhoto} de vista previa`).toBeDefined();
       if (show.postUrl) expect(instagramEmbedInfo(show.postUrl), `publicación de Instagram: ${show.postUrl}`).not.toBeNull();
     });
   }
@@ -57,9 +58,9 @@ test.describe("próximos y anteriores", () => {
     expect(dates(past)).toEqual(["2026-01-10", "2025-05-05"]);
   });
 
-  test("la fecha se muestra en castellano y una mal escrita frena el build", () => {
-    expect(formatShowDate("2026-11-28")).toBe("28 de Noviembre, 2026");
-    expect(formatShowDate("2025-09-05")).toBe("5 de Septiembre, 2025");
-    expect(() => formatShowDate("28/11/2026")).toThrow();
+  test("la fecha se muestra en castellano, con su día de la semana, y una mal escrita frena el build", () => {
+    expect(showDateParts("2026-11-28")).toEqual({ day: "28", month: "Nov", weekday: "Sáb", year: "2026" });
+    expect(showDateParts("2025-09-05")).toEqual({ day: "05", month: "Sep", weekday: "Vie", year: "2025" });
+    expect(() => showDateParts("28/11/2026")).toThrow();
   });
 });

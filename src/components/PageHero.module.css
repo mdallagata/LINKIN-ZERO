@@ -1,0 +1,29 @@
+.hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: clamp(26rem, 62svh, 40rem);
+  overflow: hidden;
+}
+
+/* Oscurece arriba (para la barra de navegación) y funde con el fondo abajo,
+   donde va el título. */
+.shade::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(11, 11, 11, 0.6) 0%, rgba(11, 11, 11, 0) 22%, rgba(11, 11, 11, 0.35) 55%, var(--bg) 100%);
+}
+
+.content {
+  position: relative;
+  padding-top: calc(var(--nav-height) + 3rem);
+  padding-bottom: clamp(2rem, 4vw, 3.5rem);
+}
+
+.title {
+  margin: 0 0 0 -0.03em;
+  font-size: clamp(4rem, 12vw, 11rem);
+  line-height: 0.86;
+}

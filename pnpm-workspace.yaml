@@ -4,6 +4,10 @@ allowBuilds:
   sharp: false
   unrs-resolver: true
   workerd: true
-minimumReleaseAgeExclude:
-  - miniflare@5.20261023.1-beta
-  - wrangler@4.154.0
+# eslint-config-next soporta ESLint 10 (node_modules/next/dist/docs/01-app/03-api-reference/05-config/03-eslint.md),
+# pero estos plugins que trae todavía no lo declaran en sus peerDependencies.
+peerDependencyRules:
+  allowedVersions:
+    eslint-plugin-import>eslint: "10"
+    eslint-plugin-jsx-a11y>eslint: "10"
+    eslint-plugin-react>eslint: "10"

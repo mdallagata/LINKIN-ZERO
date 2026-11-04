@@ -20,6 +20,8 @@ export type Show = {
   entry?: string;
   pressLinks?: PressLink[];
   photos?: string[];
+  /** Qué foto (1…N, como en la galería) va de vista previa en la lista de Fechas de la home. Sin esto, la 1. */
+  coverPhoto?: number;
 };
 
 // Nombres de bandas invitadas/anfitrionas, reutilizados en varias descripciones.
@@ -36,8 +38,9 @@ function showPhotos(folder: number, count: number): string[] {
 export const SHOWS: Show[] = [
   {
     date: "2026-11-28",
-    venue: "Tuc-Man Expo Tattoo",
+    venue: "Sociedad Rural de Tucumán",
     city: "Tucumán, Argentina",
+    event: "Tuc-Man Expo Tattoo",
     entry: "Entrada: alimento no perecedero",
     invitedBy: "Tuc-Man Expo Tattoo",
     postUrl: "https://www.instagram.com/p/Dcr8pDARsA_/",
@@ -52,6 +55,7 @@ export const SHOWS: Show[] = [
     description: `Formamos parte de la fecha debut de ${BREAKPOINT_BAND_NAME}, compartiendo escenario en una noche a puro nu metal.`,
     postUrl: "https://www.instagram.com/p/DaRebBYDFNT/",
     photos: showPhotos(4, 6),
+    coverPhoto: 2,
   },
   {
     date: "2025-11-08",
@@ -62,6 +66,7 @@ export const SHOWS: Show[] = [
     description: `Tres tributos en una noche de Nü Metal: ${PORN_BAND_NAME} (Korn), LINKIN ZERØ (Linkin Park) y Def Party (Deftones), más DJ set de 2000s.`,
     postUrl: "https://www.instagram.com/p/DSYwsETDNQ8/",
     photos: showPhotos(3, 10),
+    coverPhoto: 9,
   },
   {
     date: "2025-09-12",
@@ -71,6 +76,7 @@ export const SHOWS: Show[] = [
     description: `Nuestra primera fecha propia, tocando junto a ${PORN_BAND_NAME} (Korn) en una noche dedicada por completo al nu metal.`,
     postUrl: "https://www.instagram.com/p/DO4zdAtjF5A/",
     photos: showPhotos(2, 8),
+    coverPhoto: 5,
   },
   {
     date: "2025-09-05",
@@ -91,5 +97,6 @@ export const SHOWS: Show[] = [
     description: `Una noche de rock alternativo y metal junto a ${PORN_BAND_NAME} (Korn) y Aeon (Tool), en un evento cultural y familiar con música en vivo, feria de artesanos y gastronomía.`,
     postUrl: "https://www.instagram.com/p/DOXS0a2DDJ7/",
     photos: showPhotos(1, 6),
+    coverPhoto: 6,
   },
 ];

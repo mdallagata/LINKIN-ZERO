@@ -26,8 +26,8 @@ async function scrollToBottom(page: Page): Promise<void> {
 }
 
 const PAGES: { path: string; title: string; h1: string; canonical: string }[] = [
-  { path: "/", title: "LINKIN ZERØ", h1: "[ LINKIN ZERØ ]", canonical: "https://linkinzero.hyan.dev" },
-  { path: "/members", title: "Miembros — LINKIN ZERØ", h1: "Miembros", canonical: "https://linkinzero.hyan.dev/members" },
+  { path: "/", title: "LINKIN ZERØ", h1: "LINKIN ZERØ", canonical: "https://linkinzero.hyan.dev" },
+  { path: "/members", title: "Integrantes — LINKIN ZERØ", h1: "Integrantes", canonical: "https://linkinzero.hyan.dev/members" },
   { path: "/shows", title: "Shows — LINKIN ZERØ", h1: "Shows", canonical: "https://linkinzero.hyan.dev/shows" },
 ];
 
@@ -53,9 +53,47 @@ test("una ruta que no existe devuelve la página 404", async ({ page }) => {
 test("la navegación lleva a cada página y marca la actual", async ({ page }) => {
   await page.goto("/");
   const nav: Locator = page.getByRole("navigation", { name: "Principal" });
-  await nav.getByRole("link", { name: "Miembros" }).click();
+  await nav.getByRole("link", { name: "Integrantes" }).click();
   await expect(page).toHaveURL(/\/members$/);
-  await expect(nav.getByRole("link", { name: "Miembros" })).toHaveAttribute("aria-current", "page");
+  await expect(nav.getByRole("link", { name: "Integrantes" })).toHaveAttribute("aria-current", "page");
+});
+
+test("Contratar, desde otra página, lleva a la sección de contrataciones de la home", async ({ page, isMobile }) => {
+  test.skip(isMobile, "en celular Contratar está en la barra fija de abajo");
+  await page.goto("/shows");
+  await page.getByRole("navigation", { name: "Principal" }).getByRole("link", { name: "Contratar" }).click();
+  await expect(page).toHaveURL(/\/#contacto$/);
+  await expect(page.locator("#contacto")).toBeInViewport();
+});
+
+test("en celular, Contratar por WhatsApp queda siempre a mano", async ({ page, isMobile }) => {
+  test.skip(!isMobile, "solo en celular");
+  await page.goto("/shows");
+  await scrollToBottom(page);
+  const booking: Locator = page.getByRole("link", { name: "Contratar por WhatsApp" });
+  await expect(booking).toBeInViewport();
+  await expect(booking).toHaveAttribute("href", /^https:\/\/wa\.me\//);
+});
+
+test("Fechas: la fila de un show lleva a ese show en /shows, y Fotos abre la galería sin salir de la home", async ({ page }) => {
+  await page.goto("/");
+  const row: Locator = page
+    .locator("#fechas li")
+    .filter({ has: page.getByRole("button", { name: /fotos/ }) })
+    .first();
+
+  // El botón de fotos queda por encima del link que cubre la fila.
+  await row.getByRole("button", { name: /fotos/ }).click();
+  await expect(page.getByRole("dialog")).toBeVisible();
+  await expect(page).toHaveURL(/\/$/);
+  await page.keyboard.press("Escape");
+
+  // Cualquier parte de la fila (acá, la esquina de la fecha) sigue el link del título.
+  const href: string = (await row.getByRole("link").first().getAttribute("href")) ?? "";
+  expect(href).toMatch(/^\/shows#/);
+  await row.click({ position: { x: 8, y: 8 } });
+  await expect(page).toHaveURL(new RegExp(`${href}$`));
+  await expect(page.locator(`[id="${href.split("#")[1]}"]`)).toBeInViewport();
 });
 
 test("galería: abre en la foto elegida, se navega con las flechas y se cierra con Esc", async ({ page }) => {
@@ -67,8 +105,10 @@ test("galería: abre en la foto elegida, se navega con las flechas y se cierra c
   const photo: Locator = dialog.getByRole("img");
   await expect(dialog).toBeVisible();
   await expect(photo).toHaveAttribute("alt", /Foto 2$/);
+  await expect(dialog.getByText(/^2 \/ \d+$/)).toBeVisible();
   await page.keyboard.press("ArrowRight");
   await expect(photo).toHaveAttribute("alt", /Foto 3$/);
+  await expect(dialog.getByText(/^3 \/ \d+$/)).toBeVisible();
 
   // El modal está en la capa superior: el botón "volver arriba" no queda por encima.
   const backToTop: Locator = page.getByRole("button", { name: "Volver arriba", includeHidden: true });
@@ -81,6 +121,38 @@ test("galería: abre en la foto elegida, se navega con las flechas y se cierra c
   await page.keyboard.press("Escape");
   await expect(dialog).toBeHidden();
   await expect(thumb).toBeFocused();
+});
+
+test("zoom: un click acerca la foto, se arrastra, otro click la deja entera y al cerrar el modal se resetea", async ({ page, isMobile }) => {
+  test.skip(isMobile, "con el dedo es doble toque: lo prueba el test de celular");
+  await page.goto("/");
+  const trigger: Locator = page.getByRole("button", { name: /^Ver imagen completa/ });
+  await trigger.click();
+  const dialog: Locator = page.getByRole("dialog");
+  const photo: Locator = dialog.getByRole("img");
+  const transform = (): Promise<string> => photo.evaluate((img: HTMLElement): string => img.style.transform);
+  const box = await photo.boundingBox();
+  if (!box) throw new Error("la foto no tiene tamaño");
+  const [x, y]: [number, number] = [box.x + box.width / 2, box.y + box.height / 2];
+
+  await page.mouse.click(x, y);
+  await expect.poll(transform).toContain("scale(2.5)");
+  const zoomed: string = await transform();
+  await page.mouse.move(x, y);
+  await page.mouse.down();
+  await page.mouse.move(x + 120, y + 60, { steps: 5 });
+  await page.mouse.up();
+  await expect.poll(transform).not.toBe(zoomed);
+  await page.mouse.click(x, y);
+  await expect.poll(transform).toContain("scale(1)");
+
+  // El botón de la esquina hace lo mismo; al cerrar y volver a abrir, la foto se ve entera.
+  await dialog.getByRole("button", { name: "Acercar la foto" }).click();
+  await expect.poll(transform).toContain("scale(2.5)");
+  await page.keyboard.press("Escape");
+  await expect(dialog).toBeHidden();
+  await trigger.click();
+  await expect.poll(transform).toContain("scale(1)");
 });
 
 test("Instagram: muestra la portada y carga el embed recién al tocarla", async ({ page }) => {

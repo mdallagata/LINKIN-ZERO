@@ -59,19 +59,28 @@ export default function ShowPhotoGallery({ eventName, photos, index, onIndexChan
         )}
       </div>
       <div className="d-flex flex-column flex-sm-row align-items-center justify-content-center mt-3 gap-2">
-        <div className="d-flex gap-4">
-          <button type="button" className="outline-button outline-button--round" onClick={goPrev} disabled={!canGoPrev} aria-label="Foto anterior">
+        <div className="d-flex align-items-center gap-3">
+          <button type="button" className="button button--outline button--icon" onClick={goPrev} disabled={!canGoPrev} aria-label="Foto anterior">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
               <path d="M15 18l-6-6 6-6" />
             </svg>
           </button>
-          <button type="button" className="outline-button outline-button--round" onClick={goNext} disabled={!canGoNext} aria-label="Foto siguiente">
+          {/* Cuál foto es y cuántas hay; el lector de pantalla oye "Foto 3 de 10" en cada cambio. */}
+          <span className={styles.counter}>
+            <span aria-hidden="true">
+              {index + 1} / {photos.length}
+            </span>
+            <span className="visually-hidden" aria-live="polite">
+              Foto {index + 1} de {photos.length}
+            </span>
+          </span>
+          <button type="button" className="button button--outline button--icon" onClick={goNext} disabled={!canGoNext} aria-label="Foto siguiente">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
               <path d="M9 18l6-6-6-6" />
             </svg>
           </button>
         </div>
-        <small className={cx("text-white text-opacity-50 text-nowrap", styles.caption)}>{eventName}</small>
+        <small className={cx("text-muted text-nowrap", styles.caption)}>{eventName}</small>
       </div>
     </PhotoDialog>
   );

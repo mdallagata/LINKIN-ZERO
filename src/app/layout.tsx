@@ -1,12 +1,15 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
-import { Anton, Space_Grotesk } from "next/font/google";
+import { Anton, Archivo } from "next/font/google";
 import "./bootstrap.scss";
 import "./globals.css";
 import BackToTop from "@/components/BackToTop";
 import JsonLd from "@/components/JsonLd";
+import MobileBookingBar from "@/components/MobileBookingBar";
 import SiteFooter from "@/components/SiteFooter";
+import SiteHeader from "@/components/SiteHeader";
 import { BAND_DESCRIPTION, BAND_NAME, BAND_TAGLINE, INSTAGRAM_URL, OG_IMAGE, SITE_URL } from "@/data/band";
+import { NAV_LINKS } from "@/data/nav";
 import { BRAND_COLOR } from "@/lib/theme";
 
 // Solo se usa .variable (la clase que define --font-heading / --font-body);
@@ -17,9 +20,9 @@ const anton: { variable: string } = Anton({
   variable: "--font-heading",
 });
 
-const spaceGrotesk: { variable: string } = Space_Grotesk({
+// Archivo es variable: un solo archivo trae todos los pesos.
+const archivo: { variable: string } = Archivo({
   subsets: ["latin"],
-  weight: ["400", "500", "700"],
   variable: "--font-body",
 });
 
@@ -30,10 +33,10 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: `${BAND_NAME}`,
+    default: BAND_NAME,
     template: `%s — ${BAND_NAME}`,
   },
-  description: `${BAND_NAME} — banda tributo a LINKIN PARK de Tucumán, Argentina.` + ` Contrataciones para eventos y shows en vivo.`,
+  description: `${BAND_NAME} — banda tributo a LINKIN PARK de Tucumán, Argentina. Contrataciones para eventos y shows en vivo.`,
   keywords: [
     "LINKIN ZERØ",
     "tributo LINKIN PARK",
@@ -81,14 +84,16 @@ export default function RootLayout({
   children: ReactNode;
 }>): ReactNode {
   return (
-    <html lang="es" data-bs-theme="dark" className={`${anton.variable} ${spaceGrotesk.variable}`}>
+    <html lang="es" data-bs-theme="dark" className={`${anton.variable} ${archivo.variable}`}>
       {/* Extensiones del navegador (ColorZilla, Grammarly…) le agregan atributos al
           <body> antes de que React hidrate. suppressHydrationWarning ignora solo
           los atributos de este elemento, no su contenido. */}
-      <body className="d-flex flex-column min-vh-100 align-items-center" suppressHydrationWarning>
+      <body className="d-flex flex-column min-vh-100" suppressHydrationWarning>
         <JsonLd data={MUSIC_GROUP_JSON_LD} />
+        <SiteHeader links={NAV_LINKS} />
         {children}
         <SiteFooter />
+        <MobileBookingBar />
         <BackToTop />
       </body>
     </html>

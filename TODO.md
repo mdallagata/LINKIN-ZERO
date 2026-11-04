@@ -3,4 +3,4 @@
 - [ ] Cloudflare (requiere acceso al panel de hyan.dev, pedírselo al dueño del dominio):
   - Web Analytics ya está activo en producción (el beacon de cloudflareinsights carga); falta acceso para ver los datos
   - El script de detección de bots (`/cdn-cgi/challenge-platform/…`, Bot Fight Mode / JS Detections) es la tarea más larga del hilo principal en móvil (~1–2 s en Lighthouse): evaluar desactivarlo para este subdominio
-- [ ] Al mergear a `prod`: confirmar en GitHub → Actions que corre el deploy diario (schedule de las 06:00) y que el 29/11 la Expo Tattoo pasa sola a "Último Show"
+- [ ] Al mergear a `prod`: confirmar en GitHub → Actions que corre el deploy diario (schedule de las 06:00) y que el 29/11 la Expo Tattoo pasa sola a los shows anteriores (y la franja del hero cambia a "Sin fechas confirmadas")

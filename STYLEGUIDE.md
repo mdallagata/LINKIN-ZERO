@@ -1,7 +1,7 @@
 # LINKIN ZERØ — Style Guide
 
 **Platform:** Next.js 16 · Bootstrap 5 (Sass) · CSS Modules
-**Last updated:** 2026-10-27
+**Last updated:** 2026-11-03
 
 > For coding rules and architecture conventions, see [PROJECT_GUIDE.md](./PROJECT_GUIDE.md).
 
@@ -9,53 +9,72 @@
 
 ## 1. Brand
 
-LINKIN ZERØ is a LINKIN PARK tribute band. The site keeps an early-2000s, slightly retro internet aesthetic as an homage: black background, glowing cadetblue accents, condensed display type — but branded as its own act, not as LINKIN PARK's official site (see the footer disclaimer). Currently frontend-only.
+LINKIN ZERØ is a LINKIN PARK tribute band. The site looks like a tour poster: near-black background, big condensed type, black-and-white live photos and a single cadetblue accent. It's branded as its own act, not as LINKIN PARK's official site (see the footer disclaimer). Currently frontend-only.
+
+Principles:
+
+- **Nothing glows.** No text-shadow/box-shadow glows, no breathing or letter-by-letter animations, no hover scaling. Cadetblue is reserved for a few things: the Ø of the wordmark, the next show's date, eyebrows, the "Contratar" button and the booking block.
+- **Left-aligned, on one grid.** Every section uses `.page-container` (max 1440px, `--gutter` side margins). No centered stacks with a divider under each title.
+- **Content-specific shapes**, not one generic card: shows as a tour-dates list, members as portraits, booking as a solid brand-colored block.
+- **One photo treatment.** Photos on the page are black and white (`.photo-bw`); galleries, modals and the show thumbnails (the home's date list and /shows) show the original color. Portraits and the home's group photo get their color back on hover (`.photo-reveal`): a quick tint in the brand color that settles into the real colors.
+- **Booking always at hand**: "Contratar" in the nav (desktop) and a fixed bottom bar with WhatsApp (phone).
 
 ---
 
 ## 2. Colors
 
-Source of truth: `$brand` and the `-dark` variables in [src/app/bootstrap.scss](src/app/bootstrap.scss) (same value in [src/lib/theme.ts](src/lib/theme.ts) for the manifest and `theme-color`); the rest of the tokens in [src/app/globals.css](src/app/globals.css).
+Source of truth: `$brand` and the `-dark` variables in [src/app/bootstrap.scss](src/app/bootstrap.scss) (same values in [src/lib/theme.ts](src/lib/theme.ts) for the manifest and `theme-color`); the rest of the tokens in [src/app/globals.css](src/app/globals.css).
 
-| Token                | Value                                 | Usage                                                                                                   |
-| -------------------- | ------------------------------------- | ------------------------------------------------------------------------------------------------------- |
-| Brand (cadetblue)    | `--brand` `#5f9ea0`                   | Links, nav, headings glow, borders. Transparencias: `color-mix(in srgb, var(--brand) 30%, transparent)` |
-| Background           | `--bs-body-bg` `#000000`              | Page background                                                                                         |
-| Text                 | `--bs-body-color` `#ffffff`           | Body text                                                                                               |
-| Secondary/muted text | `--ink-2` `rgba(255,255,255,0.7)`     | Roles, descriptions, muted copy (`.text-muted`)                                                         |
-| Surface (elevated)   | `--surface-2` `#121212`               | Card backgrounds for finished content                                                                   |
-| Hairline             | `--hairline` `rgba(255,255,255,0.12)` | Subtle borders around cards/photos                                                                      |
+| Token         | Value                    | Usage                                                                      |
+| ------------- | ------------------------ | -------------------------------------------------------------------------- |
+| `--brand`     | `#5f9ea0` (cadetblue)    | The only accent (see Principles). Black text on it passes contrast (6.9:1) |
+| `--bg`        | `#0b0b0b`                | Page background (also `--bs-body-bg`)                                      |
+| `--ink`       | `#ecebe6`                | Main text, instead of pure white (also `--bs-body-color`)                  |
+| `--ink-2`     | `#a3a29d`                | Secondary text: places, roles, metadata (`.text-muted`)                    |
+| `--ink-soft`  | `rgba(236,235,230,0.78)` | Long paragraphs                                                            |
+| `--surface-2` | `#151515`                | Behind photos while they load                                              |
+| `--hairline`  | `rgba(236,235,230,0.14)` | 1px rules between rows and sections                                        |
 
 ## 3. Typography
 
-Display type via `next/font/google` (see [src/app/layout.tsx](src/app/layout.tsx)): **Anton** for headings and the wordmark (`--font-heading`), **Space Grotesk** for body copy (`--font-body`, wired into `--bs-body-font-family`). Text is centered throughout.
+Display type via `next/font/google` (see [src/app/layout.tsx](src/app/layout.tsx)): **Anton** for the wordmark, headings and show dates (`--font-heading`), **Archivo** for body copy and UI (`--font-body`, variable, wired into `--bs-body-font-family`).
 
-## 4. Effects
+- `h1`/`h2`: Anton, uppercase. `h2` is the big section title (up to 104px).
+- `h3`/`h4`: Archivo 600, sentence case (rows, cards).
+- Eyebrows and labels: Archivo 700, 13px, uppercase, letter-spacing 0.16em.
 
-Clases compartidas, en [src/app/globals.css](src/app/globals.css):
+## 4. Shared classes
 
-| Class              | Effect                                                                                                      |
-| ------------------ | ----------------------------------------------------------------------------------------------------------- |
-| `.text-brand`      | Brand-colored (cadetblue) text                                                                              |
-| `.text-muted`      | Secondary/muted text (`--ink-2`)                                                                            |
-| `.glow-hover`      | White text + brand glow on hover (links/nav)                                                                |
-| `.brand-hr`        | Glowing cadetblue gradient `<hr>` (default Bootstrap hr is a faint inherited-color line, doesn't work here) |
-| `.section-divider` | Short centered cadetblue rule under section headings                                                        |
-| `.icon-link`       | Brand-colored icon links (`--text` with label, `--member` on member roles)                                  |
-| `.outline-button`  | Light outlined button (`--round` for the gallery arrows)                                                    |
+In [src/app/globals.css](src/app/globals.css):
 
-El resto de los efectos vive en el `.module.css` de cada componente:
+| Class                               | Effect                                                                                       |
+| ----------------------------------- | -------------------------------------------------------------------------------------------- |
+| `.page-container`                   | Max 1440px, `--gutter` side padding: every section                                           |
+| `.section`                          | Vertical section spacing (`--section-space`)                                                 |
+| `.section-header`                   | Section title on the left, a link ("Historial completo →") on the right                      |
+| `.eyebrow`                          | Small cadetblue label above a title                                                          |
+| `.text-link`                        | Underlined text link/button, 44px tall                                                       |
+| `.button` + `--solid` / `--outline` | Square uppercase buttons (brand fill / light outline)                                        |
+| `--dark` / `--dark-outline`         | Buttons on the brand-colored booking block                                                   |
+| `--large` / `--icon`                | Taller button / square icon-only button                                                      |
+| `.photo-bw` / `.photo-reveal`       | Black-and-white photo / its container gives the color back on hover (brand-color tint first) |
+| `.text-muted`                       | Secondary text                                                                               |
 
-| Component (module)                  | Effect                                                                                             |
-| ----------------------------------- | -------------------------------------------------------------------------------------------------- |
-| `SiteHeader`                        | Hero with photo, wordmark `[ BAND NAME ]` with breathing glow, letter-by-letter tagline, fixed nav |
-| `ShowsSections`                     | Show cards (`showCardFeatured` for the latest), year timeline, entry badge, "no dates" box         |
-| `ShowPhotos` / `ShowPhotoGallery`   | Thumbnails and the gallery frame (16/9, 4/5 on mobile)                                             |
-| `PhotoDialog` / `PhotoModalTrigger` | Photo modal (native `<dialog>`) and the framed photo buttons that open it                          |
-| `FadeInSection` / `FadeInImage`     | Scroll reveal and fade on image load (only with JS, off with reduced motion)                       |
-| `InstagramEmbed`                    | Embed frame, poster with "Tocá para cargar", skeleton and fallback link                            |
-| `BackToTop`, `ContactButtons`       | Floating back-to-top button; contact buttons                                                       |
+Component-specific styles live in each component's `.module.css`:
+
+| Component (module)                   | What it draws                                                                             |
+| ------------------------------------ | ----------------------------------------------------------------------------------------- |
+| `SiteHeader`                         | Fixed nav: transparent over the hero, solid once scrolled; Ø logo, links, "Contratar"     |
+| `HomeHero` / `PageHero`              | Full-screen hero with the wordmark and next-show strip / shorter hero with the page title |
+| `ShowsSections`                      | Tour-dates rows (home), next show in detail and past shows by year (/shows)               |
+| `MemberGrid` / `MemberSection`       | Portrait grid (home) / one row per member (/members)                                      |
+| `BookingSection`, `MobileBookingBar` | Brand-colored booking block (home) / fixed WhatsApp bar on phones                         |
+| `LogoMark`                           | The brush Ø as a CSS mask (`public/icons/logo-mark.webp`), colored with `currentColor`    |
+| `ShowPhotos` / `ShowPhotoGallery`    | Thumbnails and the gallery frame (16/9, 4/5 on mobile)                                    |
+| `PhotoDialog` / `PhotoModalTrigger`  | Photo modal (native `<dialog>`) and the photo buttons that open it                        |
+| `InstagramEmbed`                     | Embed frame, poster with "Tocá para cargar", skeleton and fallback link                   |
+| `BackToTop`, `ContactButtons`        | Floating back-to-top button; booking buttons                                              |
 
 ## 5. Layout
 
-Bootstrap's grid classes (`container`, `row`, `col-md-*`) drive responsive layout — mobile stacks to a single centered column, `md`+ splits into the two-column alternating layout on the members page. Animations respect `prefers-reduced-motion` (including smooth scrolling).
+Sections are full-width `.page-container`s; inside, CSS grid/flex in each module (Bootstrap's grid classes are no longer used in components). Rows collapse to a date column plus a stacked column on phones; the shows list goes to columns from 992px. Animations respect `prefers-reduced-motion` (including smooth scrolling).

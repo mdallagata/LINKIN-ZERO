@@ -4,14 +4,14 @@
 // clase de Bootstrap que no existe en el CSS final, revisá que su grupo esté en
 // $utilities.
 
-// Tema del sitio: fondo negro, texto blanco, acento cadetblue. $brand es la
+// Tema del sitio: fondo casi negro, texto hueso, acento cadetblue. $brand es la
 // única definición del color en el CSS (el resto usa var(--brand)); el mismo
-// valor está en src/lib/theme.ts para el manifest y el theme-color.
+// valor y el del fondo están en src/lib/theme.ts para el manifest y el theme-color.
 $brand: #5f9ea0;
-$body-bg-dark: #000;
-$body-color-dark: #fff;
-$link-color-dark: $brand;
-$link-hover-color-dark: #fff;
+$body-bg-dark: #0b0b0b;
+$body-color-dark: #ecebe6;
+$link-color-dark: $body-color-dark;
+$link-hover-color-dark: $brand;
 $border-color-dark: $brand;
 $font-family-base: var(--font-body), system-ui, sans-serif;
 
@@ -29,28 +29,18 @@ $utilities: map-get-multiple(
   $utilities,
   (
     "align-items",
-    "color",
     "display",
     "flex-direction",
-    "flex-wrap",
-    "font-weight",
     "gap",
     "height",
     "justify-content",
     "margin-bottom",
     "margin-top",
-    "margin-y",
     "min-viewport-height",
-    "order",
     "padding",
-    "padding-bottom",
     "padding-top",
-    "padding-x",
     "padding-y",
-    "position",
     "text-align",
-    "text-decoration",
-    "text-opacity",
     "white-space",
     "width"
   )

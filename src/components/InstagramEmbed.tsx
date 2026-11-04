@@ -76,7 +76,7 @@ export default function InstagramEmbed({ url, poster }: Props): ReactNode {
         ) : (
           <div className={cx(styles.instagramPlaceholder, styles.instagramSkeleton)}>
             <SiInstagram size={32} aria-hidden />
-            Cargando...
+            Cargando…
           </div>
         ))}
 
@@ -92,7 +92,7 @@ export default function InstagramEmbed({ url, poster }: Props): ReactNode {
       )}
 
       {slow && status === "loading" && (
-        <a href={url} target="_blank" rel="noopener noreferrer" className={cx(styles.instagramFallback, "glow-hover text-brand")}>
+        <a href={url} target="_blank" rel="noopener noreferrer" className={cx(styles.instagramFallback, "text-link")}>
           <SiInstagram size={32} aria-hidden />
           <span>Ver en Instagram ↗</span>
         </a>

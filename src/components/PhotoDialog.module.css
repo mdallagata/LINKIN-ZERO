@@ -32,7 +32,7 @@
 }
 
 .photoDialog::backdrop {
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.85);
   opacity: 0;
   transition:
     opacity 0.15s linear,
@@ -44,8 +44,7 @@
   opacity: 1;
 }
 
-/* Misma curva y gesto que FadeInSection (los textos de la página): entra
-   desde abajo con fade, solo que más pausado por ser una pieza protagónica. */
+/* Entra desde abajo con un fade pausado: es una pieza protagónica. */
 .photoDialogFrame {
   position: relative;
   display: flex;
@@ -106,10 +105,9 @@
   flex-direction: column;
   width: 100%;
   pointer-events: auto;
-  background-color: var(--bs-body-bg);
+  background-color: var(--bg);
   background-clip: padding-box;
-  border: 1px solid var(--bs-border-color-translucent);
-  border-radius: 0.5rem;
+  border: 1px solid var(--hairline);
 }
 
 .photoDialogBody {
@@ -128,9 +126,8 @@
   height: 1em;
   padding: 0.5rem;
   border: 0;
-  border-radius: 0.375rem;
   background: transparent;
-  color: #fff;
+  color: var(--ink);
   opacity: 0.8;
 }
 

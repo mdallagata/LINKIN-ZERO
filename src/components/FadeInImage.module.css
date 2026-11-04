@@ -1,5 +1,21 @@
+/* El fade es una animación y no una transition: así la foto puede tener sus
+   propias transiciones (el color de .photo-reveal) sin pisarse. */
 @media (scripting: enabled) {
   .fadeInImage:not(.isLoaded) {
     opacity: 0;
+  }
+
+  .fadeInImage.isLoaded {
+    animation: fadeIn 0.4s ease-in;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
   }
 }

@@ -15,14 +15,15 @@ export default function GlobalError({ error, retry }: { error: unknown; retry: (
 
   return (
     <html lang="es" data-bs-theme="dark">
-      <body className="d-flex flex-column min-vh-100 align-items-center justify-content-center px-3">
+      <body className="d-flex flex-column min-vh-100 justify-content-center page-container">
         <title>Algo salió mal — LINKIN ZERØ</title>
-        <h1 className="mb-1">Algo salió mal</h1>
-        <div className="section-divider" />
+        <h1 className="mb-3">Algo salió mal</h1>
         <p className="text-muted">Hubo un error inesperado. Intentalo de nuevo.</p>
-        <button onClick={() => retry()} className="outline-button mt-3" type="button">
-          Reintentar
-        </button>
+        <div className="mt-3">
+          <button onClick={() => retry()} className="button button--outline" type="button">
+            Reintentar
+          </button>
+        </div>
       </body>
     </html>
   );

@@ -1,22 +1,26 @@
-/* Show card — mini thumbnails */
+/* Miniaturas de un show en /shows: a color, como las de la lista de Fechas
+   de la home; al pasar el mouse se marca el borde. */
+.thumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+}
+
 .showCardThumb {
-  width: 60px;
-  height: 45px;
-  border-radius: 6px;
+  width: 88px;
+  height: 66px;
   overflow: hidden;
   border: 1px solid var(--hairline);
   padding: 0;
-  background: transparent;
+  background: var(--surface-2);
   cursor: pointer;
-  transition:
-    border-color 0.2s,
-    transform 0.2s;
   flex-shrink: 0;
+  transition: border-color 0.2s;
 }
 
 .showCardThumb:hover {
-  border-color: var(--brand);
-  transform: scale(1.05);
+  border-color: var(--ink);
 }
 
 .showCardThumbImg {
@@ -30,17 +34,14 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: var(--surface-2);
-  color: var(--brand);
-  font-size: 0.75rem;
+  color: var(--ink);
+  font-size: 0.875rem;
   font-weight: 700;
-  border-color: var(--hairline);
 }
 
 .showCardThumbMore:hover {
-  background: var(--brand);
-  color: #000;
-  border-color: var(--brand);
+  background: var(--ink);
+  color: var(--bg);
 }
 
 @media (prefers-reduced-motion: reduce) {

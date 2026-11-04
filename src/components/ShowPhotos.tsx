@@ -21,7 +21,7 @@ export default function ShowPhotos({ eventName, photos }: { eventName: string; p
   };
 
   return (
-    <div className="d-flex gap-2 mt-3 flex-wrap justify-content-center">
+    <div className={styles.thumbs}>
       {photos.slice(0, VISIBLE_THUMBS).map((photo: string, i: number) => (
         <button key={photo} type="button" className={styles.showCardThumb} onClick={() => openAt(i)} aria-label={`Ver foto ${i + 1}`}>
           <FadeInImage src={photo} alt={`${eventName} — Foto ${i + 1}`} width={120} height={90} className={styles.showCardThumbImg} />

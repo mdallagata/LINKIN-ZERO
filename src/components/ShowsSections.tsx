@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
-import { SiInstagram } from "react-icons/si";
+import { SiGooglemaps, SiInstagram } from "react-icons/si";
 import FadeInImage from "@/components/FadeInImage";
 import InstagramEmbed from "@/components/InstagramEmbed";
 import JsonLd from "@/components/JsonLd";
@@ -27,7 +27,7 @@ function upcomingShowJsonLd(show: Show): object {
     location: {
       "@type": "Place",
       name: show.venue,
-      address: show.city,
+      address: show.address ? `${show.address}, ${show.city}` : show.city,
     },
     performer: {
       "@type": "MusicGroup",
@@ -50,6 +50,12 @@ function showTitle(show: Show): string {
 
 function showPlace(show: Show): string {
   return show.event ? `${show.venue} · ${show.city}` : show.city;
+}
+
+// Búsqueda en Google Maps (no hace falta el link exacto del lugar): https://developers.google.com/maps/documentation/urls/get-started
+function showMapUrl(show: Show, address: string): string {
+  const query: string = `${show.venue}, ${address}, ${show.city}`;
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
 }
 
 function showHost(show: Show): string {
@@ -163,6 +169,12 @@ function UpcomingShow({ show }: { show: Show }): ReactNode {
           {show.ticketUrl && (
             <a href={show.ticketUrl} className="button button--solid">
               Entradas
+            </a>
+          )}
+          {show.address && (
+            <a href={showMapUrl(show, show.address)} className="text-link" target="_blank" rel="noopener noreferrer">
+              <SiGooglemaps aria-hidden />
+              {show.address} ↗
             </a>
           )}
           {show.postUrl && (

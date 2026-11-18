@@ -8,6 +8,8 @@ export type Show = {
   date: string;
   venue: string;
   city: string;
+  /** Calle y barrio del lugar (ej. "Lavalle 560, Barrio Sur"). Mientras el show es próximo, se muestra con un link a Google Maps. */
+  address?: string;
   /** Nombre del evento. Sin él, la tarjeta de un show anterior usa el lugar como título. */
   event?: string;
   /** Banda o entidad que nos invitó; sin esto el show se marca como "Fecha propia". */
@@ -37,14 +39,14 @@ function showPhotos(folder: number, count: number): string[] {
 // los separa según la fecha del día en que se genera el sitio.
 export const SHOWS: Show[] = [
   {
-    date: "2026-11-28",
-    venue: "Sociedad Rural de Tucumán",
+    date: "2026-11-29",
+    venue: "Club Independiente",
     city: "Tucumán, Argentina",
+    address: "Lavalle 560, Barrio Sur",
     event: "Tuc-Man Expo Tattoo",
     entry: "Entrada: alimento no perecedero",
     invitedBy: "Tuc-Man Expo Tattoo",
-    postUrl: "https://www.instagram.com/p/Dcr8pDARsA_/",
-    description: "Formamos parte de la Tuc-Man Expo Tattoo, el evento de tatuajes más grande del NOA, con más de 200 artistas en la Sociedad Rural de Tucumán.",
+    description: "Formamos parte de la Tuc-Man Expo Tattoo, el evento de tatuajes más grande del NOA, con más de 200 artistas en el Club Independiente.",
   },
   {
     date: "2026-06-19",

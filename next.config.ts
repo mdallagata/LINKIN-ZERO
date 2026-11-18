@@ -22,6 +22,9 @@ const nextConfig: NextConfig = {
     quietDeps: true,
     silenceDeprecations: ["import"],
   },
+  experimental: {
+    agentUpgrade: "security",
+  },
 };
 
 export default nextConfig;

@@ -46,6 +46,7 @@ export const SHOWS: Show[] = [
     event: "Tuc-Man Expo Tattoo",
     entry: "Entrada: alimento no perecedero",
     invitedBy: "Tuc-Man Expo Tattoo",
+    postUrl: "https://www.instagram.com/p/Df8wQ8Px8Zl/",
     description: "Formamos parte de la Tuc-Man Expo Tattoo, el evento de tatuajes más grande del NOA, con más de 200 artistas en el Club Independiente.",
   },
   {

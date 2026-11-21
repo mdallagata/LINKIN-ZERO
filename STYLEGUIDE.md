@@ -16,7 +16,7 @@ Principles:
 - **Nothing glows.** No text-shadow/box-shadow glows, no breathing or letter-by-letter animations, no hover scaling. Cadetblue is reserved for a few things: the Ø of the wordmark, the next show's date, eyebrows, the "Contratar" button and the booking block.
 - **Left-aligned, on one grid.** Every section uses `.page-container` (max 1440px, `--gutter` side margins). No centered stacks with a divider under each title.
 - **Content-specific shapes**, not one generic card: shows as a tour-dates list, members as portraits, booking as a solid brand-colored block.
-- **One photo treatment.** Photos on the page are black and white (`.photo-bw`); galleries, modals and the show thumbnails (the home's date list and /shows) show the original color. Portraits and the home's group photo get their color back on hover (`.photo-reveal`): a quick tint in the brand color that settles into the real colors.
+- **One photo treatment.** Photos on the page are black and white (`.photo-bw`); galleries, modals and the show thumbnails (the home's date list and /shows) show the original color. Portraits and the home's group photo get their color back on hover (`.photo-reveal`): a quick tint in the brand color that settles into the real colors. Touch screens have no hover, so there the same tint-then-color follows the scroll: each photo turns to color as it reaches the middle of the screen and back to black and white as it leaves.
 - **Booking always at hand**: "Contratar" in the nav (desktop) and a fixed bottom bar with WhatsApp (phone).
 
 ---
@@ -47,18 +47,18 @@ Display type via `next/font/google` (see [src/app/layout.tsx](src/app/layout.tsx
 
 In [src/app/globals.css](src/app/globals.css):
 
-| Class                               | Effect                                                                                       |
-| ----------------------------------- | -------------------------------------------------------------------------------------------- |
-| `.page-container`                   | Max 1440px, `--gutter` side padding: every section                                           |
-| `.section`                          | Vertical section spacing (`--section-space`)                                                 |
-| `.section-header`                   | Section title on the left, a link ("Historial completo →") on the right                      |
-| `.eyebrow`                          | Small cadetblue label above a title                                                          |
-| `.text-link`                        | Underlined text link/button, 44px tall                                                       |
-| `.button` + `--solid` / `--outline` | Square uppercase buttons (brand fill / light outline)                                        |
-| `--dark` / `--dark-outline`         | Buttons on the brand-colored booking block                                                   |
-| `--large` / `--icon`                | Taller button / square icon-only button                                                      |
-| `.photo-bw` / `.photo-reveal`       | Black-and-white photo / its container gives the color back on hover (brand-color tint first) |
-| `.text-muted`                       | Secondary text                                                                               |
+| Class                               | Effect                                                                                                                            |
+| ----------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| `.page-container`                   | Max 1440px, `--gutter` side padding: every section                                                                                |
+| `.section`                          | Vertical section spacing (`--section-space`)                                                                                      |
+| `.section-header`                   | Section title on the left, a link ("Historial completo →") on the right                                                           |
+| `.eyebrow`                          | Small cadetblue label above a title                                                                                               |
+| `.text-link`                        | Underlined text link/button, 44px tall                                                                                            |
+| `.button` + `--solid` / `--outline` | Square uppercase buttons (brand fill / light outline)                                                                             |
+| `--dark` / `--dark-outline`         | Buttons on the brand-colored booking block                                                                                        |
+| `--large` / `--icon`                | Taller button / square icon-only button                                                                                           |
+| `.photo-bw` / `.photo-reveal`       | Black-and-white photo / its container gives the color back on hover, or with the scroll on touch screens (brand-color tint first) |
+| `.text-muted`                       | Secondary text                                                                                                                    |
 
 Component-specific styles live in each component's `.module.css`:
 

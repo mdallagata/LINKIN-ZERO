@@ -197,6 +197,81 @@ h4 {
   }
 }
 
+/* En pantallas táctiles no hay hover: ahí el color va atado al scroll. La foto
+   entra en blanco y negro, se tiñe del color de la banda, recupera sus colores
+   al acercarse a la mitad de la pantalla y vuelve al blanco y negro al irse por
+   arriba. La caja que contiene la foto anima dos variables con su propia
+   view-timeline (la foto no, porque su animation es el fade de FadeInImage).
+   Sin soporte (Firefox, iOS anterior al 26) quedan en blanco y negro. */
+@property --photo-color {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+@property --photo-tint {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+@supports (animation-timeline: view()) {
+  @media (hover: none) {
+    :is(.photo-reveal:has(> .photo-bw), .photo-reveal :has(> .photo-bw)) {
+      view-timeline: --photo-reveal block;
+      animation:
+        photo-scroll-tint linear both,
+        photo-scroll-color linear both;
+      animation-timeline: --photo-reveal, --photo-reveal;
+    }
+
+    /* Los valores de --photo-filter, que se apagan a medida que sube --photo-color. */
+    .photo-reveal .photo-bw {
+      filter: grayscale(calc(1 - var(--photo-color))) contrast(calc(1.12 - 0.12 * var(--photo-color))) brightness(calc(0.92 + 0.08 * var(--photo-color)));
+      transition: none;
+    }
+
+    :is(.photo-reveal:has(> .photo-bw), .photo-reveal :has(> .photo-bw))::after {
+      opacity: var(--photo-tint);
+    }
+  }
+}
+
+/* Progreso de la foto en pantalla: 0% asoma por abajo, 50% en el medio, 100% se fue por arriba. */
+@keyframes photo-scroll-tint {
+  0%,
+  15% {
+    --photo-tint: 0;
+  }
+
+  25%,
+  32% {
+    --photo-tint: 1;
+  }
+
+  45%,
+  100% {
+    --photo-tint: 0;
+  }
+}
+
+@keyframes photo-scroll-color {
+  0%,
+  22% {
+    --photo-color: 0;
+  }
+
+  30%,
+  70% {
+    --photo-color: 1;
+  }
+
+  85%,
+  100% {
+    --photo-color: 0;
+  }
+}
+
 /* Botones: rectos, en mayúsculas. --solid (fondo de marca), --outline (borde
    claro), --dark/--dark-outline (sobre el bloque de marca), --icon (cuadrado,
    solo un ícono). */

@@ -6,7 +6,7 @@ import InstagramEmbed from "@/components/InstagramEmbed";
 import JsonLd from "@/components/JsonLd";
 import ShowGalleryButton from "@/components/ShowGalleryButton";
 import ShowPhotos from "@/components/ShowPhotos";
-import { BAND_NAME, SITE_URL } from "@/data/band";
+import { BAND_NAME, COMMUNITY_NAME, COMMUNITY_URL, SITE_URL } from "@/data/band";
 import { BOOKING_LINK } from "@/data/nav";
 import type { PressLink, Show } from "@/data/shows";
 import { instagramPoster } from "@/lib/instagram-poster";
@@ -132,6 +132,19 @@ function ShowRow({ show, upcoming }: { show: Show; upcoming: boolean }): ReactNo
   );
 }
 
+/** Fila de la lista de la home con la invitación al canal de Instagram (sorteos de entradas y novedades). */
+function CommunityRow(): ReactNode {
+  return (
+    <li className={styles.communityRow}>
+      <p className="mb-0">¿Querés participar por entradas y enterarte primero de todo?</p>
+      <a href={COMMUNITY_URL} className="text-link" target="_blank" rel="noopener noreferrer">
+        <SiInstagram aria-hidden />
+        Unite a {COMMUNITY_NAME} ↗
+      </a>
+    </li>
+  );
+}
+
 /** Home: los próximos shows y los últimos anteriores, como lista de gira. */
 export function ShowListSection(): ReactNode {
   const past: Show[] = PAST_SHOWS.slice(0, HOME_PAST_SHOWS);
@@ -148,6 +161,8 @@ export function ShowListSection(): ReactNode {
         {UPCOMING_SHOWS.map((show: Show) => (
           <ShowRow key={`${show.date}-${show.venue}`} show={show} upcoming />
         ))}
+        {/* Entre el próximo show y los anteriores, donde más se ve. */}
+        <CommunityRow />
         {past.map((show: Show) => (
           <ShowRow key={`${show.date}-${show.venue}`} show={show} upcoming={false} />
         ))}

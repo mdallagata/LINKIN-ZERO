@@ -10,6 +10,9 @@ export const BAND_DESCRIPTION: string =
   "Somos una banda tributo a LINKIN PARK de Tucumán, Argentina, formada en diciembre de 2023. A donde vayamos buscamos ofrecer una experiencia fiel, potente y emocional, tratando de transmitir la esencia de esta banda, tanto en lo musical como en lo sonoro.";
 export const CONTACT_EMAIL: string = "linkin.zero.tuc@gmail.com";
 export const INSTAGRAM_URL: string = "https://www.instagram.com/linkin.zero/";
+/** Canal de Instagram donde sorteamos entradas y avisamos novedades: lo invitamos en Fechas (home) y el footer. */
+export const COMMUNITY_URL: string = "https://www.instagram.com/channel/9NE-haaHyzaugfsW/";
+export const COMMUNITY_NAME: string = `${BAND_NAME} COMUNIDAD`;
 export const WHATSAPP_URL: string = "https://wa.me/543816176275";
 /** El mismo número de WHATSAPP_URL, escrito para mostrarlo. */
 export const CONTACT_PHONE: string = "+54 381 617-6275";

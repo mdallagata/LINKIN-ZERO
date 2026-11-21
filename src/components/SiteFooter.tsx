@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 import LogoMark from "@/components/LogoMark";
-import { BAND_NAME, INSTAGRAM_URL, LEGAL_DISCLAIMER } from "@/data/band";
+import { BAND_NAME, COMMUNITY_URL, INSTAGRAM_URL, LEGAL_DISCLAIMER } from "@/data/band";
 import type { NavLink } from "@/data/nav";
 import { BOOKING_LINK, NAV_LINKS } from "@/data/nav";
 import { cx } from "@/lib/cx";
@@ -24,6 +24,11 @@ export default function SiteFooter(): ReactNode {
           <li>
             <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer">
               Instagram
+            </a>
+          </li>
+          <li>
+            <a href={COMMUNITY_URL} target="_blank" rel="noopener noreferrer">
+              Comunidad
             </a>
           </li>
         </ul>

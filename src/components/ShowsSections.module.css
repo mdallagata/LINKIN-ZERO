@@ -228,18 +228,6 @@
   font-size: 1.125rem;
 }
 
-/* Invitación al canal de Instagram: una fila más de la lista de la home,
-   entre el próximo show y los anteriores. */
-.communityRow {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.25rem 1.5rem;
-  padding: 1.5rem 0;
-  border-top: 1px solid var(--hairline);
-  color: var(--ink-soft);
-}
-
 /* /shows — anteriores, agrupados por año */
 .year {
   border-top: 1px solid var(--hairline);

@@ -1,9 +1,11 @@
 /* Quiénes somos: la frase grande a la izquierda; descripción y datos rápidos a la derecha. */
+/* Va pegada al hero, que ya cierra con su propio espacio abajo: menos aire arriba que las demás secciones. */
 .about {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
   gap: 3rem clamp(3rem, 7vw, 6rem);
+  padding-top: clamp(2.5rem, 4vw, 3.5rem);
 }
 
 .aboutLead {

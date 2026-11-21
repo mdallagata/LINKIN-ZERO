@@ -1,7 +1,8 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
+import { SiInstagram } from "react-icons/si";
 import HeroImage from "@/components/HeroImage";
-import { BAND_LOCATION, BAND_NAME, BAND_TAGLINE } from "@/data/band";
+import { BAND_LOCATION, BAND_NAME, BAND_TAGLINE, COMMUNITY_NAME, COMMUNITY_URL } from "@/data/band";
 import { BOOKING_LINK } from "@/data/nav";
 import type { Show } from "@/data/shows";
 import { showDateParts } from "@/lib/show-schedule";
@@ -10,7 +11,8 @@ import { cx } from "@/lib/cx";
 import styles from "./HomeHero.module.css";
 
 // Hero de la home: foto a pantalla completa, el nombre de la banda enorme (el
-// h1) y, abajo de todo, la próxima fecha, para que se vea sin scrollear.
+// h1) y, abajo de todo, la próxima fecha y la invitación a la comunidad, para
+// que se vean sin scrollear.
 export default function HomeHero(): ReactNode {
   const next: Show | undefined = UPCOMING_SHOWS[0];
   // La Ø final va en el color de marca.
@@ -29,6 +31,7 @@ export default function HomeHero(): ReactNode {
           <span className={styles.wordmarkEnd}>{wordmarkEnd}</span>
         </h1>
         {next ? <NextShow show={next} /> : <NoUpcomingShows />}
+        <CommunityInvite />
       </div>
     </section>
   );
@@ -59,5 +62,18 @@ function NoUpcomingShows(): ReactNode {
       <span className={styles.stripMain}>¿Querés que toquemos en tu evento?</span>
       <span className={styles.stripMore}>Escribinos →</span>
     </Link>
+  );
+}
+
+// Justo debajo de la próxima fecha: el canal de Instagram donde sorteamos entradas y avisamos todo primero.
+function CommunityInvite(): ReactNode {
+  return (
+    <div className={styles.community}>
+      <p className="mb-0">¿Querés participar por entradas y enterarte primero de todo?</p>
+      <a href={COMMUNITY_URL} className="text-link" target="_blank" rel="noopener noreferrer">
+        <SiInstagram aria-hidden />
+        Unite a {COMMUNITY_NAME} ↗
+      </a>
+    </div>
   );
 }

@@ -55,7 +55,7 @@
   flex-direction: column;
   gap: 0.35rem;
   margin-top: clamp(1.75rem, 3vw, 2.75rem);
-  padding: 1.25rem 0 2rem;
+  padding: 1.25rem 0 1.5rem;
   border-top: 1px solid rgba(236, 235, 230, 0.2);
   color: var(--ink);
   text-decoration: none;
@@ -113,13 +113,26 @@
   color: var(--brand);
 }
 
+/* Invitación a la comunidad, debajo de la próxima fecha y con la misma línea
+   arriba: una fila de texto y link en escritorio, apilada en celular. */
+.community {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 1.5rem;
+  padding: 0.5rem 0 1.25rem;
+  border-top: 1px solid rgba(236, 235, 230, 0.2);
+  color: var(--ink-soft);
+  font-size: 0.9375rem;
+}
+
 @media (min-width: 992px) {
   .strip {
     flex-direction: row;
     flex-wrap: wrap;
     align-items: baseline;
     gap: 0.75rem 2.5rem;
-    padding: 1.75rem 0 2.75rem;
+    padding: 1.75rem 0;
   }
 
   .stripDate {
@@ -134,5 +147,9 @@
   .stripMore {
     align-self: auto;
     margin-top: 0;
+  }
+
+  .community {
+    padding: 0.75rem 0 2rem;
   }
 }

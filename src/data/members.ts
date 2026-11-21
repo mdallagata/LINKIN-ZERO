@@ -47,7 +47,7 @@ export const MEMBERS: Member[] = [
     imageAlt: "Mauricio Dall'Agata",
     imageWidth: 480,
     imageHeight: 720,
-    instagramUrl: "https://www.instagram.com/m_dallagata/",
+    instagramUrl: "https://www.instagram.com/mauri_dall/",
     imagePosition: "center 20%",
   },
   {

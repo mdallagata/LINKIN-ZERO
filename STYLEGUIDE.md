@@ -23,7 +23,7 @@ Principles:
 
 ## 2. Colors
 
-Source of truth: `$brand` and the `-dark` variables in [src/app/bootstrap.scss](src/app/bootstrap.scss) (same values in [src/lib/theme.ts](src/lib/theme.ts) for the manifest and `theme-color`); the rest of the tokens in [src/app/globals.css](src/app/globals.css).
+Source of truth: `$brand` and the `-dark` variables in [src/app/bootstrap.scss](src/app/bootstrap.scss) (same values in [src/lib/theme.ts](src/lib/theme.ts) for the manifest and `theme-color`, and in [.vscode/settings.json](.vscode/settings.json) for the editor's colors); the rest of the tokens in [src/app/globals.css](src/app/globals.css).
 
 | Token         | Value                    | Usage                                                                      |
 | ------------- | ------------------------ | -------------------------------------------------------------------------- |

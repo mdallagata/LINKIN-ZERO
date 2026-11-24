@@ -5,7 +5,7 @@ import HeroImage from "@/components/HeroImage";
 import { BAND_LOCATION, BAND_NAME, BAND_TAGLINE, COMMUNITY_NAME, COMMUNITY_URL } from "@/data/band";
 import { BOOKING_LINK } from "@/data/nav";
 import type { Show } from "@/data/shows";
-import { showDateParts } from "@/lib/show-schedule";
+import { showDateParts, showStartDate } from "@/lib/show-schedule";
 import { UPCOMING_SHOWS } from "@/lib/shows";
 import { cx } from "@/lib/cx";
 import styles from "./HomeHero.module.css";
@@ -42,8 +42,9 @@ function NextShow({ show }: { show: Show }): ReactNode {
   return (
     <Link href="/shows#proximo" className={styles.strip}>
       <span className={styles.stripLabel}>Próximo show</span>
-      <time dateTime={show.date} className={styles.stripDate}>
+      <time dateTime={showStartDate(show.date, show.time)} className={styles.stripDate}>
         {weekday} {day} {month}
+        {show.time && ` · ${show.time} hs`}
       </time>
       <span className={styles.stripMain}>
         <strong>{show.event ?? show.venue}</strong>

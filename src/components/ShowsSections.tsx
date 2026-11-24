@@ -8,9 +8,9 @@ import ShowGalleryButton from "@/components/ShowGalleryButton";
 import ShowPhotos from "@/components/ShowPhotos";
 import { BAND_NAME, SITE_URL } from "@/data/band";
 import { BOOKING_LINK } from "@/data/nav";
-import type { PressLink, Show } from "@/data/shows";
+import type { PressLink, ScheduleSlot, Show } from "@/data/shows";
 import { instagramPoster } from "@/lib/instagram-poster";
-import { showDateParts } from "@/lib/show-schedule";
+import { lineupText, otherBands, showDateParts, showStartDate } from "@/lib/show-schedule";
 import { PAST_SHOWS, UPCOMING_SHOWS } from "@/lib/shows";
 import { cx } from "@/lib/cx";
 import styles from "./ShowsSections.module.css";
@@ -23,17 +23,16 @@ function upcomingShowJsonLd(show: Show): object {
     "@context": "https://schema.org",
     "@type": "MusicEvent",
     name: `${BAND_NAME} en ${show.event ?? show.venue}`,
-    startDate: show.date,
+    startDate: showStartDate(show.date, show.time),
     location: {
       "@type": "Place",
       name: show.venue,
       address: show.address ? `${show.address}, ${show.city}` : show.city,
     },
-    performer: {
-      "@type": "MusicGroup",
-      name: BAND_NAME,
-      url: SITE_URL,
-    },
+    performer: [
+      { "@type": "MusicGroup", name: BAND_NAME, url: SITE_URL },
+      ...otherBands(show).map((name: string): object => ({ "@type": "MusicGroup", name })),
+    ],
     ...(show.description ? { description: show.description } : {}),
     ...(show.ticketUrl ? { offers: { "@type": "Offer", url: show.ticketUrl } } : {}),
   };
@@ -73,18 +72,26 @@ function showAnchor(show: Show): string {
   return `${show.date}-${venue}`;
 }
 
-function ShowDate({ date, highlight = false, large = false }: { date: string; highlight?: boolean; large?: boolean }): ReactNode {
+// Con `time` (solo en los próximos), la hora va en una tercera línea: "21:30 hs".
+function ShowDate({ date, time, highlight = false, large = false }: { date: string; time?: string; highlight?: boolean; large?: boolean }): ReactNode {
   const { day, month, weekday, year } = showDateParts(date);
   return (
-    <time dateTime={date} className={cx(styles.date, highlight && styles.dateHighlight, large && styles.dateLarge)}>
+    <time dateTime={showStartDate(date, time)} className={cx(styles.date, highlight && styles.dateHighlight, large && styles.dateLarge)}>
       <span className={styles.dateDay}>
         {day} {month}
       </span>
       <span className={styles.dateMeta}>
         {weekday} · {year}
       </span>
+      {time && <span className={styles.dateTime}>{time} hs</span>}
     </time>
   );
+}
+
+/** "Compartimos escenario con…", si hay otras bandas en el cronograma. */
+function Lineup({ show }: { show: Show }): ReactNode {
+  const text: string | undefined = lineupText(show);
+  return text && <p className={styles.lineup}>{text}</p>;
 }
 
 // Una fila de la lista de fechas de la home: fecha, foto (siempre a color), show, quién nos invitó y la acción.
@@ -95,7 +102,7 @@ function ShowRow({ show, upcoming }: { show: Show; upcoming: boolean }): ReactNo
   const thumbnail: string | undefined = show.photos?.[(show.coverPhoto ?? 1) - 1];
   return (
     <li className={styles.row}>
-      <ShowDate date={show.date} highlight={upcoming} />
+      <ShowDate date={show.date} time={upcoming ? show.time : undefined} highlight={upcoming} />
       <div className={styles.rowMedia}>
         {upcoming ? (
           <span className={styles.upcomingBox}>Próximo</span>
@@ -111,6 +118,7 @@ function ShowRow({ show, upcoming }: { show: Show; upcoming: boolean }): ReactNo
           </Link>
         </h3>
         <p className={styles.place}>{showPlace(show)}</p>
+        {upcoming && <Lineup show={show} />}
       </div>
       <p className={styles.rowNote}>{upcoming ? (show.entry ?? showHost(show)) : showHost(show)}</p>
       <div className={styles.rowAction}>
@@ -156,13 +164,31 @@ export function ShowListSection(): ReactNode {
   );
 }
 
+// Cronograma del día como el del flyer: hora y qué pasa; nuestro horario resaltado.
+function Schedule({ slots }: { slots: ScheduleSlot[] }): ReactNode {
+  return (
+    <div className={styles.schedule}>
+      <h4 className={styles.scheduleTitle}>Cronograma</h4>
+      <ol className={styles.scheduleList}>
+        {slots.map((slot: ScheduleSlot) => (
+          <li key={`${slot.time}-${slot.label}`} className={cx(styles.slot, slot.band && styles.slotBand, slot.label === BAND_NAME && styles.slotUs)}>
+            <span className={styles.slotTime}>{slot.time}</span>
+            <span>{slot.label}</span>
+          </li>
+        ))}
+      </ol>
+    </div>
+  );
+}
+
 function UpcomingShow({ show }: { show: Show }): ReactNode {
   return (
     <article id={showAnchor(show)} className={styles.upcomingShow}>
       <div className={styles.upcomingInfo}>
-        <ShowDate date={show.date} highlight large />
+        <ShowDate date={show.date} time={show.time} highlight large />
         <h3 className={styles.upcomingTitle}>{showTitle(show)}</h3>
         <p className={styles.place}>{showPlace(show)}</p>
+        <Lineup show={show} />
         {show.description && <p className={styles.description}>{show.description}</p>}
         {show.entry && <p className={styles.entry}>{show.entry}</p>}
         <div className={styles.links}>
@@ -184,6 +210,7 @@ function UpcomingShow({ show }: { show: Show }): ReactNode {
             </a>
           )}
         </div>
+        {show.schedule && show.schedule.length > 0 && <Schedule slots={show.schedule} />}
       </div>
       {show.postUrl && (
         <div className={styles.upcomingEmbed}>
@@ -223,6 +250,7 @@ function PastShow({ show }: { show: Show }): ReactNode {
         <h4 className={styles.title}>{title}</h4>
         <p className={styles.place}>{showPlace(show)}</p>
         <p className={styles.host}>{showHost(show)}</p>
+        <Lineup show={show} />
         {show.description && <p className={styles.description}>{show.description}</p>}
         {(show.postUrl || show.pressLinks) && (
           <div className={styles.links}>

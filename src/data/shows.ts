@@ -1,6 +1,18 @@
+import { BAND_NAME } from "@/data/band";
+
 export type PressLink = {
   label: string;
   url: string;
+};
+
+/** Un horario del cronograma del evento. */
+export type ScheduleSlot = {
+  /** Hora en 24 h, tal como se muestra: "8:30", "21:30". */
+  time: string;
+  /** Qué pasa a esa hora. Nuestro horario lleva `BAND_NAME` y va resaltado. */
+  label: string;
+  /** Es otra banda que toca ese día: se nombra en "Compartimos escenario con…". */
+  band?: boolean;
 };
 
 export type Show = {
@@ -8,6 +20,8 @@ export type Show = {
   date: string;
   venue: string;
   city: string;
+  /** Hora a la que tocamos, en 24 h ("21:30"). Mientras el show es próximo se muestra junto a la fecha. */
+  time?: string;
   /** Calle y barrio del lugar (ej. "Lavalle 560, Barrio Sur"). Mientras el show es próximo, se muestra con un link a Google Maps. */
   address?: string;
   /** Nombre del evento. Sin él, la tarjeta de un show anterior usa el lugar como título. */
@@ -21,6 +35,8 @@ export type Show = {
   /** Info de acceso, se muestra como badge mientras el show es próximo (ej. entrada gratuita). */
   entry?: string;
   pressLinks?: PressLink[];
+  /** Cronograma del día, se muestra en /shows mientras el show es próximo. Las bandas (`band: true`) siguen nombradas después. */
+  schedule?: ScheduleSlot[];
   photos?: string[];
   /** Qué foto (1…N, como en la galería) va de vista previa en la lista de Fechas de la home. Sin esto, la 1. */
   coverPhoto?: number;
@@ -40,6 +56,7 @@ function showPhotos(folder: number, count: number): string[] {
 export const SHOWS: Show[] = [
   {
     date: "2026-11-29",
+    time: "21:30",
     venue: "Club Independiente",
     city: "Tucumán, Argentina",
     address: "Lavalle 560, Barrio Sur",
@@ -48,6 +65,16 @@ export const SHOWS: Show[] = [
     invitedBy: "Tuc-Man Expo Tattoo",
     postUrl: "https://www.instagram.com/p/Df8wQ8Px8Zl/",
     description: "Formamos parte de la Tuc-Man Expo Tattoo, el evento de tatuajes más grande del NOA, con más de 200 artistas en el Club Independiente.",
+    schedule: [
+      { time: "8:30", label: "Ingreso de los artistas y armado de stands" },
+      { time: "10:00", label: "Ingreso del público" },
+      { time: "17:00", label: "Subasta de arte" },
+      { time: "18:00", label: "Dark Phoenix", band: true },
+      { time: "19:00", label: "Dentro del Túnel", band: true },
+      { time: "20:00", label: "Presentación de lienzos y premiación" },
+      { time: "21:30", label: BAND_NAME },
+      { time: "22:30", label: "Cierre del día" },
+    ],
   },
   {
     date: "2026-06-19",

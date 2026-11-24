@@ -1,4 +1,4 @@
-import type { Show } from "@/data/shows";
+import type { ScheduleSlot, Show } from "@/data/shows";
 
 export type ShowSchedule = {
   /** De `today` en adelante, el más cercano primero. */
@@ -35,4 +35,24 @@ export function showDateParts(iso: string): ShowDateParts {
   // En UTC: el día de la semana no puede depender de la zona horaria de la máquina que genera el sitio.
   const weekday: string = WEEKDAYS[new Date(Date.UTC(year, month - 1, day)).getUTCDay()] ?? "";
   return { day: String(day).padStart(2, "0"), month: monthName, weekday, year: String(year) };
+}
+
+/** Inicio del show para schema.org: "2026-11-29" + "21:30" → "2026-11-29T21:30:00-03:00" (Tucumán es UTC−3 todo el año). Sin hora, solo la fecha. */
+export function showStartDate(date: string, time?: string): string {
+  if (!time) return date;
+  const [hours, minutes] = time.split(":");
+  return `${date}T${(hours ?? "").padStart(2, "0")}:${minutes}:00-03:00`;
+}
+
+/** Las otras bandas del cronograma, en orden: ["Dark Phoenix", "Dentro del Túnel"]. */
+export function otherBands(show: Show): string[] {
+  return (show.schedule ?? []).filter((slot: ScheduleSlot): boolean => Boolean(slot.band)).map((slot: ScheduleSlot): string => slot.label);
+}
+
+const LIST_FORMAT: Intl.ListFormat = new Intl.ListFormat("es", { type: "conjunction" });
+
+/** "Compartimos escenario con Dark Phoenix y Dentro del Túnel", o nada si tocamos solos. */
+export function lineupText(show: Show): string | undefined {
+  const bands: string[] = otherBands(show);
+  return bands.length > 0 ? `Compartimos escenario con ${LIST_FORMAT.format(bands)}` : undefined;
 }

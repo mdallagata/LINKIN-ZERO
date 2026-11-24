@@ -1,15 +1,19 @@
 import { existsSync } from "node:fs";
 import { expect, test } from "@playwright/test";
+import { BAND_NAME } from "../src/data/band";
 import { REEL_URL } from "../src/data/instagram";
 import { MEMBERS } from "../src/data/members";
 import type { Member } from "../src/data/members";
 import { SHOWS } from "../src/data/shows";
-import type { Show } from "../src/data/shows";
+import type { ScheduleSlot, Show } from "../src/data/shows";
 import { instagramEmbedInfo } from "../src/lib/instagram-embed";
-import { showDateParts, splitShows } from "../src/lib/show-schedule";
+import { lineupText, showDateParts, showStartDate, splitShows } from "../src/lib/show-schedule";
 
 // Chequeos de src/data: lo que antes había que acordarse de revisar a mano
 // antes de deployar (fotos que existan, fechas bien escritas, links válidos).
+
+/** Hora en 24 h: "8:30", "21:30". */
+const TIME_PATTERN: RegExp = /^([01]?\d|2[0-3]):[0-5]\d$/;
 
 function publicFileExists(path: string): boolean {
   return existsSync(`public${path}`);
@@ -23,6 +27,10 @@ test.describe("shows", () => {
       for (const photo of show.photos ?? []) expect(publicFileExists(photo), `existe ${photo}`).toBe(true);
       if (show.coverPhoto !== undefined) expect(show.photos?.[show.coverPhoto - 1], `existe la foto ${show.coverPhoto} de vista previa`).toBeDefined();
       if (show.postUrl) expect(instagramEmbedInfo(show.postUrl), `publicación de Instagram: ${show.postUrl}`).not.toBeNull();
+      if (show.time !== undefined) expect(show.time, "hora en 24 h").toMatch(TIME_PATTERN);
+      for (const slot of show.schedule ?? []) expect(slot.time, `hora de "${slot.label}"`).toMatch(TIME_PATTERN);
+      const ourSlot: ScheduleSlot | undefined = show.schedule?.find((slot: ScheduleSlot): boolean => slot.label === BAND_NAME);
+      if (ourSlot) expect(ourSlot.time, "nuestro horario en el cronograma es el mismo que `time`").toBe(show.time);
     });
   }
 
@@ -62,5 +70,22 @@ test.describe("próximos y anteriores", () => {
     expect(showDateParts("2026-11-28")).toEqual({ day: "28", month: "Nov", weekday: "Sáb", year: "2026" });
     expect(showDateParts("2025-09-05")).toEqual({ day: "05", month: "Sep", weekday: "Vie", year: "2025" });
     expect(() => showDateParts("28/11/2026")).toThrow();
+  });
+
+  test("con hora, el inicio para schema.org va en hora de Tucumán", () => {
+    expect(showStartDate("2026-11-29", "21:30")).toBe("2026-11-29T21:30:00-03:00");
+    expect(showStartDate("2026-11-29", "8:30")).toBe("2026-11-29T08:30:00-03:00");
+    expect(showStartDate("2026-11-29")).toBe("2026-11-29");
+  });
+
+  test("las otras bandas del cronograma se nombran en orden", () => {
+    const schedule: ScheduleSlot[] = [
+      { time: "18:00", label: "Dark Phoenix", band: true },
+      { time: "20:00", label: "Premiación" },
+      { time: "21:00", label: "Dentro del Túnel", band: true },
+      { time: "21:30", label: BAND_NAME },
+    ];
+    expect(lineupText({ ...show, schedule })).toBe("Compartimos escenario con Dark Phoenix y Dentro del Túnel");
+    expect(lineupText(show)).toBeUndefined();
   });
 });

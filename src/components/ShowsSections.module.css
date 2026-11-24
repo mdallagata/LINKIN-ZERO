@@ -1,4 +1,4 @@
-/* Fecha: "28 NOV" en Anton y abajo "SÁB · 2026". --highlight para la próxima. */
+/* Fecha: "28 NOV" en Anton y abajo "SÁB · 2026" (y "21:30 HS" en los próximos con hora). --highlight para la próxima. */
 .date {
   display: flex;
   flex-direction: column;
@@ -20,12 +20,30 @@
   color: var(--ink-2);
 }
 
-.dateHighlight .dateDay {
+.dateTime {
+  margin-top: 0.3rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.dateHighlight .dateDay,
+.dateHighlight .dateTime {
   color: var(--brand);
 }
 
 .dateLarge .dateDay {
   font-size: clamp(3.5rem, 8vw, 6rem);
+}
+
+.dateLarge .dateTime {
+  margin-top: 0.5rem;
+  font-family: var(--font-heading), sans-serif;
+  font-size: clamp(1.5rem, 2.6vw, 2rem);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  line-height: 1;
 }
 
 .title {
@@ -35,6 +53,13 @@
 .place {
   margin: 0.35rem 0 0;
   color: var(--ink-2);
+}
+
+/* "Compartimos escenario con…" */
+.lineup {
+  margin: 0.35rem 0 0;
+  font-size: 0.9375rem;
+  color: var(--ink-soft);
 }
 
 .description {
@@ -214,6 +239,55 @@
   color: var(--brand);
   font-size: 0.875rem;
   font-weight: 600;
+}
+
+/* Cronograma del día, debajo de los links del próximo show. */
+.schedule {
+  max-width: 34rem;
+  margin-top: 2.25rem;
+}
+
+.scheduleTitle {
+  margin: 0 0 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+
+.scheduleList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--hairline);
+}
+
+.slot {
+  display: grid;
+  grid-template-columns: 3.75rem minmax(0, 1fr);
+  column-gap: 1rem;
+  padding: 0.65rem 0;
+  border-bottom: 1px solid var(--hairline);
+  font-size: 0.9375rem;
+  color: var(--ink-soft);
+}
+
+.slotTime {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-2);
+}
+
+.slotBand {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.slotUs,
+.slotUs .slotTime {
+  font-weight: 700;
+  color: var(--brand);
 }
 
 .upcomingEmbed {

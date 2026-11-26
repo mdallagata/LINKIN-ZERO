@@ -6,7 +6,7 @@ Empezó en 2021 como una página de fan sobre la banda real, mi primera página 
 
 ## Requisitos
 
-- Node.js 24.22.1 (LTS) — fijado en [.nvmrc](.nvmrc). Si usás [nvm](https://github.com/nvm-sh/nvm), corré `nvm use`.
+- Node.js 24.22.3 (LTS) — fijado en [.nvmrc](.nvmrc). Si usás [nvm](https://github.com/nvm-sh/nvm), corré `nvm use`.
 
 ## Desarrollo
 

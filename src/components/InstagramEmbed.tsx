@@ -34,7 +34,7 @@ export default function InstagramEmbed({ url, poster }: Props): ReactNode {
   useEffect((): void | (() => void) => {
     const el: HTMLDivElement | null = containerRef.current;
     if (poster || !el) return;
-    const observer = new IntersectionObserver(
+    const observer: IntersectionObserver = new IntersectionObserver(
       ([entry]: IntersectionObserverEntry[]) => {
         if (!entry?.isIntersecting) return;
         observer.disconnect();

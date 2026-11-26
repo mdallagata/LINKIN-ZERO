@@ -6,11 +6,12 @@ import InstagramEmbed from "@/components/InstagramEmbed";
 import JsonLd from "@/components/JsonLd";
 import ShowGalleryButton from "@/components/ShowGalleryButton";
 import ShowPhotos from "@/components/ShowPhotos";
-import { BAND_NAME, SITE_URL } from "@/data/band";
+import { BAND_NAME, OG_IMAGE, SITE_URL } from "@/data/band";
 import { BOOKING_LINK } from "@/data/nav";
 import type { PressLink, ScheduleSlot, Show } from "@/data/shows";
 import { instagramPoster } from "@/lib/instagram-poster";
-import { lineupText, otherBands, showDateParts, showStartDate } from "@/lib/show-schedule";
+import type { LineupPart } from "@/lib/show-schedule";
+import { lineupParts, otherBands, showDateParts, showStartDate } from "@/lib/show-schedule";
 import { PAST_SHOWS, UPCOMING_SHOWS } from "@/lib/shows";
 import { cx } from "@/lib/cx";
 import styles from "./ShowsSections.module.css";
@@ -18,20 +19,34 @@ import styles from "./ShowsSections.module.css";
 /** Shows anteriores en la lista de la home (el resto, en /shows). */
 const HOME_PAST_SHOWS: number = 4;
 
+const BAND_JSON_LD: object = { "@type": "MusicGroup", name: BAND_NAME, url: SITE_URL };
+
+// Evento para Google (https://developers.google.com/search/docs/appearance/structured-data/event):
+// además de lo obligatorio (nombre, inicio y lugar) lleva estado, modalidad,
+// organizador, bandas e imagen, que Search Console marca si faltan.
 function upcomingShowJsonLd(show: Show): object {
+  const poster: string | undefined = show.postUrl ? instagramPoster(show.postUrl) : undefined;
   return {
     "@context": "https://schema.org",
     "@type": "MusicEvent",
     name: `${BAND_NAME} en ${show.event ?? show.venue}`,
     startDate: showStartDate(show.date, show.time),
+    eventStatus: "https://schema.org/EventScheduled",
+    eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
     location: {
       "@type": "Place",
       name: show.venue,
       address: show.address ? `${show.address}, ${show.city}` : show.city,
     },
+    image: `${SITE_URL}${poster ?? OG_IMAGE.url}`,
+    organizer: show.invitedBy ? { "@type": "Organization", name: show.invitedBy, ...(show.invitedByUrl ? { url: show.invitedByUrl } : {}) } : BAND_JSON_LD,
     performer: [
-      { "@type": "MusicGroup", name: BAND_NAME, url: SITE_URL },
-      ...otherBands(show).map((name: string): object => ({ "@type": "MusicGroup", name })),
+      BAND_JSON_LD,
+      ...otherBands(show).map((slot: ScheduleSlot): object => ({
+        "@type": "MusicGroup",
+        name: slot.label,
+        ...(slot.instagramUrl ? { sameAs: slot.instagramUrl } : {}),
+      })),
     ],
     ...(show.description ? { description: show.description } : {}),
     ...(show.ticketUrl ? { offers: { "@type": "Offer", url: show.ticketUrl } } : {}),
@@ -61,6 +76,19 @@ function showHost(show: Show): string {
   return show.invitedBy ? `Invitados por ${show.invitedBy}` : "Fecha propia";
 }
 
+/** "Invitados por …" o "Fecha propia"; en /shows, quien nos invitó lleva a su Instagram si lo tenemos. */
+function ShowHost({ show }: { show: Show }): ReactNode {
+  if (!show.invitedBy || !show.invitedByUrl) return <p className={styles.host}>{showHost(show)}</p>;
+  return (
+    <p className={styles.host}>
+      Invitados por{" "}
+      <a href={show.invitedByUrl} className={styles.inlineLink} target="_blank" rel="noopener noreferrer">
+        {show.invitedBy}
+      </a>
+    </p>
+  );
+}
+
 /** id de cada show en /shows, para linkearlo desde la home: "2025-11-08-mendoza-1084". */
 function showAnchor(show: Show): string {
   const venue: string = show.venue
@@ -88,10 +116,27 @@ function ShowDate({ date, time, highlight = false, large = false }: { date: stri
   );
 }
 
-/** "Compartimos escenario con…", si hay otras bandas en el cronograma. */
-function Lineup({ show }: { show: Show }): ReactNode {
-  const text: string | undefined = lineupText(show);
-  return text && <p className={styles.lineup}>{text}</p>;
+/**
+ * "Compartimos escenario con…", si hay otras bandas en el cronograma. Con
+ * `linked`, cada banda lleva a su Instagram (no en la lista de la home: ahí toda
+ * la fila ya es un link al show).
+ */
+function Lineup({ show, linked = false }: { show: Show; linked?: boolean }): ReactNode {
+  const parts: LineupPart[] = lineupParts(show);
+  if (parts.length === 0) return null;
+  return (
+    <p className={styles.lineup}>
+      {parts.map((part: LineupPart, i: number): ReactNode =>
+        linked && part.url ? (
+          <a key={i} href={part.url} className={styles.inlineLink} target="_blank" rel="noopener noreferrer">
+            {part.text}
+          </a>
+        ) : (
+          part.text
+        ),
+      )}
+    </p>
+  );
 }
 
 // Una fila de la lista de fechas de la home: fecha, foto (siempre a color), show, quién nos invitó y la acción.
@@ -188,9 +233,15 @@ function UpcomingShow({ show }: { show: Show }): ReactNode {
         <ShowDate date={show.date} time={show.time} highlight large />
         <h3 className={styles.upcomingTitle}>{showTitle(show)}</h3>
         <p className={styles.place}>{showPlace(show)}</p>
-        <Lineup show={show} />
+        <ShowHost show={show} />
+        <Lineup show={show} linked />
         {show.description && <p className={styles.description}>{show.description}</p>}
-        {show.entry && <p className={styles.entry}>{show.entry}</p>}
+        {(show.entry || show.audience) && (
+          <ul className={styles.badges}>
+            {show.entry && <li className={styles.badge}>{show.entry}</li>}
+            {show.audience && <li className={styles.badge}>{show.audience}</li>}
+          </ul>
+        )}
         <div className={styles.links}>
           {show.ticketUrl && (
             <a href={show.ticketUrl} className="button button--solid">
@@ -249,8 +300,8 @@ function PastShow({ show }: { show: Show }): ReactNode {
       <div className={styles.pastMain}>
         <h4 className={styles.title}>{title}</h4>
         <p className={styles.place}>{showPlace(show)}</p>
-        <p className={styles.host}>{showHost(show)}</p>
-        <Lineup show={show} />
+        <ShowHost show={show} />
+        <Lineup show={show} linked />
         {show.description && <p className={styles.description}>{show.description}</p>}
         {(show.postUrl || show.pressLinks) && (
           <div className={styles.links}>

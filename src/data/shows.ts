@@ -13,6 +13,8 @@ export type ScheduleSlot = {
   label: string;
   /** Es otra banda que toca ese día: se nombra en "Compartimos escenario con…". */
   band?: boolean;
+  /** Instagram de esa banda: en /shows su nombre lleva a su perfil. */
+  instagramUrl?: string;
 };
 
 export type Show = {
@@ -28,12 +30,16 @@ export type Show = {
   event?: string;
   /** Banda o entidad que nos invitó; sin esto el show se marca como "Fecha propia". */
   invitedBy?: string;
+  /** Instagram (o web) de quien nos invitó: en /shows su nombre lleva ahí. */
+  invitedByUrl?: string;
   description?: string;
   /** Publicación de Instagram del show: la promo mientras es próximo, el recuerdo después. */
   postUrl?: string;
   ticketUrl?: string;
   /** Info de acceso, se muestra como badge mientras el show es próximo (ej. entrada gratuita). */
   entry?: string;
+  /** Para quién es, otro badge mientras el show es próximo (ej. "Apto para todo público", "+18"). */
+  audience?: string;
   pressLinks?: PressLink[];
   /** Cronograma del día, se muestra en /shows mientras el show es próximo. Las bandas (`band: true`) siguen nombradas después. */
   schedule?: ScheduleSlot[];
@@ -57,20 +63,23 @@ export const SHOWS: Show[] = [
   {
     date: "2026-11-29",
     time: "21:30",
-    venue: "Club Independiente",
+    venue: "Club Atlético Independiente",
     city: "Tucumán, Argentina",
     address: "Lavalle 560, Barrio Sur",
     event: "Tuc-Man Expo Tattoo",
-    entry: "Entrada: alimento no perecedero",
+    entry: "Entrada gratuita con un alimento no perecedero",
+    audience: "Apto para todo público",
     invitedBy: "Tuc-Man Expo Tattoo",
-    postUrl: "https://www.instagram.com/p/Df8wQ8Px8Zl/",
-    description: "Formamos parte de la Tuc-Man Expo Tattoo, el evento de tatuajes más grande del NOA, con más de 200 artistas en el Club Independiente.",
+    invitedByUrl: "https://www.instagram.com/tuc_manexpotattoo/",
+    postUrl: "https://www.instagram.com/p/DgLasM2GAqd/",
+    description:
+      "Formamos parte de la Tuc-Man Expo Tattoo, el evento de tatuajes más grande del NOA, con más de 200 artistas en el Club Atlético Independiente. Cerramos la jornada con el último show del día, a las 21:30.",
     schedule: [
       { time: "8:30", label: "Ingreso de los artistas y armado de stands" },
       { time: "10:00", label: "Ingreso del público" },
       { time: "17:00", label: "Subasta de arte" },
-      { time: "18:00", label: "Dark Phoenix", band: true },
-      { time: "19:00", label: "Dentro del Túnel", band: true },
+      { time: "18:00", label: "Dark Phoenix", band: true, instagramUrl: "https://www.instagram.com/darkphoenixband/" },
+      { time: "19:00", label: "Dentro del Túnel", band: true, instagramUrl: "https://www.instagram.com/dentro_del_tunel/" },
       { time: "20:00", label: "Presentación de lienzos y premiación" },
       { time: "21:30", label: BAND_NAME },
       { time: "22:30", label: "Cierre del día" },

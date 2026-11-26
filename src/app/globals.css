@@ -24,11 +24,10 @@ html {
   scroll-padding-top: calc(var(--nav-height) + 1rem);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  html {
-    scroll-behavior: smooth;
-  }
-}
+/* Sin scroll-behavior: smooth acá: con él, el salto al #ancla de un link que
+   se abre de cero (linkinzero…/#contacto) arranca animado y la carga de la
+   página lo corta más seguido (ver useScrollToHash en src/lib/scroll.ts).
+   Los scrolls animados (Contratar, Volver arriba) los hace el JS con scrollBehavior(). */
 
 body {
   background: var(--bg);

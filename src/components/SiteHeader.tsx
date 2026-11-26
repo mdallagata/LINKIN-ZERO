@@ -7,7 +7,7 @@ import LogoMark from "@/components/LogoMark";
 import { BAND_NAME } from "@/data/band";
 import type { NavLink } from "@/data/nav";
 import { BOOKING_LINK } from "@/data/nav";
-import { scrollBehavior, useScrolledPast } from "@/lib/scroll";
+import { scrollBehavior, useScrolledPast, useScrollToHash } from "@/lib/scroll";
 import { cx } from "@/lib/cx";
 import styles from "./SiteHeader.module.css";
 
@@ -18,11 +18,14 @@ export default function SiteHeader({ links }: { links: NavLink[] }): ReactNode {
   const pathname: string = usePathname();
   const router = useRouter();
   const scrolled: boolean = useScrolledPast(16);
+  useScrollToHash(pathname);
 
   // Los links con # (Contratar) scrollean suave si la sección está en esta página.
+  // Con Ctrl/Cmd/Shift/Alt o un botón que no es el principal, el navegador hace
+  // lo suyo (abrirlo en otra pestaña o ventana) en vez del scroll.
   const handleNavClick = (e: MouseEvent, href: string): void => {
     const hashIndex: number = href.indexOf("#");
-    if (hashIndex === -1) return;
+    if (hashIndex === -1 || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
     const hash: string = href.slice(hashIndex);
     const path: string = href.slice(0, hashIndex) || "/";
     e.preventDefault();

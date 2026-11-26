@@ -63,7 +63,7 @@ export const metadata: Metadata = {
   },
 };
 
-const MUSIC_GROUP_JSON_LD = {
+const MUSIC_GROUP_JSON_LD: object = {
   "@context": "https://schema.org",
   "@type": "MusicGroup",
   name: BAND_NAME,

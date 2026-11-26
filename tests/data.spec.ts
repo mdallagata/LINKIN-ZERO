@@ -7,13 +7,15 @@ import type { Member } from "../src/data/members";
 import { SHOWS } from "../src/data/shows";
 import type { ScheduleSlot, Show } from "../src/data/shows";
 import { instagramEmbedInfo } from "../src/lib/instagram-embed";
-import { lineupText, showDateParts, showStartDate, splitShows } from "../src/lib/show-schedule";
+import { lineupParts, lineupText, showDateParts, showStartDate, splitShows } from "../src/lib/show-schedule";
 
 // Chequeos de src/data: lo que antes había que acordarse de revisar a mano
 // antes de deployar (fotos que existan, fechas bien escritas, links válidos).
 
 /** Hora en 24 h: "8:30", "21:30". */
 const TIME_PATTERN: RegExp = /^([01]?\d|2[0-3]):[0-5]\d$/;
+/** Perfil de Instagram: "https://www.instagram.com/usuario/". */
+const INSTAGRAM_PROFILE_PATTERN: RegExp = /^https:\/\/www\.instagram\.com\/[\w.]+\/$/;
 
 function publicFileExists(path: string): boolean {
   return existsSync(`public${path}`);
@@ -28,7 +30,17 @@ test.describe("shows", () => {
       if (show.coverPhoto !== undefined) expect(show.photos?.[show.coverPhoto - 1], `existe la foto ${show.coverPhoto} de vista previa`).toBeDefined();
       if (show.postUrl) expect(instagramEmbedInfo(show.postUrl), `publicación de Instagram: ${show.postUrl}`).not.toBeNull();
       if (show.time !== undefined) expect(show.time, "hora en 24 h").toMatch(TIME_PATTERN);
-      for (const slot of show.schedule ?? []) expect(slot.time, `hora de "${slot.label}"`).toMatch(TIME_PATTERN);
+      for (const slot of show.schedule ?? []) {
+        expect(slot.time, `hora de "${slot.label}"`).toMatch(TIME_PATTERN);
+        if (slot.instagramUrl !== undefined) {
+          expect(slot.band, `"${slot.label}" tiene Instagram, así que es una banda`).toBe(true);
+          expect(slot.instagramUrl, `Instagram de "${slot.label}"`).toMatch(INSTAGRAM_PROFILE_PATTERN);
+        }
+      }
+      if (show.invitedByUrl !== undefined) {
+        expect(show.invitedBy, "con `invitedByUrl` también va `invitedBy`").toBeDefined();
+        expect(show.invitedByUrl, "link de quien nos invitó").toMatch(/^https:\/\//);
+      }
       const ourSlot: ScheduleSlot | undefined = show.schedule?.find((slot: ScheduleSlot): boolean => slot.label === BAND_NAME);
       if (ourSlot) expect(ourSlot.time, "nuestro horario en el cronograma es el mismo que `time`").toBe(show.time);
     });
@@ -87,5 +99,22 @@ test.describe("próximos y anteriores", () => {
     ];
     expect(lineupText({ ...show, schedule })).toBe("Compartimos escenario con Dark Phoenix y Dentro del Túnel");
     expect(lineupText(show)).toBeUndefined();
+  });
+
+  test("cada banda del cronograma lleva a su Instagram, en el mismo orden", () => {
+    const schedule: ScheduleSlot[] = [
+      { time: "18:00", label: "Dark Phoenix", band: true, instagramUrl: "https://www.instagram.com/darkphoenixband/" },
+      { time: "19:00", label: "Dentro del Túnel", band: true },
+      { time: "20:00", label: "Otra Banda", band: true, instagramUrl: "https://www.instagram.com/otra/" },
+    ];
+    expect(lineupParts({ ...show, schedule })).toEqual([
+      { text: "Compartimos escenario con " },
+      { text: "Dark Phoenix", url: "https://www.instagram.com/darkphoenixband/" },
+      { text: ", " },
+      { text: "Dentro del Túnel" },
+      { text: " y " },
+      { text: "Otra Banda", url: "https://www.instagram.com/otra/" },
+    ]);
+    expect(lineupParts(show)).toEqual([]);
   });
 });

@@ -5,6 +5,7 @@
 // del archivo, que un checkout de git o el CI cambian) y borra lo que ya no
 // tiene foto de origen.
 import { createHash } from "node:crypto";
+import type { Dirent } from "node:fs";
 import { copyFile, mkdir, readdir, readFile, rm, writeFile } from "node:fs/promises";
 import { dirname, extname, join, relative } from "node:path";
 import sharp from "sharp";
@@ -22,8 +23,8 @@ const EXTENSIONS: Set<string> = new Set([".webp", ".jpg", ".jpeg", ".png"]);
 sharp.concurrency(2);
 
 async function listFiles(dir: string): Promise<string[]> {
-  const entries = await readdir(dir, { withFileTypes: true, recursive: true });
-  return entries.filter((e) => e.isFile()).map((e) => join(e.parentPath, e.name));
+  const entries: Dirent[] = await readdir(dir, { withFileTypes: true, recursive: true });
+  return entries.filter((e: Dirent): boolean => e.isFile()).map((e: Dirent): string => join(e.parentPath, e.name));
 }
 
 async function exists(path: string): Promise<boolean> {

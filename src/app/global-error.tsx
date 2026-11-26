@@ -2,6 +2,7 @@
 
 import type { ReactNode } from "react";
 import { useEffect } from "react";
+import { BAND_NAME } from "@/data/band";
 import "./bootstrap.scss";
 import "./globals.css";
 
@@ -16,7 +17,7 @@ export default function GlobalError({ error, retry }: { error: unknown; retry: (
   return (
     <html lang="es" data-bs-theme="dark">
       <body className="d-flex flex-column min-vh-100 justify-content-center page-container">
-        <title>Algo salió mal — LINKIN ZERØ</title>
+        <title>{`Algo salió mal — ${BAND_NAME}`}</title>
         <h1 className="mb-3">Algo salió mal</h1>
         <p className="text-muted">Hubo un error inesperado. Intentalo de nuevo.</p>
         <div className="mt-3">

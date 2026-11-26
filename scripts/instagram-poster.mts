@@ -5,20 +5,22 @@
 // tocan, así quien no mira el video no descarga el embed (~50 pedidos). Hay que
 // correrlo una vez por cada publicación nueva que se muestre en el sitio.
 import { mkdir } from "node:fs/promises";
+import type { Browser, Page } from "@playwright/test";
 import { chromium } from "@playwright/test";
 import sharp from "sharp";
+import type { InstagramEmbedInfo } from "../src/lib/instagram-embed.ts";
 import { instagramEmbedInfo } from "../src/lib/instagram-embed.ts";
 
 const url: string | undefined = process.argv[2];
-const info = url ? instagramEmbedInfo(url) : null;
+const info: InstagramEmbedInfo | null = url ? instagramEmbedInfo(url) : null;
 if (!url || !info) {
   console.error("Uso: pnpm instagram-poster https://www.instagram.com/p/<código>/");
   process.exit(1);
 }
 
 // Usa el Chrome instalado; si no hay, el Chromium de Playwright (`pnpm exec playwright install chromium`).
-const browser = await chromium.launch({ channel: "chrome" }).catch(() => chromium.launch());
-const page = await browser.newPage({ viewport: { width: info.width, height: info.height }, deviceScaleFactor: 2 });
+const browser: Browser = await chromium.launch({ channel: "chrome" }).catch((): Promise<Browser> => chromium.launch());
+const page: Page = await browser.newPage({ viewport: { width: info.width, height: info.height }, deviceScaleFactor: 2 });
 await page.goto(info.src, { waitUntil: "networkidle" });
 await page.waitForTimeout(2500);
 const png: Buffer = await page.screenshot();

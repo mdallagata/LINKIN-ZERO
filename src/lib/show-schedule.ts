@@ -44,15 +44,39 @@ export function showStartDate(date: string, time?: string): string {
   return `${date}T${(hours ?? "").padStart(2, "0")}:${minutes}:00-03:00`;
 }
 
-/** Las otras bandas del cronograma, en orden: ["Dark Phoenix", "Dentro del Túnel"]. */
-export function otherBands(show: Show): string[] {
-  return (show.schedule ?? []).filter((slot: ScheduleSlot): boolean => Boolean(slot.band)).map((slot: ScheduleSlot): string => slot.label);
+/** Las otras bandas del cronograma, en orden (los horarios con `band: true`). */
+export function otherBands(show: Show): ScheduleSlot[] {
+  return (show.schedule ?? []).filter((slot: ScheduleSlot): boolean => Boolean(slot.band));
 }
 
 const LIST_FORMAT: Intl.ListFormat = new Intl.ListFormat("es", { type: "conjunction" });
 
+/** Lo que devuelve `Intl.ListFormat.formatToParts` (TypeScript no le da un nombre al tipo). */
+type ListPart = { type: "element" | "literal"; value: string };
+
+/** Un pedazo de "Compartimos escenario con…": texto suelto o el nombre de una banda, con su Instagram si lo tiene. */
+export type LineupPart = {
+  text: string;
+  url?: string;
+};
+
+/**
+ * "Compartimos escenario con Dark Phoenix y Dentro del Túnel" en pedazos, para
+ * poder linkear cada banda a su Instagram. Vacío si tocamos solos.
+ */
+export function lineupParts(show: Show): LineupPart[] {
+  const bands: ScheduleSlot[] = otherBands(show);
+  if (bands.length === 0) return [];
+  // formatToParts devuelve los nombres ("element") en el mismo orden en que entran.
+  const remaining: ScheduleSlot[] = [...bands];
+  const parts: LineupPart[] = LIST_FORMAT.formatToParts(bands.map((slot: ScheduleSlot): string => slot.label)).map((part: ListPart): LineupPart =>
+    part.type === "element" ? { text: part.value, url: remaining.shift()?.instagramUrl } : { text: part.value },
+  );
+  return [{ text: "Compartimos escenario con " }, ...parts];
+}
+
 /** "Compartimos escenario con Dark Phoenix y Dentro del Túnel", o nada si tocamos solos. */
 export function lineupText(show: Show): string | undefined {
-  const bands: string[] = otherBands(show);
-  return bands.length > 0 ? `Compartimos escenario con ${LIST_FORMAT.format(bands)}` : undefined;
+  const parts: LineupPart[] = lineupParts(show);
+  return parts.length > 0 ? parts.map((part: LineupPart): string => part.text).join("") : undefined;
 }

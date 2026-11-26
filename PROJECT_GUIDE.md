@@ -85,13 +85,13 @@ Cada decisión de contenido y layout debe responder a: **¿esto ayuda a vender u
 - Un solo `h1` por página: en la home es el nombre de la banda (wordmark); en las demás, el título de la página.
 - JSON-LD (schema.org) se renderiza con el componente `JsonLd` (`<script type="application/ld+json">`):
   - `layout.tsx` inyecta un `MusicGroup` global.
-  - `ShowsSections` inyecta un `MusicEvent` por cada próximo show (con su `date`).
+  - `ShowsSections` inyecta un `MusicEvent` por cada próximo show: inicio con hora de Tucumán, lugar, estado, organizador, bandas e imagen (la portada de su publicación de Instagram).
 
 ## Content
 
 This is a tribute-band site, not the real LINKIN PARK's — all editable content (band name/tagline, nav links, shows, member bios) lives in [src/data/](src/data/). When editing content:
 
-- **Shows**: una sola lista `SHOWS` en `src/data/shows.ts`, con `date` en formato `AAAA-MM-DD`. No hay que separar próximos de anteriores ni ordenarlos: se calcula al generar el sitio. Fotos con `showPhotos(carpeta, cantidad)`; la publicación de Instagram en `postUrl` (con su portada, ver **Images**).
+- **Shows**: una sola lista `SHOWS` en `src/data/shows.ts`, con `date` en formato `AAAA-MM-DD`. No hay que separar próximos de anteriores ni ordenarlos: se calcula al generar el sitio. Fotos con `showPhotos(carpeta, cantidad)`; la publicación de Instagram en `postUrl` (con su portada, ver **Images**). Mientras es próximo, `entry` y `audience` se muestran como badges (entrada, edad). Los links de Instagram de quien nos invitó (`invitedByUrl`) y de las otras bandas del cronograma (`instagramUrl` en cada horario con `band: true`) se usan en /shows y en el JSON-LD.
 - `MemberSection` requires an `imageSrc` (member photo); there is no automatic placeholder-avatar fallback, so every member needs a real photo in `public/images/`.
 - Keep the footer's tribute disclaimer (`LEGAL_DISCLAIMER` in `src/data/band.ts`) — this is a tribute act, not the official band, and the site shouldn't imply otherwise.
 

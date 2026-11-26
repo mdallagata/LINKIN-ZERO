@@ -43,7 +43,7 @@ export default function Home(): ReactNode {
 
       <PhotoShowcase
         src="/images/todos.webp"
-        alt="Los integrantes de LINKIN ZERØ en Obscene Fest"
+        alt={`Los integrantes de ${BAND_NAME} en Obscene Fest`}
         width={2800}
         height={1864}
         caption="Obscene Fest — Nü Sessions Vol. I · Noviembre 2025"

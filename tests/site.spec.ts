@@ -66,6 +66,20 @@ test("Contratar, desde otra página, lleva a la sección de contrataciones de la
   await expect(page.locator("#contacto")).toBeInViewport();
 });
 
+test("Contratar con Ctrl/Cmd abre la home en otra pestaña y deja esta página como estaba", async ({ page, context, isMobile }) => {
+  test.skip(isMobile, "en celular Contratar está en la barra fija de abajo");
+  await page.goto("/shows");
+  const [newTab]: [Page, void] = await Promise.all([
+    context.waitForEvent("page"),
+    page
+      .getByRole("navigation", { name: "Principal" })
+      .getByRole("link", { name: "Contratar" })
+      .click({ modifiers: ["ControlOrMeta"] }),
+  ]);
+  await expect(newTab).toHaveURL(/\/#contacto$/);
+  await expect(page).toHaveURL(/\/shows$/);
+});
+
 test("en celular, Contratar por WhatsApp queda siempre a mano", async ({ page, isMobile }) => {
   test.skip(!isMobile, "solo en celular");
   await page.goto("/shows");

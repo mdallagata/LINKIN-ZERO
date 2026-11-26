@@ -40,17 +40,20 @@ export default function HomeHero(): ReactNode {
 function NextShow({ show }: { show: Show }): ReactNode {
   const { day, month, weekday } = showDateParts(show.date);
   return (
-    <Link href="/shows#proximo" className={styles.strip}>
-      <span className={styles.stripLabel}>Próximo show</span>
-      <time dateTime={showStartDate(show.date, show.time)} className={styles.stripDate}>
-        {weekday} {day} {month}
-        {show.time && ` · ${show.time} hs`}
-      </time>
+    <Link href="/shows#proximo" className={cx(styles.strip, styles.stripShow)}>
+      <span className={styles.stripWhen}>
+        <span className={styles.stripLabel}>Próximo show</span>
+        <time dateTime={showStartDate(show.date, show.time)} className={styles.stripDate}>
+          {weekday} {day} {month}
+          {show.time && ` · ${show.time} hs`}
+        </time>
+      </span>
+      {/* El evento arriba y el lugar abajo, cada uno entero en su línea. */}
       <span className={styles.stripMain}>
         <strong>{show.event ?? show.venue}</strong>
-        <span className={styles.stripMuted}> — {show.event ? show.venue : show.city}</span>
+        <span className={styles.stripPlace}>{show.event ? show.venue : show.city}</span>
       </span>
-      {show.entry && <span className={styles.stripMuted}>{show.entry}</span>}
+      {show.entry && <span className={cx(styles.stripMuted, styles.stripEntry)}>{show.entry}</span>}
       <span className={styles.stripMore}>Más info →</span>
     </Link>
   );
